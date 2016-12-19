@@ -1,0 +1,41 @@
+﻿@using DNAMais.Domain.Entidades
+@using DNAMais.Framework
+
+@model RamoAtividade
+
+@{
+    Layout = "~/Views/Shared/_Cadastro.cshtml";
+
+    ViewBag.Title = "DNA+ :: Ramos de Atividade";
+    ViewBag.TituloPagina = "Ramo de Atividade";
+
+    //VARIAVEIS PARA UTILIZAÇÃO EM VISOES SHARED
+    ViewData["messageSuccess"] = "Ramo de Atividade registrado com sucesso";
+    ViewData["messageReturn"] = "Voltar para lista de Ramos de Atividade";
+
+    bool locked = ViewData["LOCKED"] == null ? false : (bool)ViewData["LOCKED"];
+}
+
+@section cadastro
+{
+    @if (Request.HttpMethod == "GET" || !ViewData.ModelState.IsValid)
+    {
+        <div style="width:100%;">
+
+            @Html.HiddenFor(
+                expression: m => m.Id)
+
+            @Html.DnaMaisTextBoxFor(
+                expression: m => m.Nome,
+                width: 300,
+                disabled: locked)
+
+            <hr class="separator" />
+        </div>
+    }
+}
+
+@section validacoes
+{
+    @Html.Validations((RamoAtividade)Model)
+}

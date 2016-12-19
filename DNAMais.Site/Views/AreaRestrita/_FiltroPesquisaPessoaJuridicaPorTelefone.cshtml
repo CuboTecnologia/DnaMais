@@ -1,0 +1,50 @@
+﻿<div class="row">
+    <form id="frmPesquisaTelefone" action="@Url.Action("PesquisarPessoaJuridicaPorTelefone", "AreaRestrita")" method="post" autocomplete="off">
+        <div class="col-md-12">
+            <div style="float: left">
+                <label>DDD</label>
+                <input type="text" class="form-control" id="txtDddPesquisaPorTelefone" name="txtDddPesquisaPorTelefone" style="width: 60px; margin-right: 10px;" maxlength="11" onkeypress="return onlyNumbers(event);" />
+            </div>
+
+            <div style="float: left">
+                <label>Telefone</label>
+                <input type="text" class="form-control" id="txtTelefonePesquisaPorTelefone" name="txtTelefonePesquisaPorTelefone" style="width: 200px;" maxlength="9" onkeypress="return onlyNumbers(event);" />
+            </div>
+        </div>
+
+        <div class="col-md-12" style="margin-top: 20px;">
+            <input type="submit" value="Pesquisar" class="btn btn-danger" />
+        </div>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#frmPesquisaTelefone').on('submit', function (event) {
+            
+            if (!$('#frmPesquisaTelefone').valid()) {
+                return;
+            }
+            event.preventDefault();
+            $.ajax({
+                url: this.action,
+                type: 'GET',
+                data: $(this).serialize(),
+                context: $('#divResultadoPesquisaPJ'),
+                success: function (result) {
+                    $('#divResultadoPesquisaPJ').html(result);
+                    $('#divResultadoPesquisaPJ').fadeIn(500);
+                    $('#btnNovaPesquisa').fadeIn(2500);
+                    $('#divLoading').hide();
+                },
+                beforeSend: function () {
+                    $('#divFiltros').hide();
+                    $('#divLoading').show();
+                },
+                error: function (a, b, c) {
+                    alert(a.responseText.replace('"', '').replace('"', ''));
+                }
+            });
+        });
+    });
+</script>

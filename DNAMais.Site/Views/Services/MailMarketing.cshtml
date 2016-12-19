@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "DNA+ | E-mail MKT";
+}
+
+@Html.Partial("Services/MailMarketing/_TitleBarMailMarketing")
+
+<div class="container">
+    @Html.Partial("Services/MailMarketing/_HeadingMailMarketing")
+    <div class="row">
+        <div class="col-md-9">
+            @Html.Partial("Services/MailMarketing/_FirstBoxMailMarketing")
+            @Html.Partial("Services/MailMarketing/_SecondBoxMailMarketing")
+            @Html.Partial("Services/MailMarketing/_ThirdBoxMailMarketing")
+            @Html.Partial("Services/MailMarketing/_ButtonMailMarketing")
+        </div>
+        @Html.Partial("Services/MailMarketing/_SideMenuMailMarketing")
+    </div>
+</div>
+
+<hr />
+
+<script>
+
+    $(document).ready(function () {
+        $("#servicesMenu").addClass("active");
+    });
+
+</script>

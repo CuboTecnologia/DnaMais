@@ -1,0 +1,10 @@
+﻿@using DNAMais.Framework
+
+@if (!ViewData.ModelState.IsValid)
+{
+    @Html.DnaMaisMessageError(ViewData.ModelState)
+}
+else if (Request.HttpMethod == "POST")
+{
+    @Html.DnaMaisMessageSuccess(ViewData["messageSuccess"].ToString())
+}

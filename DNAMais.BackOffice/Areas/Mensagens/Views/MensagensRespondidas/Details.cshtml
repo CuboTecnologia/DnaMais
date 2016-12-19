@@ -1,0 +1,89 @@
+﻿@using DNAMais.Domain.Entidades
+@using DNAMais.Framework
+@using DNAMais.BackOffice.Facades
+
+@model MensagemContato
+
+@{
+    Layout = "~/Views/Shared/_Listagem.cshtml";
+
+    ViewBag.Title = "DNA+ :: Mensagens";
+    ViewBag.TituloPagina = "Mensagens";
+    ViewBag.TituloGrid = "Detalhes da Mensagem de " + Model.Nome;
+
+    ViewData["messageReturn"] = "Voltar para lista de mensagens";
+
+}
+
+@section grid
+{
+
+    <table class="table table-bordered table-hover mb-none">
+        <thead>
+            <tr>
+                <th class="col-md-1">N.</th>
+                <th class="col-md-3">Nome</th>
+                <th class="col-md-3">E-Mail</th>
+                <th class="col-md-2">Data do Envio</th>
+                <th class="col-md-3">Título/Assunto</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Id</td>
+                <td>@Model.Nome</td>
+                <td>@Model.Email</td>
+                <td>@Model.DataRegistro</td>
+                <td>@Model.Assunto</td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Mensagem</th>
+            </tr>
+        </thead>
+        <tr>
+            <td>
+                <p class="text-justify text-md" style="line-height:30px; text-indent: 25px;">@Model.Conteudo</p>
+            </td>
+        </tr>
+    </table>
+    <hr />
+    <table class="table table-bordered table-hover mb-none">
+        <thead>
+            <tr>
+                <th class="col-md-1">N.</th>
+                <th class="col-md-3">Usuário Responsável</th>
+                <th class="col-md-3">E-Mail</th>
+                <th class="col-md-5">Data da Resposta</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.UsuarioBackOffice.Id</td>
+                <td>@Model.UsuarioBackOffice.Nome</td>
+                <td>@Model.UsuarioBackOffice.Email</td>
+                <td>@Model.DataResposta</td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-bordered table-hover mb-none">
+        <thead>
+            <tr>
+                <th>Resposta</th>
+            </tr>
+        </thead>
+        <tr>
+            <td>
+                <p class="text-justify text-md" style="line-height:30px; text-indent: 25px;">@Model.DescricaoResposta</p>
+            </td>
+        </tr>
+    </table>
+
+    <hr />
+
+    @Html.DnaMaisButton("Index", "btnVoltar", ViewData["messageReturn"].ToString(), "default", "arrow-circle-left")
+
+}

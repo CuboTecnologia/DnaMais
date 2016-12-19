@@ -1,0 +1,143 @@
+﻿@using DNAMais.Site.Facades
+
+@{
+    List<SelectListItem> ufs = new EnderecoFacade(null).ListarUFs().ToList().Select(i => new SelectListItem
+    {
+        Value = i.Sigla,
+        Text = i.Sigla + " - " + i.Nome
+    }).ToList();
+
+    ufs.Insert(0, new SelectListItem { Value = "", Text = "Selecione uma UF" });
+}
+<div class="row">
+    <form id="frmPesquisaEndereco" action="@Url.Action("PesquisarPessoaFisicaPorCEP", "AreaRestrita")" method="post" autocomplete="off">
+        <div class="col-md-12">
+            <label>Pesquisar por:</label>
+
+            <div class="radio">
+                <label>
+                    <input type="radio" name="optRadio" id="cepRadio">CEP
+                </label>
+                <label>
+                    <input type="radio" name="optRadio" id="endRadio">Endereço Completo
+                </label>
+            </div>
+
+            <div id="divCep" class="hidden">
+                <label>Número do CEP</label>
+                <input type="text" class="form-control" id="txtCepPesquisaPorEndereco" name="txtCepPesquisaPorEndereco" style="width: 200px;" onkeypress="return onlyNumbers(event);" onkeyup="maskCEP(this);" maxlength="9" />
+            </div>
+
+            <div id="divEnderecoCompleto" class="hidden">
+
+                <div class="form-group">
+                    <label for="Uf">UF</label>
+                    @Html.DropDownList("ddlUfPesquisaPorEndereco", ufs, new { @class = "form-control", style = "width: 500px;" })
+                </div>
+
+                <div class="form-group" id="divMunicipios">
+                    <label for="Cidade">Cidade</label>
+                    <select class="form-control" id="Municipio" disabled="disabled" style="width: 500px;">
+                        <option>Selecione uma Cidade</option>
+                    </select>
+                </div>
+
+                <label>Bairro</label>
+                <input type="text" class="form-control" id="txtBairroPesquisaPorEndereco" name="txtBairroPesquisaPorEndereco" style="width: 500px;" maxlength="80" />
+                <br />
+                <label>Logradouro</label>
+                <input type="text" class="form-control" id="txtLogradouroPesquisaPorEndereco" name="txtLogradouroPesquisaPorEndereco" style="width: 500px;" maxlength="100" />
+                <br />
+                <div class="container">
+                    <div class="row">
+                        <div style="float: left">
+                            <label>Número</label>
+                            <input type="text" class="form-control" id="txtNumeroPesquisaPorEndereco" name="txtNumeroPesquisaPorEndereco" style="width: 80px; margin-right: 20px;" maxlength="20" />
+                        </div>
+                        <div style="float: left">
+                            <label>Complemento</label>
+                            <input type="text" class="form-control" id="txtComplementoPesquisaPorEndereco" name="txtComplementoPesquisaPorEndereco" style="width: 400px; " maxlength="80" />
+                        </div>
+                    </div>
+
+                    <br />
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12" style="margin-top: 20px;">
+            <input type="submit" value="Pesquisar" class="btn btn-danger" />
+        </div>
+    </form>
+</div>
+
+<script>
+    $("input:radio").click(function (e) {
+
+        var radioSelecionado = e.target.id;
+
+        if (radioSelecionado == "cepRadio") {
+            $('#divCep').removeClass('hidden');
+            $('#divEnderecoCompleto').addClass('hidden');
+            $('#frmPesquisaEndereco').attr('action', '@Url.Action("PesquisarPessoaFisicaPorCEP", "AreaRestrita")');
+
+            setTimeout(function () {
+                $('#txtCepPesquisaPorEndereco').focus();
+            }, 1);
+
+        }
+        else if (radioSelecionado == "endRadio") {
+            $('#divEnderecoCompleto').removeClass('hidden');
+            $('#divCep').addClass('hidden');
+            $('#frmPesquisaEndereco').attr('action', '@Url.Action("PesquisarPessoaFisicaPorEndereco", "AreaRestrita")');
+        }
+    });
+</script>
+
+
+<script>
+    $(document).ready(function () {
+
+        $('#ddlUfPesquisaPorEndereco').change(function () {
+            var uf = $(this).val();
+            $.ajax({
+                url: '@Url.Action("ListarMunicipios")',
+                type: 'GET',
+                data: 'uf=' + uf,
+                context: $('#divMunicipios'),
+                success: function (result) {
+                    $(this).replaceWith(result);
+                },
+                error: function (a, b, c) {
+                    alert(a.responseText.replace('"', '').replace('"', ''));
+                }
+            });
+        });
+        
+        $('#frmPesquisaEndereco').on('submit', function (event) {
+            if (!$('#frmPesquisaEndereco').valid()) {
+                return;
+            }
+            event.preventDefault();
+            $.ajax({
+                url: this.action,
+                type: 'GET',
+                data: $(this).serialize(),
+                context: $('#divResultadoPesquisaPF'),
+                success: function (result) {
+                    $('#divResultadoPesquisaPF').html(result);
+                    $('#divResultadoPesquisaPF').fadeIn(500);
+                    $('#btnNovaPesquisa').fadeIn(2500);
+                    $('#divLoading').hide();
+                },
+                beforeSend: function () {
+                    $('#divFiltros').hide();
+                    $('#divLoading').show();
+                },
+                error: function (a, b, c) {
+                    alert(a.responseText.replace('"', '').replace('"', ''));
+                }
+            });
+        });
+    });
+</script>

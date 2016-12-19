@@ -1,0 +1,19 @@
+﻿<hr class="visible-xs visible-sm" />
+
+<div class="col-md-3">
+    <blockquote class="blockquote-primary">
+        <h4 class="heading-primary">Outros Produtos</h4>
+
+        <h5><a href="@Url.Action("AssigningDocs","Services")">Atribuição de Documentos</a></h5>
+        @Html.Partial("Services/AssigningDocs/_SideMenuTextAssigningDocs")
+        <p><a href="@Url.Action("AssigningDocs","Services")">Saiba Mais!</a></p>
+
+        <h5><a href="@Url.Action("DataEnrichment","Services")">Enriquecimento de Dados</a></h5>
+        @Html.Partial("Services/DataEnrichment/_SideMenuTextDataEnrichment")
+        <p><a href="@Url.Action("DataEnrichment","Services")">Saiba Mais!</a></p>
+
+        <h5><a href="@Url.Action("MailMarketing","Services")">E-mail Marketing</a></h5>
+        @Html.Partial("Services/MailMarketing/_SideMenuTextMailMarketing")
+        <p><a href="@Url.Action("MailMarketing","Services")">Saiba Mais!</a></p>
+    </blockquote>
+</div>

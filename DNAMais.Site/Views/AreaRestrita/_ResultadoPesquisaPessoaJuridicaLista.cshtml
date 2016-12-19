@@ -1,0 +1,92 @@
+﻿@using DNAMais.Domain.Entidades.Consultas
+@using DNAMais.Framework
+
+@model List<InfoPessoaJuridica>
+
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="mb-none">Protocolo da Consulta Realizada: <strong>@ViewBag.NumeroTransacao</strong></h2>
+        <h4 class="mb-none">Data/Hora da Consulta: <strong>@ViewBag.DataTransacao</strong></h4>
+    </div>
+</div>
+
+<div class="featured-boxes featured-boxes-style-8">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="featured-box featured-box-secondary featured-box-text-left">
+                <div class="box-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <i class="icon-featured fa fa-user pull-left mr-lg"></i>
+                            <h2>Pessoas Físicas Encontradas</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>CNPJ</th>
+                                        <th>Razão Social</th>
+                                        <th>Data de Abertura</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        int indexPessoa = 0;
+                                    }
+                                    @foreach (InfoPessoaJuridica pessoa in Model)
+                                    {
+                                        indexPessoa++;
+                                        <tr>
+                                            <td>@indexPessoa</td>
+                                            <td>
+                                                <a href="#" class="link-pessoa-juridica" data-cnpj="@pessoa.CNPJ.LimparCaracteresCNPJ()">
+                                                    @pessoa.CNPJ.FormatarCNPJ()
+                                                </a>
+                                            </td>
+                                            <td>@pessoa.RazaoSocial</td>
+                                            <td>@pessoa.DataAbertura.FormatarData()</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('#cnpj').focus();
+        $('.link-pessoa-juridica').on('click', function () {
+            event.preventDefault();
+            var cnpj = $(this).attr('data-cnpj');
+            $.ajax({
+                url: '@Url.Action("PesquisarPessoaJuridicaPorCNPJ", "AreaRestrita")',
+                type: 'POST',
+                data: 'txtCnpjPesquisaPorCnpj=' + cnpj,
+                context: $('#divResultadoPesquisaPJ'),
+                success: function (result) {
+                    $('#divResultadoPesquisaPJ').html(result);
+                    $('#divResultadoPesquisaPJ').fadeIn(500);
+                    $('#btnNovaPesquisa').fadeIn(2500);
+                    $('#divLoading').hide();
+                },
+                beforeSend: function () {
+                    $('#divFiltros').hide();
+                    $('#divLoading').show();
+                },
+                error: function (a, b, c) {
+                    alert(a.responseText.replace('"', '').replace('"', ''));
+                }
+            });
+        });
+    });
+</script>

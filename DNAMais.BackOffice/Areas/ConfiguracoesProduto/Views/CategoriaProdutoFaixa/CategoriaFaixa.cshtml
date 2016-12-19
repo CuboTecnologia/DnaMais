@@ -1,0 +1,131 @@
+﻿@using DNAMais.Domain.Entidades
+@using DNAMais.Framework
+
+@model List<CategoriaProdutoFaixa>
+
+<style>
+    .modal-header-danger {
+        color: #fff;
+        padding: 9px 15px;
+        border-bottom: 1px solid #eee;
+        background-color: #d2322d;
+        -webkit-border-top-left-radius: 5px;
+        -webkit-border-top-right-radius: 5px;
+        -moz-border-radius-topleft: 5px;
+        -moz-border-radius-topright: 5px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+</style>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header modal-header-danger">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4><i class="glyphicon"></i>Editar Faixa</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Descrição</label>
+                        <input type="email" class="form-control" id="txtDescricao" placeholder="Descrição">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Início</label>
+                        <input type="text" class="form-control" id="txtInicio" placeholder="Início">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Término</label>
+                        <input type="text" class="form-control" id="txtTermino" placeholder="Término">
+                    </div>
+                    <input type="text" id="txtIdCategoria"  style="display:none">
+                    <input type="text" id="txtCodigoFaixa" style="display:none">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" id="btnSalvar" class="btn btn-primary">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table id="myTable" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
+    <thead>
+        <tr>
+            <th>Faixa</th>
+            <th>Descrição</th>
+            <th>Início</th>
+            <th>Término</th>
+            <th>Editar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><span>@item.CodigoFaixa</span></td>
+                <td><span>@item.DescricaoFaixa</span></td>
+                <td><span>@item.InicioFaixa</span></td>
+                <td><span>@item.TerminoFaixa</span></td>
+                <td><span><a onclick="EditarFaixa('@item.CodigoFaixa','@item.CodigoCategoria','@item.DescricaoFaixa','@item.InicioFaixa','@item.TerminoFaixa');" class="btn btn-default" title="editar" data-toggle="modal" data-target="#myModal"><i class="fa fa-pencil"></i></a></span></td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+
+        $("#btnSalvar").click(function () {
+
+            $.ajax(
+           {
+               type: 'POST',
+               dataType: 'json',
+               url: '/ConfiguracoesProduto/CategoriaProdutoFaixa/EditarFaixa',
+               data: { data: objEditar() },
+               success: function (data) {
+                   console.log(data);
+                   location.href = "/ConfiguracoesProduto/CategoriaProdutoFaixa?idCategoria=" + data.idCategoria;
+               }
+           });
+        });
+    })
+
+ 
+    function objEditar()
+    {
+        var objData = new Object();
+
+        objData.CodigoFaixa = $("#txtCodigoFaixa").val();
+        objData.IdCategoria = $("#txtIdCategoria").val();
+        objData.Descricao = $("#txtDescricao").val();
+        objData.InicioFaixa = $("#txtInicio").val();
+        objData.TerminoFaixa = $("#txtTermino").val();
+
+        return objData;
+    }
+    function EditarFaixa(codigoFaixa,idCategoria,DescricaoFaixa, InicioFaixa, TerminoFaixa) {
+
+        $("#txtCodigoFaixa").val(codigoFaixa);
+
+        $("#txtIdCategoria").val(idCategoria);
+
+        $("#txtDescricao").val(DescricaoFaixa);
+
+        $("#txtInicio").val(InicioFaixa);
+        
+        $("#txtTermino").val(TerminoFaixa);
+
+    }
+</script>

@@ -1,0 +1,49 @@
+﻿@using DNAMais.Domain.Entidades
+@using DNAMais.Framework
+
+@model List<RamoAtividade>
+
+@{
+    ViewBag.Title = "DNA+ :: Ramos de Atividade";
+    ViewBag.TituloPagina = "Ramos de Atividade";
+    ViewBag.TituloGrid = "Ramos de Atividade Cadastrados";
+    Layout = "~/Views/Shared/_Listagem.cshtml";
+
+    //bool permiteEdicao = new AutorizacaoDnaMais().Authorize(ViewContext.HttpContext);
+    string mensagemExclusao = "Tem certeza que deseja remover este Ramo de Atividade?";
+
+    WebGrid grid = new WebGrid(Model, canSort: false);
+
+    WebGridColumn coluna1 = grid.Column(columnName: "Id", header: "No.", format: @<span>@(item.Id)</span>, style: "col-md-1");
+    WebGridColumn coluna2 = grid.Column(columnName: "Nome", header: "Nome", format: @<span>@(item.Nome)</span>, style: "col-md-3");
+    WebGridColumn coluna3 = grid.Column(columnName: "Usuario", header: "Usuário", format: @<span>@(item.UsuarioBackOffice.Nome)</span>, style: "col-md-3");
+    WebGridColumn coluna4 = grid.Column(columnName: "DataCadastro", header: "Data Cadastro", format: @<span>@(((DateTime)item.DataCadastro).FormatarDataHora())</span>, style: "col-md-2");
+}
+
+@section botaoNovo {
+    <p>
+        @Html.DnaMaisButton("Create", "btnCreate", "Novo Ramo de Atividade", "default", "plus")
+    </p>
+}
+
+@section grid {
+    @grid.GetHtml(
+        htmlAttributes: new { id = "myTable" },
+        tableStyle: "table table-bordered table-condensed table-striped table-primary table-vertical-center",
+        columns:
+            grid.Columns(
+                coluna1,
+                coluna2,
+                coluna3,
+                coluna4,
+                grid.Column(
+                    header: "Ações",
+                    format: @<span>
+                        @Html.DnaMaisTableLinkDetails("Details", (object)item.Id)
+                        @Html.DnaMaisTableLinkEdit("Edit", (object)item.Id)
+                        @Html.DnaMaisTableLinkRemove("Remove", (object)item.Id, mensagemExclusao)
+                    </span>
+                            )
+                        )
+                    )
+}

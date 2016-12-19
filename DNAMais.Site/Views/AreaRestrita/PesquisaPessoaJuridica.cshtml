@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "Pessoa Jurídica";
+    Layout = "~/Views/Shared/_LayoutLogged.cshtml";
+}
+
+<section class="page-header page-header-color page-header-dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Consultas Pessoa Jurídica</h1>
+                <hr class="short visible-xs visible-sm" />
+                <ul class="breadcrumb breadcrumb-valign-mid">
+                    <li><a href="@Url.Action("ProdutosContratados", "AreaRestrita")">Produtos Contratados</a></li>
+                    <li class="active">Pessoa Jurídica</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+        <div class="row">
+        <div class="col-md-12" id="divFiltros">
+            <div class="tabs tabs-primary">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#tabCnpj" id="cnpj" data-toggle="tab"><i class="fa fa-building"></i>CNPJ</a>
+                    </li>
+                    <li>
+                        <a href="#tabNome" id="nome" data-toggle="tab"><i class="fa fa-registered"></i>Razão Social</a>
+                    </li>
+                    <li>
+                        <a href="#tabTelefone" id="telefone" data-toggle="tab"><i class="fa fa-phone"></i>Telefone</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tabCnpj" class="tab-pane active">
+                        @Html.Partial("_FiltroPesquisaPessoaJuridicaPorCNPJ")
+                    </div>
+                    <div id="tabNome" class="tab-pane">
+                        @Html.Partial("_FiltroPesquisaPessoaJuridicaPorNome")
+                    </div>
+                    <div id="tabTelefone" class="tab-pane">
+                        @Html.Partial("_FiltroPesquisaPessoaJuridicaPorTelefone")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <input type="button" value="Nova Consulta" class="btn btn-default btn-lg btn-borders pull-right" id="btnNovaPesquisa" />
+        <div id="divResultadoPesquisaPJ">
+        </div>
+        <div id="divLoading">
+            @Html.Partial("_Loading")
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $('#txtCnpjPesquisaPorCnpj').focus();
+        $('#btnNovaPesquisa').hide();
+        $('#divResultadoPesquisaPJ').hide();
+        $('#divLoading').hide();
+
+        $('#btnNovaPesquisa').click(function () {
+            $('#btnNovaPesquisa').fadeOut(500);
+            $('#divResultadoPesquisaPJ').fadeOut(500);
+            $('#divFiltros').fadeIn(500);
+        });
+    });
+
+</script>

@@ -1,0 +1,75 @@
+﻿@using DNAMais.Domain.Entidades
+@using DNAMais.Framework
+@using DNAMais.BackOffice.Facades;
+
+@model PerfilAcessoBackOffice
+
+@{
+    Layout = "~/Views/Shared/_Cadastro.cshtml";
+
+    ViewBag.Title = "DNA+ :: Perfis de Acesso BackOffice";
+    ViewBag.TituloPagina = "Perfil de Acesso BackOffice";
+
+    //VARIAVEIS PARA UTILIZAÇÃO EM VISOES SHARED
+    ViewData["messageSuccess"] = "Perfil de Acesso BackOffice registrado com sucesso";
+    ViewData["messageReturn"] = "Voltar para lista de Perfis de Acesso BackOffice";
+
+    bool locked = ViewData["LOCKED"] == null ? false : (bool)ViewData["LOCKED"];
+    
+    List<FuncionalidadeBackOffice> funcionalidades = new AcessoFacade(null).ListarFuncionalidadesBackOffice().ToList();
+    
+    List<PerfilAcessoFuncionalidade> funcionalidadesAssociadas = Model.PerfisFuncionalidades.ToList();
+}
+
+@section cadastro
+{
+    @if (Request.HttpMethod == "GET" || !ViewData.ModelState.IsValid)
+    {
+        <div style="width:100%;">
+
+            @Html.HiddenFor(
+                expression: m => m.Id)
+
+            @Html.DnaMaisTextBoxFor(
+                expression: m => m.Nome,
+                width: 300,
+                disabled: locked)
+
+            <hr class="separator" />
+
+        </div>
+        <div class="row">
+            <div class="col-lg-2">
+            </div>
+            <div class="col-lg-10">
+                @foreach (FuncionalidadeBackOffice func in funcionalidades)
+                {
+                    if (funcionalidadesAssociadas.Count == 0)
+                    {
+                        <input type="checkbox" name="Funcionalidades" value="@func.Codigo" class="span6" id="Func_@func.Codigo" checked="checked" />
+                    }
+                    else
+                    { 
+                        if (funcionalidadesAssociadas.Exists(i => i.CodigoFuncionalidadeBackOffice == func.Codigo))
+                        {
+                            <input type="checkbox" name="Funcionalidades" value="@func.Codigo" class="span6" id="Func_@func.Codigo" checked="checked" />
+                        }
+                        else
+                        {
+                            <input type="checkbox" name="Funcionalidades" value="@func.Codigo" class="span6" id="Func_@func.Codigo" />
+                        }
+                    }
+                    @Html.Label(func.Nome, htmlAttributes: new { @class = "span6" })
+                    <br />
+                }
+            </div>
+
+        </div>
+
+    }
+}
+
+@section validacoes
+{
+    @Html.Validations((PerfilAcessoBackOffice)Model)
+}

@@ -1,0 +1,54 @@
+﻿@using DNAMais.Domain.Entidades
+@using DNAMais.Framework
+@using DNAMais.BackOffice.Facades;
+
+@model ItemProduto
+
+@{
+    Layout = "~/Views/Shared/_Cadastro.cshtml";
+
+    ViewBag.Title = "DNA+ :: Itens de Produto BackOffice";
+    ViewBag.TituloPagina = "Itens de Produto BackOffice";
+
+    //VARIAVEIS PARA UTILIZAÇÃO EM VISOES SHARED
+    ViewData["messageSuccess"] = "Item de Produto registrado com sucesso";
+    ViewData["messageReturn"] = "Voltar para lista de Itens de Produto";
+
+    bool locked = ViewData["LOCKED"] == null ? false : (bool)ViewData["LOCKED"];
+
+}
+
+@section cadastro
+{
+    @if (Request.HttpMethod == "GET" || !ViewData.ModelState.IsValid)
+    {
+        <div style="width:100%;">
+
+            @Html.HiddenFor(
+                expression: m => m.Id)
+
+            @Html.HiddenFor(
+                expression: m => m.Nome)
+
+            @Html.HiddenFor(
+                expression: m => m.CodigoProduto)
+
+            @Html.DnaMaisTextBoxFor(
+                expression: m => m.Descricao,
+                width: 300,
+                disabled: locked)
+
+            <hr class="separator" />
+
+        </div>
+        <div class="row">
+
+        </div>
+
+    }
+}
+
+@section validacoes
+{
+    @Html.Validations((ItemProduto)Model)
+}

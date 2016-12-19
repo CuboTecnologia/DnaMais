@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "DNA+ | Enriquecimento";
+}
+
+@Html.Partial("Services/DataEnrichment/_TitleBarDataEnrichment")
+
+<div class="container">
+    @Html.Partial("Services/DataEnrichment/_HeadingDataEnrichment")
+    <div class="row">
+        <div class="col-md-9">
+            @Html.Partial("Services/DataEnrichment/_FirstBoxDataEnrichment")
+            @Html.Partial("Services/DataEnrichment/_SecondBoxDataEnrichment")
+            @Html.Partial("Services/DataEnrichment/_ThirdBoxDataEnrichment")
+            @Html.Partial("Services/DataEnrichment/_ButtonDataEnrichment")
+        </div>
+        @Html.Partial("Services/DataEnrichment/_SideMenuDataEnrichment")
+    </div>
+</div>
+
+<hr />
+
+@Html.Partial("Services/DataEnrichment/_OnlineServiceDataEnrichment")
+
+<script>
+
+    $(document).ready(function () { 
+        $('#servicesMenu').addClass('active');
+    });
+
+</script>

@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "DNA+ | BackOffice";
+}
+
+@Html.Partial("_TitleBarMsgAnswered")
+@Html.Partial("_GridMsgAnswered")
+@Html.Partial("_ModalMsgAnswered")
+
+<script>
+
+    $(document).ready(function () {
+
+        $('#navParentMessages').toggleClass('nav-expanded');
+
+    });
+
+</script>

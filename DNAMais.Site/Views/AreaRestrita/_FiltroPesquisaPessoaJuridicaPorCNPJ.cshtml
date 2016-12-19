@@ -1,0 +1,43 @@
+﻿<div class="row">
+    <form id="frmPesquisaCNPJ" action="@Url.Action("PesquisarPessoaJuridicaPorCNPJ", "AreaRestrita")" method="post" autocomplete="off">
+        <div class="col-md-12">
+            <label>CNPJ</label>
+            <input type="text" class="form-control" id="txtCnpjPesquisaPorCnpj" name="txtCnpjPesquisaPorCnpj" style="width: 250px;" onkeypress="return onlyNumbers(event);" onkeyup="maskCNPJ(this, event);" maxlength="18" />
+        </div>
+
+        <div class="col-md-12" style="margin-top: 20px;">
+            <input type="submit" value="Pesquisar" class="btn btn-danger" />
+        </div>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#txtCnpjPesquisaPorCnpj').focus();
+        $('#frmPesquisaCNPJ').on('submit', function (event) {
+            if (!$('#frmPesquisaCNPJ').valid()) {
+                return;
+            }
+            event.preventDefault();
+            $.ajax({
+                url: this.action,
+                type: 'GET',
+                data: $(this).serialize(),
+                context: $('#divResultadoPesquisaPJ'),
+                success: function (result) {
+                    $('#divResultadoPesquisaPJ').html(result);
+                    $('#divResultadoPesquisaPJ').fadeIn(500);
+                    $('#btnNovaPesquisa').fadeIn(2500);
+                    $('#divLoading').hide();
+                },
+                beforeSend: function () {
+                    $('#divFiltros').hide();
+                    $('#divLoading').show();
+                },
+                error: function (a, b, c) {
+                    alert(a.responseText.replace('"', '').replace('"', ''));
+                }
+            });
+        });
+    });
+</script>

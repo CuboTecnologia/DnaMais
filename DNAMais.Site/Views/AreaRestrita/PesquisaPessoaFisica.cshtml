@@ -1,0 +1,111 @@
+﻿@{
+    ViewBag.Title = "Pessoa Física";
+    Layout = "~/Views/Shared/_LayoutLogged.cshtml";
+}
+
+<section class="page-header page-header-color page-header-dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Consultas Pessoa Física</h1>
+                <hr class="short visible-xs visible-sm" />
+                <ul class="breadcrumb breadcrumb-valign-mid">
+                    <li><a href="@Url.Action("ProdutosContratados", "AreaRestrita")">Produtos Contratados</a></li>
+                    <li class="active">Pessoa Física</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-12" id="divFiltros">
+            <div class="tabs tabs-secondary">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#tabCpf" id="cpf" data-toggle="tab"><i class="fa fa-user"></i>CPF</a>
+                    </li>
+                    <li>
+                        <a href="#tabEndereco" id="endereco" data-toggle="tab"><i class="fa fa-map-marker"></i>Endereço</a>
+                    </li>
+                    <li>
+                        <a href="#tabNome" id="nome" data-toggle="tab"><i class="fa fa-user-secret"></i>Nome</a>
+                    </li>
+                    <li>
+                        <a href="#tabTelefone" id="telefone" data-toggle="tab"><i class="fa fa-phone"></i>Telefone</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tabCpf" class="tab-pane active">
+                        @Html.Partial("_FiltroPesquisaPessoaFisicaPorCPF")
+                    </div>
+                    <div id="tabEndereco" class="tab-pane">
+                        @Html.Partial("_FiltroPesquisaPessoaFisicaPorEndereco")
+                    </div>
+                    <div id="tabNome" class="tab-pane">
+                        @Html.Partial("_FiltroPesquisaPessoaFisicaPorNome")
+                    </div>
+                    <div id="tabTelefone" class="tab-pane">
+                        @Html.Partial("_FiltroPesquisaPessoaFisicaPorTelefone")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <input type="button" value="Nova Consulta" class="btn btn-danger btn-lg btn-borders pull-right" id="btnNovaPesquisa" />
+        <div id="divResultadoPesquisaPF">
+        </div>
+        <div id="divLoading">
+            @Html.Partial("_Loading")
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $('#txtCpfPesquisaPorCpf').focus();
+        $('#btnNovaPesquisa').hide();
+        $('#divResultadoPesquisaPF').hide();
+        $('#divLoading').hide();
+
+        $('#btnNovaPesquisa').click(function () {
+            $('#btnNovaPesquisa').fadeOut(500);
+            $('#divResultadoPesquisaPF').fadeOut(500);
+            $('#divFiltros').fadeIn(500);
+        });
+
+
+        //$("a[data-toggle=tab]").click(function (e) {
+            
+        //    var abaClicada = e.target.id;
+
+        //    if (abaClicada == "cpf") {
+        //        setTimeout(function () {
+        //            $('#txtCpfPesquisaPorCpf').focus();
+        //        }, 1);
+        //    }
+        //    else if (abaClicada == "endereco") {
+        //        setTimeout(function () {
+        //            $('#txtCepPesquisaPorEndereco').focus();
+        //        });
+        //    }
+        //    else if (abaClicada == "nome") {
+        //        setTimeout(function () {
+        //            $('#txtNome').focus();
+        //        }, 1);
+        //    }
+        //    else if (abaClicada == "telefone") {
+        //        setTimeout(function () {
+        //            $('#txtDdd').focus();
+        //        }, 1);
+        //    }
+
+        //});
+
+    });
+
+</script>

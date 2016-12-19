@@ -1,0 +1,44 @@
+﻿@using DNAMais.Domain.Entidades
+@using DNAMais.Framework
+
+@{
+    ViewBag.Title = "DNA+ :: Newsletters";
+    ViewBag.TituloPagina = "Newsletters";
+    ViewBag.TituloGrid = "Newsletters Confirmadas";
+    Layout = "~/Views/Shared/_Listagem.cshtml";
+
+
+    WebGrid grid = new WebGrid(Model, canSort: false);
+
+    WebGridColumn coluna1 = grid.Column(columnName: "Id", header: "No.", format: @<span>@(item.Id)</span>, style: "col-md-1");
+    WebGridColumn coluna2 = grid.Column(columnName: "GUID", header: "GUID", format: @<span>@(item.GUID)</span>, style: "col-md-3");
+    WebGridColumn coluna3 = grid.Column(columnName: "Nome", header: "Nome", format: @<span>@(item.Nome)</span>, style: "col-md-2");
+    WebGridColumn coluna4 = grid.Column(columnName: "Email", header: "E-Mail", format: @<span>@(item.Email)</span>, style: "col-md-2");
+    WebGridColumn coluna5 = grid.Column(columnName: "DataRegistro", header: "Data do Registro", format: @<span>@(((DateTime)item.DataRegistro).FormatarDataHora())</span>, style: "col-md-2");
+    WebGridColumn coluna6 = grid.Column(columnName: "DataRegistroOptIn", header: "Data de Confirmação", format: @<span>@(((DateTime)item.DataRegistroOptIn).FormatarDataHora())</span>, style: "col-md-2");
+}
+
+@section grid {
+
+    @if (grid.Rows.Count > 0)
+    {
+
+        @grid.GetHtml(
+        htmlAttributes: new { id = "myTable" },
+        tableStyle: "table table-bordered table-condensed table-striped table-primary table-vertical-center",
+        columns:
+            grid.Columns(
+                coluna1,
+                coluna2,
+                coluna3,
+                coluna4,
+                coluna5,
+                coluna6
+                )
+            )
+    }
+    else
+    {
+        <p style="color:#449010; font-size:medium;">Não há newsletters confirmadas.</p>
+    }
+}

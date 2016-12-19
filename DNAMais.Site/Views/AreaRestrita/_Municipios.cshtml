@@ -1,0 +1,18 @@
+﻿@using DNAMais.Site.Facades
+
+@{
+    string uf = (string)ViewBag.UF;
+    
+    List<SelectListItem> ufs = new EnderecoFacade(null).ListarMunicipiosPorUF(uf).ToList().Select(i => new SelectListItem
+    {
+        Value = i.Nome.ToUpper(),
+        Text = i.Nome
+    }).ToList();
+
+    ufs.Insert(0, new SelectListItem { Value = "", Text = "Selecione uma Cidade" });
+}
+
+<div class="form-group" id="divMunicipios">
+    <label for="Cidade">Cidade</label>
+    @Html.DropDownList("ddlMunicipioPesquisaPorEndereco", ufs, new { @class = "form-control", style = "width: 500px;" })
+</div>

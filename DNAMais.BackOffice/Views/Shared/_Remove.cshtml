@@ -1,0 +1,14 @@
+﻿@using DNAMais.Framework
+
+@{
+    ViewBag.Title = ViewData["Title"].ToString();
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+<div class="separator bottom"></div>
+<h3>@ViewData["TituloPagina"].ToString()</h3>
+<div class="innerLR">
+    @using (Html.DnaMaisBeginContent("Dados de " + ViewData["TituloPagina"].ToString()))
+    {
+        @Html.Partial("~/Views/Shared/_StandardRemove.cshtml")
+    }
+</div>

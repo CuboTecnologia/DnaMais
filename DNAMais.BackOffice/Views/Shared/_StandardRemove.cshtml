@@ -1,0 +1,14 @@
+﻿@using DNAMais.Framework
+
+@if (!ViewData.ModelState.IsValid)
+{
+    @Html.DnaMaisMessageError(ViewData.ModelState)
+}
+else
+{
+    @Html.DnaMaisMessageSuccess(ViewData["messageSuccess"].ToString())
+}
+
+<hr class="mt-md mb-md" />
+
+@Html.DnaMaisButton("Index", "btnVoltar", ViewData["messageReturn"].ToString(), ViewData.ModelState.IsValid ? "success" : "danger", "arrow-circle-left")

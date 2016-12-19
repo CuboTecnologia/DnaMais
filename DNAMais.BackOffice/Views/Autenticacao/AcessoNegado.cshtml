@@ -1,0 +1,26 @@
+﻿@using DNAMais.Framework
+
+@{
+    string pageTitle = "Cubo Reveno :: Acesso Negado";
+    string title = "Acesso Negado";
+
+    ViewBag.Title = pageTitle;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="separator bottom"></div>
+<h3>@title</h3>
+<div class="innerLR">
+    <div id="divWidget" class="widget">
+        <h2>Acesso não Autorizado</h2>
+
+        <div class="widget-body">
+            <div class="separator bottom"></div>
+
+            <h4 class="heading-arrow">Você não possui acesso à funcionalidade requisitada.</h4>
+
+            <div class="form-actions">
+                <button class="btn btn-icon btn-inverse glyphicons circle_arrow_left" id="btnVoltar" name="btnVoltar" type="button" onclick="javascript:history.back();"><i></i>Voltar</button>
+            </div>
+        </div>
+    </div>
+</div>

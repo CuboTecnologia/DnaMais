@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "DNA+ | Onde Estamos";
+}
+
+@Html.Partial("Contact/Location/_TitleBarLocation")
+@Html.Partial("Contact/Location/_MapLocation")
+
+<div class="container">
+    <div class="row">
+        @Html.Partial("Contact/Location/_AddressLocation")
+        @Html.Partial("Contact/Location/_BusinessHoursLocation")
+    </div>
+</div>
+
+<script src="http://maps.google.com/maps/api/js"></script>
+<script>
+
+    /*
+    Map Settings
+
+        Find the Latitude and Longitude of your address:
+            - http://universimmedia.pagesperso-orange.fr/geo/loc.htm
+            - http://www.findlatitudeandlongitude.com/find-address-from-latitude-and-longitude/
+
+    */
+
+    // Map Markers
+    var mapMarkers = [{
+        address: "Av. Brigadeiro Luís Antônio, 2696 - Jardins, São Paulo - SP",
+        html: "<strong>DNA+</strong><br>Av. Brigadeiro Luís Antônio, 2696 - Jardins, São Paulo - SP",
+        icon: {
+            image: "../img/pin.png",
+            iconsize: [26, 46],
+            iconanchor: [12, 46]
+        },
+        popup: true
+    }];
+
+    // Map Initial Location
+    var initLatitude = -23.570478;
+    var initLongitude = -46.651896;
+
+    // Map Extended Settings
+    var mapSettings = {
+        controls: {
+            draggable: false,
+            panControl: true,
+            zoomControl: true,
+            mapTypeControl: true,
+            scaleControl: true,
+            streetViewControl: true,
+            overviewMapControl: true
+        },
+        scrollwheel: false,
+        markers: mapMarkers,
+        latitude: initLatitude,
+        longitude: initLongitude,
+        zoom: 16
+    };
+
+    var map = $("#googlemaps").gMap(mapSettings);
+
+    // Map Center At
+    var mapCenterAt = function (options, e) {
+        e.preventDefault();
+        $("#googlemaps").gMap("centerAt", options);
+    }
+
+</script>
+
+<script>
+
+    $(document).ready(function () {
+        $("#contactMenu").addClass("active");
+    });
+
+</script>

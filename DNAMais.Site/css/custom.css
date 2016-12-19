@@ -1,0 +1,81 @@
+/* Add here all your CSS customizations */
+
+.panel-group .without-bg:hover {
+    background-color: #FBFBFB;
+}
+
+/* Buttons */
+.btn {
+    -webkit-transition: all 0.1s;
+    -moz-transition: all 0.1s;
+    transition: all 0.1s;
+}
+
+.btn-pf {
+    color: #EEE;
+    background-color: #527e85;
+    border:solid;
+    border-width:0.1px;
+    border-color:#333;
+    text-shadow:-0.8px 0 black, 0 0.8px black, 0.8px 0 black, 0 -0.8px black;
+}
+
+.btn-pf:hover {
+    color: #000;
+    background-color: #BBB;
+    text-shadow:none;
+}
+
+.btn-pj {
+    color:#000;
+    background-color:#96aebf;
+    border:solid;
+    border-width:0.1px;
+    border-color:#333;
+}
+
+.btn-pj:hover {
+    color:#111;
+    background-color:#DDD;
+}
+
+.btn-vehicles {
+    color:#EEE;
+    background-color:#688a96;
+    border:solid;
+    border-width:0.1px;
+    border-color:#222;
+    text-shadow:-0.8px 0 black, 0 0.8px black, 0.8px 0 black, 0 -0.8px black;
+}
+
+.btn-vehicles:hover {
+    color:#333;
+    background-color:#9eccdc;
+    text-shadow: none;
+}
+
+.btn-ftp {
+    color:#222;
+    background-color:#7b97c4;
+    border-color:rgba(255,255,255,0.3);
+}
+
+.btn-ftp:hover {
+    color:#000;
+    background-color:#cbd9ee;
+}
+
+.btn-cpf{
+    color:#EFEFEF;
+    background-color:#0088B2;
+    margin-left:20px;
+    margin-top:-15px;
+    width:200px;
+}
+
+.btn-cpf:hover{
+    color:#EDEDED;
+    background-color:#08A0CF;
+    margin-left:20px;
+    margin-top:-15px;
+}

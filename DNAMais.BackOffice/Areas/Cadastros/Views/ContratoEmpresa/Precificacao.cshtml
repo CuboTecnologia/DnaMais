@@ -1,0 +1,88 @@
+﻿@using DNAMais.Domain.Entidades
+@using DNAMais.Framework
+@using DNAMais.BackOffice.Facades
+
+@model List<ContratoEmpresaPrecificacao>
+
+@{
+    Layout = "~/Views/Shared/_Listagem.cshtml";
+
+    ViewBag.Title = "DNA+ :: Precificação";
+    ViewBag.TituloPagina = "Precificação";
+    ViewBag.TituloGrid = "Contrato Número: " + ViewBag.NumeroContrato + " - " + "Empresa: " + ViewBag.NomeEmpresa;
+
+    ViewData["messageAnswer"] = "Salvar";
+    ViewData["messageReturn"] = "Voltar para lista de contratos";
+    
+    List<ContratoEmpresaPrecificacao> precificacoes = ((List<ContratoEmpresaPrecificacao>)Model);
+
+    List<CategoriaProduto> categorias = new List<CategoriaProduto>();
+    
+    foreach (var item in precificacoes)
+    {
+        if (!categorias.Exists(i => i.Codigo == item.CodigoCategoriaConsulta))
+        {
+            categorias.Add(new CategoriaProduto
+            {
+                Codigo = item.CodigoCategoriaConsulta,
+                Nome = item.CategoriaProduto.Nome
+            });
+        }
+    }
+    
+
+}
+
+@section grid
+{
+
+    <h3>Precificação</h3>
+
+    @foreach (CategoriaProduto categoria in categorias)
+    {
+        <h4>Categoria: @categoria.Codigo - @categoria.Nome</h4>
+
+        List<ContratoEmpresaPrecificacao> precificacaoFaixa = precificacoes.Where(i => i.CodigoCategoriaConsulta == categoria.Codigo).ToList();
+
+        <form action="@Url.Action("Precificacao")" method="post">
+
+            @Html.Hidden("idContrato", (object)ViewBag.IdContrato)
+            @Html.Hidden("codigoCategoria", categoria.Codigo)
+
+            <table class="table table-bordered table-hover mb-none">
+
+                <thead>
+                    <tr>
+                        <th>Faixa</th>
+                        <th>Descrição</th>
+                        <th>Início</th>
+                        <th>Término</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ContratoEmpresaPrecificacao item in precificacaoFaixa)
+                    {
+                        <tr>
+                            <td>@item.CodigoFaixa</td>
+                            <td>@item.DescricaoFaixa</td>
+                            <td>@item.InicioFaixa</td>
+                            <td>@item.TerminoFaixa</td>
+                            <td><input type="text" onkeypress="return onlyFloatNumbers(event, this);" id="valor_@item.CodigoFaixa" value="@item.ValorConsulta" name="valor_@item.CodigoFaixa" /></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="row pull-right" style="padding-right: 20px; padding-top: 5px;">
+                @Html.ActionLink("Voltar para lista de Contratos", "Index", null, new { @class = "btn btn-default" })
+            </div>
+            <div class="row pull-right"  style="padding-right: 40px; padding-top: 5px;">
+                <input type="submit" value="Salvar" class="btn btn-danger" />
+            </div>
+        </form>
+
+        <hr class="tall" />
+    }
+
+}

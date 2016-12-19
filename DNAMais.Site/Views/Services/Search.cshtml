@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "DNA+ | Pesquisa CPF - CNPJ";
+}
+
+@Html.Partial("Services/Search/_TitleBarSearch")
+
+<div class="container">
+    @Html.Partial("Services/Search/_HeadingSearch")
+    <div class="row">
+        <div class="col-md-9">
+            @Html.Partial("Services/Search/_IntroSearch")
+            @Html.Partial("Services/Search/_BoxSearch")
+            @Html.Partial("Services/Search/_ButtonSearch")
+        </div>
+        @Html.Partial("Services/Search/_SideMenuSearch")
+    </div>
+</div>
+
+<hr />
+
+@Html.Partial("Services/Search/_OnlineServiceSearch")
+
+<script>
+
+    $(document).ready(function () {
+        $("#servicesMenu").addClass("active");
+    });
+
+</script>

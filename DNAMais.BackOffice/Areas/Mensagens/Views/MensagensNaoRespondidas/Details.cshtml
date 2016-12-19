@@ -1,0 +1,71 @@
+﻿@using DNAMais.Domain.Entidades
+@using DNAMais.Framework
+@using DNAMais.BackOffice.Facades
+
+@model MensagemContato
+
+@{
+    Layout = "~/Views/Shared/_Listagem.cshtml";
+
+    ViewBag.Title = "DNA+ :: Mensagens";
+    ViewBag.TituloPagina = "Mensagens";
+    ViewBag.TituloGrid = "Detalhes da Mensagem de " + Model.Nome;
+
+    ViewData["messageAnswer"] = "Responder mensagem";
+    ViewData["messageReturn"] = "Voltar para lista de mensagens";
+
+}
+
+@section grid
+{
+
+    <table id="myTable" class="table table-bordered table-hover mb-none">
+        <thead>
+            <tr>
+                <th>N.</th>
+                <th>Nome</th>
+                <th>E-Mail</th>
+                <th>Data do Envio</th>
+                <th>Título/Assunto</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Id</td>
+                <td>@Model.Nome</td>
+                <td>@Model.Email</td>
+                <td>@Model.DataRegistro</td>
+                <td>@Model.Assunto</td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Mensagem</th>
+            </tr>
+        </thead>
+        <tr>
+            <td>
+                <p class="text-justify text-md" style="line-height:30px; text-indent: 25px;">@Model.Conteudo</p>
+            </td>
+        </tr>
+
+    </table>
+
+    <hr />
+
+    <a href="@Url.Action("Answer", "MensagensNaoRespondidas", new { id = Model.Id })">
+        <button class="btn btn-icon btn-danger"><i class="fa fa-arrow-circle-right"></i>Responder Mensagem</button>
+    </a>
+
+    @Html.DnaMaisButton("Index", "btnVoltar", ViewData["messageReturn"].ToString(), "default", "arrow-circle-left")
+
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#myTable').DataTable();
+
+    });
+</script>

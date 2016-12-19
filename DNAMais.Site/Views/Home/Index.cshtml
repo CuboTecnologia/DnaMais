@@ -1,0 +1,367 @@
+﻿@{
+    ViewBag.Title = "DNA+ | Informações Inteligentes";
+}
+
+<div role="main" class="main">
+
+    @Html.Partial("Home/_FullBannerHome")
+
+    <hr />
+
+    <div class="container">
+        <div class="row center">
+            <div class="col-md-12">
+                <h2 class="mb-sm word-rotator-title">A <strong>DNA+</strong> fornece informações de qualidade e sempre atualizadas a seus clientes.
+                </h2>
+                <p class="lead center">
+                    Com a confiança de mais de <strong>1000</strong> clientes satisfeitos, a DNA+ está a cada dia buscando soluções inovadoras para ajudar o seu negócio.
+                </p>
+            </div>
+        </div>
+
+        <div class="center">
+            <div class="get-started">
+                <a href="@Url.Action("AllServices", "Services")" class="btn btn-danger">Conheça nossas Soluções!</a>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <section class="section" id="home-intro">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="feature-box feature-box-style-2">
+                                <div class="feature-box-icon">
+                                    <i class="fa fa-plus" id="iconPlusHome"></i>
+                                </div>
+                                <div class="feature-box-info">
+                                    <h4 class="mb-none"><a href="@Url.Action("DataEnrichment", "Services")" id="hrefPlusHome">Enriquecimento de Dados</a></h4>
+                                    @Html.Partial("Home/_AllServicesTextDataEnrichment")
+                                    <p><a href="@Url.Action("DataEnrichment", "Services")">Saiba Mais!</a></p>
+                                </div>
+                            </div>
+                            <div class="feature-box feature-box-style-2">
+                                <div class="feature-box-icon">
+                                    <i class="fa fa-recycle" id="iconRecycleHome"></i>
+                                </div>
+                                <div class="feature-box-info">
+                                    <h4 class="mb-none"><a href="@Url.Action("DataTreatment", "Services")" id="hrefRecycleHome">Tratamento e Higienização de Dados</a></h4>
+                                    @Html.Partial("Home/_AllServicesTextDataTreatment")
+                                    <p><a href="@Url.Action("DataTreatment", "Services")">Saiba Mais!</a></p>
+                                </div>
+                            </div>
+                            <div class="feature-box feature-box-style-2">
+                                <div class="feature-box-icon">
+                                    <i class="fa fa-user-plus" id="iconUserPlusHome"></i>
+                                </div>
+                                <div class="feature-box-info">
+                                    <h4 class="mb-none"><a href="@Url.Action("AssigningDocs", "Services")" id="hrefUserPlusHome">Atribuição de Documentos</a></h4>
+                                    @Html.Partial("Home/_AllServicesTextAssigningDocs")
+                                    <p><a href="@Url.Action("AssigningDocs", "Services")">Saiba Mais!</a></p>
+                                </div>
+                            </div>
+                            <div class="feature-box feature-box-style-2">
+                                <div class="feature-box-icon">
+                                    <i class="fa fa-envelope-o" id="iconEnvelopeHome"></i>
+                                </div>
+                                <div class="feature-box-info">
+                                    <h4 class="mb-none"><a href="@Url.Action("QualifiedMailing", "Services")" id="hrefEnvelopeHome">Mailing Qualificado</a></h4>
+                                    @Html.Partial("Home/_AllServicesTextQualifiedMailing")
+                                    <p><a href="@Url.Action("QualifiedMailing", "Services")">Saiba Mais!</a></p>
+                                </div>
+                            </div>
+                            <div class="feature-box feature-box-style-2">
+                                <div class="feature-box-icon">
+                                    <i class="fa fa-at" id="iconAtHome"></i>
+                                </div>
+                                <div class="feature-box-info">
+                                    <h4 class="mb-none"><a href="@Url.Action("MailMarketing", "Services")" id="hrefAtHome">E-mail Marketing</a></h4>
+                                    @Html.Partial("Home/_AllServicesTextMailMarketing")
+                                    <p><a href="@Url.Action("MailMarketing", "Services")">Saiba Mais!</a></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="feature-box feature-box-style-2">
+                                <div class="feature-box-icon">
+                                    <i class="fa fa-mobile-phone" id="iconMobileHome"></i>
+                                </div>
+                                <div class="feature-box-info">
+                                    <h4 class="mb-none"><a href="@Url.Action("Sms", "Services")" id="hrefMobileHome">SMS</a></h4>
+                                    @Html.Partial("Home/_AllServicesTextSms")
+                                    <p><a href="@Url.Action("Sms", "Services")">Saiba Mais!</a></p>
+                                </div>
+                            </div>
+                            <div class="feature-box feature-box-style-2">
+                                <div class="feature-box-icon" id="iconUserHome">
+                                    <i class="fa fa-user"></i>
+                                </div>
+                                <div class="feature-box-info">
+                                    <h4 class="mb-none"><a href="@Url.Action("Search", "Services")" id="hrefUserHome">Pesquisa Pessoa Física</a></h4>
+                                    @Html.Partial("Home/_AllServicesTextSearch")
+                                    <p><a href="@Url.Action("Search", "Services")">Saiba Mais!</a></p>
+                                </div>
+                            </div>
+                            <div class="feature-box feature-box-style-2">
+                                <div class="feature-box-icon">
+                                    <i class="fa fa-building-o" id="iconBuildingHome"></i>
+                                </div>
+                                <div class="feature-box-info">
+                                    <h4 class="mb-none"><a href="@Url.Action("Search", "Services")" id="hrefBuildingHome">Pesquisa Pessoa Jurídica</a></h4>
+                                    @Html.Partial("Home/_AllServicesTextSearchPj")
+                                    <p><a href="@Url.Action("Search", "Services")">Saiba Mais!</a></p>
+                                </div>
+                            </div>
+                            <div class="feature-box feature-box-style-2">
+                                <div class="feature-box-icon">
+                                    <i class="fa fa-pencil-square-o" id="iconPencilHome"></i>
+                                </div>
+                                <div class="feature-box-info">
+                                    <h4 class="mb-none"><a href="@Url.Action("ProspectingSolutions", "Services")" id="hrefPencilHome">Análise de Mercado</a></h4>
+                                    @Html.Partial("Home/_AllServicesTextProspectingSolutions")
+                                    <p><a href="@Url.Action("ProspectingSolutions", "Services")">Saiba Mais!</a></p>
+                                </div>
+                            </div>
+                            <div class="feature-box feature-box-style-2">
+                                <div class="feature-box-icon">
+                                    <i class="fa fa-expand" id="iconExpandHome"></i>
+                                </div>
+                                <div class="feature-box-info">
+                                    <h4 class="mb-none"><a href="@Url.Action("ProspectingSolutions", "Services")" id="hrefExpandHome">Expansão de Negócios</a></h4>
+                                    @Html.Partial("Home/_AllServicesTextProspectingExpansion")
+                                    <p><a href="@Url.Action("ProspectingSolutions", "Services")">Saiba Mais!</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="short">
+
+    <div class="container">
+        <div class="row">
+            <div class="counters">
+                <div class="col-md-3">
+                    <div class="counter counter-dark">
+                        <i class="fa fa-child"></i>
+                        <strong data-to="+1000" data-append="+">0</strong>
+                        <label>Clientes Satisfeitos</label>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="counter counter-dark">
+                        <i class="fa fa-star"></i>
+                        <strong data-to="9">0</strong>
+                        <label>Anos no Mercado</label>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="counter counter-dark">
+                        <i class="fa fa-user"></i>
+                        <strong data-to="+206" data-append="+">0</strong>
+                        <label>Milhões de CPFs</label>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="counter counter-dark">
+                        <i class="fa fa-building-o"></i>
+                        <strong data-to="+30" data-append="+">0</strong>
+                        <label>Milhões de CNPJs</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="counter counter-dark">
+                        <i class="fa fa-cloud-download"></i>
+                        <strong data-to="+10" data-append="+">0</strong>
+                        <label>Milhões de Dados Processados/Mês</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="short">
+
+    <br />
+
+    <p class="lead center" data-appear-animation="bounceInUp" style="font-size: 40px; color: black;">
+        Informações <strong>confiáveis</strong> e constantemente <strong>atualizadas</strong>.
+    </p>
+
+    <p class="lead center" data-appear-animation="bounceInDown" style="font-size: 30px; color: black">
+        <strong>DNA+</strong> já ajudou mais de <strong>1.000 clientes</strong> com soluções inovadoras.
+    </p>
+
+    <br />
+    <hr />
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-11">
+                <h2 class="mt-xl"><strong>Processamento OffLine</strong></h2>
+                <div class="col-md-4">
+                    <img class="img-responsive mt-xl appear-animation" src="img/layout-styles-offline.png" alt="layout styles" data-appear-animation="fadeInLeft">
+                </div>
+                <p class="lead">
+                    A DNA+ possui soluções para grandes corporações e processamentos, que vão desde o Enriquecimento e Tratamento de Dados, como uma completa Solução de Prospecção para seus clientes.
+                </p>
+                <p>
+                    Para estas soluções personalizadas, estamos aptos a nos adequar às necessidades específicas de cada cliente, e contamos com profissionais especialistas para entregar o melhor resultado para cada um deles.
+                </p>
+            </div>
+        </div>
+
+        <hr />
+
+        <p class="lead left" data-appear-animation="bounceInUp">
+            De <strong>Tratamento</strong> e <strong>Enriquecimento de Dados</strong> à <strong>Análise de Prospecção</strong>, a DNA+ oferece soluções completas em <strong>Inteligência de Mercado</strong>.
+        </p>
+
+        <p class="lead right" data-appear-animation="bounceInDown">
+            Cada projeto desenhado do tamanho da sua necessidade, com profissionais especialistas para entregar o melhor resultado.
+        </p>
+
+        <hr />
+
+        <!-- Exibe em Tela Cheia e Média -->
+        <div class="row hidden-xs hidden-sm">
+            <div class="col-md-7">
+                <h2 class="mt-xl"><strong>Soluções OnLine</strong></h2>
+                <p class="lead">
+                    Cada vez mais a DNA+ vem trabalhando para oferecer a seus clientes, a agilidade e dinamismo que seus negócios exigem. Uma 
+            destas iniciativas é a disponibilização de plataforma online de serviços para você.
+                </p>
+                <p>
+                    Através da plataforma online, nossos clientes podem realizar pesquisas de seus clientes, compor informações detalhadas para 
+            Pesquisa CPF e CPNPJ, Enriquecimento de Dados, entre tantas outras soluções.
+                </p>
+                <a href="@Url.Action("AllServices", "Services")" class="btn btn-lg btn-primary">Saiba Mais</a>
+            </div>
+            <div class="col-md-4 col-md-offset-1 mt-xl">
+                <img class="img-responsive mt-xl appear-animation" src="img/layout-styles-online.png" alt="style switcher" data-appear-animation="fadeInRight">
+            </div>
+        </div>
+
+        <!-- Exibe em Mobile e Tela Reduzida -->
+        <div class="row visible-xs visible-sm">
+            <div class="col-md-7">
+                <h2 class="mt-xl">Soluções <strong>OnLine</strong></h2>
+                <div class="col-md-4">
+                    <img class="img-responsive mt-xl appear-animation" src="img/layout-styles-online.png" alt="style switcher" data-appear-animation="fadeInRight">
+                </div>
+                <p class="lead">
+                    Cada vez mais a DNA+ vem trabalhando para oferecer a seus clientes, a agilidade e dinamismo que seus negócios exigem. Uma 
+            destas iniciativas é a disponibilização de plataforma online de serviços para você.
+                </p>
+                <p>
+                    Através da plataforma online, nossos clientes podem realizar pesquisas de seus clientes, compor informações detalhadas 
+            para Pesquisa CPF e CPNPJ, Enriquecimento de Dados, entre tantas outras soluções.
+                </p>
+                <a href="@Url.Action("AllServices", "Services")" class="btn btn-primary">Saiba Mais</a>
+            </div>
+        </div>
+
+        <hr class="short">
+
+        <hr />
+
+        <p class="lead center" data-appear-animation="bounceInUp">
+            Inovação, agilidade e dinamismo formam a cultura da nossa empresa. Por isso, tínhamos que ser digitais.
+        </p>
+
+        <p class="lead center" data-appear-animation="bounceInDown">
+            Nossa plataforma online permite que você faça pesquisas de seus clientes, e os resultados apresentam informações detalhadas para CPF e CNPJ, Enriquecimento de Dados, entre outras soluções possíveis.
+        </p>
+
+        <hr />
+    </div>
+
+    <!-- POSTS -->
+    <!-- DEPOIMENTOS -->
+
+    <div class="container">
+        <div class="row center">
+            <div class="col-md-12">
+                <h2 class="mb-none word-rotator-title mt-lg">Nossa prioridade é que nossos clientes sempre estejam
+                <span class="pushEffect">
+                    <span>felizes!</span>
+                    <span>satisfeitos!</span>
+                    <span>orgulhosos!</span>
+                </span>
+                    <b style="color: transparent">.......................</b>
+                </h2>
+                <p class="lead center">1000+ clientes em mais de 10 estados diferentes usam nossas soluções.</p>
+            </div>
+        </div>
+    </div>
+
+    <hr class="tall" />
+
+
+    <div class="row center mt-xl">
+        <div class="owl-carousel owl-theme" data-plugin-options='{"items": 10, "autoplay": true, "autoplayTimeout": 3000}'>
+            <div>
+                <img class="img-responsive" src="img/logos/logo-1.png" alt="">
+            </div>
+            <div>
+                <img class="img-responsive" src="img/logos/logo-2.png" alt="">
+            </div>
+            <div>
+                <img class="img-responsive" src="img/logos/logo-3.png" alt="">
+            </div>
+            <div>
+                <img class="img-responsive" src="img/logos/logo-4.png" alt="">
+            </div>
+            <div>
+                <img class="img-responsive" src="img/logos/logo-5.png" alt="">
+            </div>
+            <div>
+                <img class="img-responsive" src="img/logos/logo-6.png" alt="">
+            </div>
+            <div>
+                <img class="img-responsive" src="img/logos/logo-7.png" alt="">
+            </div>
+            <div>
+                <img class="img-responsive" src="img/logos/logo-8.png" alt="">
+            </div>
+            <div>
+                <img class="img-responsive" src="img/logos/logo-9.png" alt="">
+            </div>
+            <div>
+                <img class="img-responsive" src="img/logos/logo-10.png" alt="">
+            </div>
+        </div>
+    </div>
+
+    <section class="call-to-action call-to-action-default with-button-arrow call-to-action-in-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="call-to-action-content">
+                        <h3>DNA+ é o que você <strong>precisa</strong> para <strong>impulsionar</strong> o seu negócio agora!</h3>
+                        <p class="center">A <strong>melhor</strong> informação para seu cliente, oferecendo dados de qualidade e <strong>sempre</strong> atualizados.</p>
+                    </div>
+                    <div class="call-to-action-btn">
+                        <a href="@Url.Action("Propose", "Contact")" class="btn btn-danger">Contrate Agora!</a><span class="arrow hlb hidden-xs hidden-sm hidden-md" data-appear-animation="rotateInUpLeft" style="top: -12px;"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $("#homeMenu").addClass("active");
+    });
+
+</script>

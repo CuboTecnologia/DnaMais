@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "DNA+ | Tratamento Higienização";
+}
+
+
+@Html.Partial("Services/DataTreatment/_TitleBarDataTreatment")
+
+<div class="container">
+    @Html.Partial("Services/DataTreatment/_HeadingDataTreatment")
+    <div class="row">
+        <div class="col-md-9">
+            @Html.Partial("Services/DataTreatment/_FirstBoxDataTreatment")
+            @Html.Partial("Services/DataTreatment/_SecondBoxDataTreatment")
+            @Html.Partial("Services/DataTreatment/_ThirdBoxDataTreatment")
+            @Html.Partial("Services/DataTreatment/_ButtonDataTreatment")
+        </div>
+        @Html.Partial("Services/DataTreatment/_SideMenuDataTreatment")
+    </div>
+</div>
+
+<hr />
+
+<script>
+
+    $(document).ready(function () {
+        $("#servicesMenu").addClass("active");
+    });
+
+</script>

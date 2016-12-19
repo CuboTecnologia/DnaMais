@@ -1,0 +1,58 @@
+﻿@using DNAMais.Domain.Entidades
+@using DNAMais.Framework
+
+@{
+    ViewBag.Title = "DNA+ :: Clientes";
+    ViewBag.TituloPagina = "Clientes";
+    ViewBag.TituloGrid = "Clientes Cadastrados";
+    Layout = "~/Views/Shared/_Listagem.cshtml";
+
+    string mensagemExclusao = "Tem certeza que deseja excluir este Cliente?";
+
+    WebGrid grid = new WebGrid(Model, canSort: false);
+
+    WebGridColumn coluna1 = grid.Column(columnName: "Id", header: "No.", format: @<span>@(item.Id)</span>, style: "col-md-1");
+    WebGridColumn coluna2 = grid.Column(columnName: "Cnpj", header: "CNPJ", format: @<span>@(   ((string)item.Cnpj).FormatarCNPJ())</span>, style: "col-md-2");
+    WebGridColumn coluna3 = grid.Column(columnName: "RazaoSocial", header: "Razão Social", format: @<span>@(item.RazaoSocial)</span>, style: "col-md-2");
+    WebGridColumn coluna4 = grid.Column(columnName: "NomeFantasia", header: "Nome Fantasia", format: @<span>@(item.NomeFantasia)</span>, style: "col-md-2");
+    WebGridColumn coluna5 = grid.Column(columnName: "RamoAtividade", header: "Ramo Atividade", format: @<span>@(item.RamoAtividade.Nome)</span>, style: "col-md-1");
+    WebGridColumn coluna6 = grid.Column(columnName: "DataCadastro", header: "Data Cadastro", format: @<span>@(((DateTime)item.DataCadastro).FormatarDataHora())</span>, style: "col-md-2");
+}
+
+@section botaoNovo {
+    <p>
+        @Html.DnaMaisButton("Create", "btnCreate", "Novo Cliente", "default", "plus")
+    </p>
+}
+
+@section grid {
+
+    @if (grid.Rows.Count > 0)
+    {
+        @grid.GetHtml(
+        htmlAttributes: new { id = "myTable" },
+        tableStyle: "table table-bordered table-condensed table-striped table-primary table-vertical-center",
+        columns:
+            grid.Columns(
+                coluna1,
+                coluna2,
+                coluna3,
+                coluna4,
+                coluna5,
+                coluna6,
+                grid.Column(
+                    header: "Ações",
+                    format: @<span>
+                        @Html.DnaMaisTableLinkDetails("Details", (object)item.Id)
+                        @Html.DnaMaisTableLinkEdit("Edit", (object)item.Id)
+                        @Html.DnaMaisTableLinkRemove("Remove", (object)item.Id, mensagemExclusao)
+                    </span>
+                )
+            )
+        )
+    }
+    else
+    {
+        <p style="color:#449010; font-size:medium;">Não há clientes cadastrados.</p>
+    }
+}

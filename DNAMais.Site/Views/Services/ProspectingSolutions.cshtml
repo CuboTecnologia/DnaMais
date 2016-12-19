@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "DNA+ | Soluções Prospecção";
+}
+
+@Html.Partial("Services/ProspectingSolutions/_TitleBarProspecting")
+
+<div class="container">
+    @Html.Partial("Services/ProspectingSolutions/_HeadingProspecting")
+    <div class="row">
+        <div class="col-md-9">
+            @Html.Partial("Services/ProspectingSolutions/_IntroProspecting")
+            @Html.Partial("Services/ProspectingSolutions/_FirstBoxProspecting")
+            @Html.Partial("Services/ProspectingSolutions/_SecondBoxProspecting")
+            @Html.Partial("Services/ProspectingSolutions/_ButtonProspecting")
+        </div>
+        @Html.Partial("Services/ProspectingSolutions/_SideMenuProspecting")
+    </div>
+</div>
+
+<hr />
+
+<script>
+
+    $(document).ready(function () {
+        $("#servicesMenu").addClass("active");
+    });
+
+</script>

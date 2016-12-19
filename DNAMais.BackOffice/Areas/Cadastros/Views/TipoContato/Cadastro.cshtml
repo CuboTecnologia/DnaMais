@@ -1,0 +1,38 @@
+﻿@using DNAMais.Domain.Entidades
+@using DNAMais.Framework
+
+@model TipoContato
+
+@{
+    Layout = "~/Views/Shared/_Cadastro.cshtml";
+
+    ViewBag.Title = "DNA+ :: Tipos de Contato";
+    ViewBag.TituloPagina = "Tipo de Contato";
+
+    //VARIAVEIS PARA UTILIZAÇÃO EM VISOES SHARED
+    ViewData["messageSuccess"] = "Tipo de contato registrado com sucesso";
+    ViewData["messageReturn"] = "Voltar para lista de Tipos de Contato";
+
+    bool locked = ViewData["LOCKED"] == null ? false : (bool)ViewData["LOCKED"];
+}
+
+@section cadastro
+{
+    @if (Request.HttpMethod == "GET" || !ViewData.ModelState.IsValid)
+    {
+        <div style="width:100%;">
+
+            @Html.DnaMaisTextBoxFor(
+                expression: m => m.Nome,
+                width: 300,
+                disabled: locked)
+
+            <hr class="separator" />
+        </div>
+    }
+}
+
+@section validacoes
+{
+    @Html.Validations((TipoContato)Model)
+}

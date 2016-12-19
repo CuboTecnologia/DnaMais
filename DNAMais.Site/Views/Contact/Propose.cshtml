@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "DNA+ | Solicite uma Proposta";
+}
+
+@Html.Partial("Contact/Propose/_TitleBarPropose")
+
+<div class="container">
+    <div class="row">
+
+        @if (TempData["msgSucesso"] != null)
+        {
+            <p style="color:#449010; font-size:medium;">@TempData["msgSucesso"]</p>
+        }
+
+        @Html.Partial("Contact/Propose/_FormPropose")
+        @Html.Partial("Contact/Propose/_SideMenuPropose")
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $("#contactMenu").addClass("active");
+        $("#txtName").focus();
+    });
+
+    $("#btnSubmit").on("click", function () {
+        $("#assunto").val() = $("#assuntoVisualizacao").val();
+
+        alert($("#assunto").val());
+        alert($("#assuntoVisualizacao").val());
+    });
+
+    if (document.referrer.indexOf(window.location.hostname) != -1) {
+        var referrer = document.referrer;
+    }
+
+    var split = referrer.split("/")
+
+    if (split[4] == "sms") {
+        $("#assuntoVisualizacao").val("SMS").attr("disabled", "disabled");
+        $("#assunto").val("SMS");
+    }
+    else if (split[4] == "enriquecimento-de-dados") {
+        $("#assuntoVisualizacao").val("Enriquecimento de Dados").attr("disabled", "disabled");
+        $("#assunto").val("Enriquecimento de Dados");
+    }
+    else if (split[4] == "tratamento-e-higienizacao-de-dados") {
+        $("#assuntoVisualizacao").val("Tratamento e Higienização de Dados").attr("disabled", "disabled");
+        $("#assunto").val("Tratamento e Higienização de Dados");
+    }
+    else if (split[4] == "atribuicao-de-documentos") {
+        $("#assuntoVisualizacao").val("Atribuição de Documentos").attr("disabled", "disabled");
+        $("#assunto").val("Atribuição de Documentos");
+    }
+    else if (split[4] == "mailing-qualificado") {
+        $("#assuntoVisualizacao").val("Mailing Qualificado").attr("disabled", "disabled");
+        $("#assunto").val("Mailing Qualificado");
+    }
+    else if (split[4] == "email-marketing") {
+        $("#assuntoVisualizacao").val("E-mail Marketing").attr("disabled", "disabled");
+        $("#assunto").val("E-mail Marketing");
+    }
+    else if (split[4] == "pesquisa-cpf-cnpj") {
+        $("#assuntoVisualizacao").val("Pesquisa de CPF e/ou CNPJ").attr("disabled", "disabled");
+        $("#assunto").val("Pesquisa de CPF e/ou CNPJ");
+    }
+    else if (split[4] == "modelos-estatisticos") {
+        $("#assuntoVisualizacao").val("Modelos Estatísticos").attr("disabled", "disabled");
+        $("#assunto").val("Modelos Estatísticos");
+    }
+    else if (split[4] == "analise-de-mercado-expansao-de-negocios") {
+        $("#assuntoVisualizacao").val("Análise de Mercado e/ou Expansão de Negócios").attr("disabled", "disabled");
+        $("#assunto").val("Análise de Mercado e/ou Expansão de Negócios");
+    }
+
+</script>

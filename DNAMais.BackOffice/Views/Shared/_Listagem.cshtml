@@ -1,0 +1,38 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+<div>
+
+    @RenderSection("filtro", false)
+        
+    <div class="col-md-12">
+        <section class="panel panel-danger">
+            <header class="panel-heading portlet-handler">
+                <h2 class="panel-title">@ViewBag.TituloGrid</h2>
+            </header>
+            <div class="panel-body">
+
+                @RenderSection("botaoNovo", false)
+
+                <div class="separator bottom"></div>
+
+                @RenderSection("grid", true)
+
+            </div>
+        </section>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#myTable').DataTable();
+
+            posicionarMenu('@(ViewData["menu"].ToString())');
+        });
+    </script>
+}
+
+@RenderSection("scriptsPage", false)

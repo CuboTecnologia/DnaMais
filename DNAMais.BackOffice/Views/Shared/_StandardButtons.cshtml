@@ -1,0 +1,20 @@
+﻿@using DNAMais.Framework
+
+<div class="form-actions">
+    @if (!ViewData.ModelState.IsValid || Request.HttpMethod == "GET")
+    {
+        @Html.DnaMaisSubmitButton("btnSalvar", "Salvar", "danger", "arrow-circle-right")
+
+        @Html.DnaMaisButton("btnCancelar", "Cancelar", "default", "arrow-circle-left")   
+    }
+    else
+    {
+        <hr class="mt-md mb-md" />
+                        
+        @Html.DnaMaisButton("Index", "btnVoltar", ViewData["messageReturn"].ToString(), "success", "arrow-circle-left")
+
+        <hr class="mt-md mb-md" />
+                        
+        @Html.DnaMaisButton("Create", "btnNovo", "Criar outro item", "default", "plus")
+    }
+</div>

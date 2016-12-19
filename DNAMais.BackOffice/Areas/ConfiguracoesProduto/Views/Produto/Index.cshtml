@@ -1,0 +1,51 @@
+﻿@using DNAMais.Domain.Entidades
+@using DNAMais.Framework
+
+@model List<Produto>
+
+@{
+    ViewBag.Title = "DNA+ :: Produto";
+    ViewBag.TituloPagina = "Produtos";
+    ViewBag.TituloGrid = "Produtos";
+    Layout = "~/Views/Shared/_Listagem.cshtml";
+
+
+    WebGrid grid = new WebGrid(Model, canSort: true);
+
+    WebGridColumn coluna1 = grid.Column(columnName: "Codigo", header: "Codigo", format: @<span>@(item.Id)</span>, style: "col-md-1");
+    WebGridColumn coluna2 = grid.Column(columnName: "Nome", header: "Nome", format: @<span>@(item.Nome)</span>, style: "col-md-3");
+    WebGridColumn coluna3 = grid.Column(columnName: "Descrição", header: "Descrição", format: @<span>@(item.Descricao)</span>, style: "col-md-3");
+}
+
+@section grid {
+
+    @if (TempData["msgSucesso"] != null)
+    {
+        <p style="color:#449010; font-size: medium;">@TempData["msgSucesso"]</p>
+    }
+
+    @if (grid.Rows.Count > 0)
+    {
+
+        @grid.GetHtml(
+        htmlAttributes: new { id = "myTable" },
+        tableStyle: "table table-bordered table-condensed table-striped table-primary table-vertical-center",
+        columns:
+            grid.Columns(
+                coluna1,
+                coluna2,
+                coluna3,
+                  grid.Column(
+                    header: "Ações",
+                    format: @<span>
+                        @Html.DnaMaisTableLinkEdit("Edit", (object)item.Id)
+                    </span>
+                )
+            )
+        )
+    }
+    else
+    {
+        <p style="color: #449010; font-size: medium;">Não há produtos cadastrados.</p>
+    }
+}

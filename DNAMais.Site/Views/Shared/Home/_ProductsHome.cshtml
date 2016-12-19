@@ -1,0 +1,136 @@
+﻿<section class="section" id="home-intro">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="feature-box feature-box-style-2">
+                            <div class="feature-box-icon">
+                                <i class="fa fa-plus" id="iconPlusHome"></i>
+                            </div>
+                            <div class="feature-box-info">
+                                <h4 class="mb-none"><a href="@Url.Action("DataEnrichment","Services")" id="hrefPlusHome">Enriquecimento de Dados</a></h4>
+                                @Html.Partial("Home/_AllServicesTextDataEnrichment")
+                                <p><a href="@Url.Action("DataEnrichment","Services")">Saiba Mais!</a></p>
+                            </div>
+                        </div>
+                        <div class="feature-box feature-box-style-2">
+                            <div class="feature-box-icon">
+                                <i class="fa fa-recycle" id="iconRecycleHome"></i>
+                            </div>
+                            <div class="feature-box-info">
+                                <h4 class="mb-none"><a href="@Url.Action("DataTreatment", "Services")" id="hrefRecycleHome">Tratamento e Higienização de Dados</a></h4>
+                                @Html.Partial("Home/_AllServicesTextDataTreatment")
+                                <p><a href="@Url.Action("DataTreatment", "Services")">Saiba Mais!</a></p>
+                            </div>
+                        </div>
+                        <div class="feature-box feature-box-style-2">
+                            <div class="feature-box-icon">
+                                <i class="fa fa-user-plus" id="iconUserPlusHome"></i>
+                            </div>
+                            <div class="feature-box-info">
+                                <h4 class="mb-none"><a href="@Url.Action("AssigningDocs", "Services")" id="hrefUserPlusHome">Atribuição de Documentos</a></h4>
+                                @Html.Partial("Home/_AllServicesTextAssigningDocs")
+                                <p><a href="@Url.Action("AssigningDocs", "Services")">Saiba Mais!</a></p>
+                            </div>
+                        </div>
+                        <div class="feature-box feature-box-style-2">
+                            <div class="feature-box-icon">
+                                <i class="fa fa-envelope-o" id="iconEnvelopeHome"></i>
+                            </div>
+                            <div class="feature-box-info">
+                                <h4 class="mb-none"><a href="@Url.Action("QualifiedMailing", "Services")" id="hrefEnvelopeHome">Mailing Qualificado</a></h4>
+                                @Html.Partial("Home/_AllServicesTextQualifiedMailing")
+                                <p><a href="@Url.Action("QualifiedMailing", "Services")">Saiba Mais!</a></p>
+                            </div>
+                        </div>
+                        <div class="feature-box feature-box-style-2">
+                            <div class="feature-box-icon">
+                                <i class="fa fa-at" id="iconAtHome"></i>
+                            </div>
+                            <div class="feature-box-info">
+                                <h4 class="mb-none"><a href="@Url.Action("MailMarketing", "Services")" id="hrefAtHome">E-mail Marketing</a></h4>
+                                @Html.Partial("Home/_AllServicesTextMailMarketing")
+                                <p><a href="@Url.Action("MailMarketing", "Services")">Saiba Mais!</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-box feature-box-style-2">
+                            <div class="feature-box-icon">
+                                <i class="fa fa-mobile-phone" id="iconMobileHome"></i>
+                            </div>
+                            <div class="feature-box-info">
+                                <h4 class="mb-none"><a href="@Url.Action("Sms", "Services")" id="hrefMobileHome">SMS</a></h4>
+                                @Html.Partial("Home/_AllServicesTextSms")
+                                <p><a href="@Url.Action("Sms", "Services")">Saiba Mais!</a></p>
+                            </div>
+                        </div>
+                        <div class="feature-box feature-box-style-2">
+                            <div class="feature-box-icon" id="iconUserHome">
+                                <i class="fa fa-user"></i>
+                            </div>
+                            <div class="feature-box-info">
+                                <h4 class="mb-none"><a href="@Url.Action("Search", "Services")" id="hrefUserHome">Pesquisa Pessoa Física</a></h4>
+                                @Html.Partial("Home/_AllServicesTextSearch")
+                                <p><a href="@Url.Action("Search", "Services")">Saiba Mais!</a></p>
+                            </div>
+                        </div>
+                        <div class="feature-box feature-box-style-2">
+                            <div class="feature-box-icon">
+                                <i class="fa fa-building-o" id="iconBuildingHome"></i>
+                            </div>
+                            <div class="feature-box-info">
+                                <h4 class="mb-none"><a href="@Url.Action("Search", "Services")" id="hrefBuildingHome">Pesquisa Pessoa Jurídica</a></h4>
+                                @Html.Partial("Home/_AllServicesTextSearchPj")
+                                <p><a href="@Url.Action("Search", "Services")">Saiba Mais!</a></p>
+                            </div>
+                        </div>
+                        <div class="feature-box feature-box-style-2">
+                            <div class="feature-box-icon">
+                                <i class="fa fa-pencil-square-o" id="iconPencilHome"></i>
+                            </div>
+                            <div class="feature-box-info">
+                                <h4 class="mb-none"><a href="@Url.Action("ProspectingSolutions", "Services")" id="hrefPencilHome">Análise de Mercado</a></h4>
+                                @Html.Partial("Home/_AllServicesTextProspectingSolutions")
+                                <p><a href="@Url.Action("ProspectingSolutions", "Services")">Saiba Mais!</a></p>
+                            </div>
+                        </div>
+                        <div class="feature-box feature-box-style-2">
+                            <div class="feature-box-icon">
+                                <i class="fa fa-expand" id="iconExpandHome"></i>
+                            </div>
+                            <div class="feature-box-info">
+                                <h4 class="mb-none"><a href="@Url.Action("ProspectingSolutions", "Services")" id="hrefExpandHome">Expansão de Negócios</a></h4>
+                                @Html.Partial("Home/_AllServicesTextProspectingExpansion")
+                                <p><a href="@Url.Action("ProspectingSolutions", "Services")">Saiba Mais!</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+
+    $(document).ready(function () {
+
+        $("a").mouseover(function () {
+            var linkId = this.id;
+
+            if ($('#' + linkId)) {
+
+                var split = linkId.split('href').join("");
+                var iconId = 'icon' + split;
+
+                $('#' + iconId).fadeOut(300);
+                $('#' + iconId).fadeIn(300);
+
+            }
+
+        });
+    });
+
+</script>

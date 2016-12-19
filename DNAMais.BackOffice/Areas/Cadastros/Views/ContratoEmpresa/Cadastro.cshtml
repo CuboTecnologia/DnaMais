@@ -1,0 +1,74 @@
+﻿@using DNAMais.Domain.Entidades
+@using DNAMais.Framework
+@using DNAMais.BackOffice.Facades
+
+@model ContratoEmpresa
+
+@{
+    Layout = "~/Views/Shared/_Cadastro.cshtml";
+
+    ViewBag.Title = "DNA+ :: Contratos";
+    ViewBag.TituloPagina = "Contratos";
+
+    ViewData["messageSuccess"] = "Contrato registrado com sucesso";
+    ViewData["messageReturn"] = "Voltar para lista de Contratos";
+
+    bool locked = ViewData["LOCKED"] == null ? false : (bool)ViewData["LOCKED"];
+
+    List<SelectListItem> clientesEmpresa = new ClienteEmpresaFacade(null).ListarClientesEmpresa().ToList().Select(i => new SelectListItem
+    {
+        Value = i.Id.ToString(),
+        Text = i.RazaoSocial
+    }).ToList();
+
+    clientesEmpresa.Insert(0, new SelectListItem { Value = "", Text = "Selecione um Cliente" });
+}
+
+@section cadastro
+{
+    @if (Request.HttpMethod == "GET" || !ViewData.ModelState.IsValid)
+    {
+        <div style="width:100%;">
+
+            @Html.HiddenFor(
+                expression: m => m.Id)
+
+            @Html.HiddenFor(
+                expression: m => m.Vigente)
+
+            @Html.DnaMaisDropDownListFor(
+                expression: m => m.IdClienteEmpresa,
+                disabled: locked,
+                itens: clientesEmpresa,
+                width: 300)
+
+            @*@Html.DnaMaisTextBoxNumberFor(
+                expression: m => m.Numero,
+                width: 100,
+                disabled: locked)*@
+
+            @Html.DnaMaisDatePickerFor(
+                expression: m => m.DataAquisicao,
+                disabled: locked)
+
+            @Html.DnaMaisTextBoxNumberFor(
+                expression: m => m.DiaCorte,
+                width: 50,
+                disabled: locked)
+
+            @Html.DnaMaisTextBoxNumberFor(
+                expression: m => m.DiaFaturamento,
+                width: 50,
+                disabled: locked)
+
+            <hr class="separator" />
+        </div>
+    }
+
+}
+
+}
+
+@section validacoes{
+    @Html.Validations((ContratoEmpresa)Model)
+}

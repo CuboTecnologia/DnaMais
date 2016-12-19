@@ -1,0 +1,59 @@
+﻿@using DNAMais.Domain.Entidades
+@using DNAMais.Framework
+
+@{
+    ViewBag.Title = "DNA+ :: Contratos";
+    ViewBag.TituloPagina = "Contratos";
+    ViewBag.TituloGrid = "Contratos Cadastrados";
+    Layout = "~/Views/Shared/_Listagem.cshtml";
+
+    string mensagemExclusao = "Tem certeza que deseja excluir este Contrato?";
+
+    WebGrid grid = new WebGrid(Model, canSort: true, defaultSort: "", sortDirectionFieldName: "Asc");
+
+    WebGridColumn coluna1 = grid.Column(columnName: "Id", header: "No.", format: @<span>@(item.Id)</span>);
+    WebGridColumn coluna2 = grid.Column(columnName: "RazaoSocial", header: "Razão Social", format: @<span>@(item.ClienteEmpresa.RazaoSocial)</span>);
+    WebGridColumn coluna3 = grid.Column(columnName: "NomeFantasia", header: "Nome Fantasia", format: @<span>@(item.ClienteEmpresa.NomeFantasia)</span>);
+    WebGridColumn coluna4 = grid.Column(columnName: "DataAquisicao", header: "Aquisição", format: @<span>@(((DateTime)item.DataAquisicao).FormatarData())</span>);
+    WebGridColumn coluna5 = grid.Column(columnName: "Usuario", header: "Usuário", format: @<span>@(item.UsuarioBackoffice.Nome)</span>);
+    WebGridColumn coluna6 = grid.Column(columnName: "DataCadastro", header: "Data Cadastro", format: @<span>@(((DateTime)item.DataCadastro).FormatarDataHora())</span>);
+}
+
+@section botaoNovo{
+    <p>
+        @Html.DnaMaisButton("Create", "btnCreate", "Novo Contrato", "default", "plus")
+    </p>
+}
+
+@section grid {
+
+    @if (grid.Rows.Count > 0)
+    {
+        @grid.GetHtml(
+        htmlAttributes: new { id = "myTable" },
+        tableStyle: "table table-bordered table-condensed table-striped table-primary table-vertical-center",
+        columns:
+            grid.Columns(
+                coluna1,
+                coluna2,
+                coluna3,
+                coluna4,
+                coluna5,
+                coluna6,
+                grid.Column(
+                    header: "Ações",
+                    format: @<span>
+                        @Html.DnaMaisTableLinkDetails("Details", (object)item.Id)
+                        @Html.DnaMaisTableLinkIcone("Produtos", "Produtos", (object)item.id, "fa fa-list", "produtos")
+                        @Html.DnaMaisTableLinkIcone("Precificacao", "Precificacao", (object)item.id, "fa fa-usd", "precificação")
+                        @Html.DnaMaisTableLinkRemove("Remove", (object)item.Id, mensagemExclusao)
+                    </span>
+                )
+            )
+        )
+    }
+    else
+    {
+        <p style="color:#449010; font-size:medium;">Não há contratos cadastrados.</p>
+    }
+}

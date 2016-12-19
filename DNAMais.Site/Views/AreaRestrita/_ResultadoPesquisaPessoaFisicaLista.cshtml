@@ -1,0 +1,94 @@
+﻿@using DNAMais.Domain.Entidades.Consultas
+@using DNAMais.Framework
+
+@model List<InfoPessoaFisica>
+
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="mb-none">Protocolo da Consulta Realizada: <strong>@ViewBag.NumeroTransacao</strong></h2>
+        <h4 class="mb-none">Data/Hora da Consulta: <strong>@ViewBag.DataTransacao</strong></h4>
+    </div>
+</div>
+
+<div class="featured-boxes featured-boxes-style-8">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="featured-box featured-box-secondary featured-box-text-left">
+                <div class="box-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <i class="icon-featured fa fa-user pull-left mr-lg"></i>
+                            <h2>Pessoas Físicas Encontradas</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>CPF</th>
+                                        <th>Nome</th>
+                                        <th>Data de Nascimento</th>
+                                        <th>Nome da Mãe</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        int indexPessoa = 0;
+                                    }
+                                    @foreach (InfoPessoaFisica pessoa in Model)
+                                    {
+                                        indexPessoa++;
+                                        <tr>
+                                            <td>@indexPessoa</td>
+                                            <td>
+                                                <a href="#" class="link-pessoa-fisica" data-cpf="@pessoa.Cpf.LimparCaracteresCPF()">
+                                                    @pessoa.Cpf.FormatarCPF()
+                                                </a>
+                                            </td>
+                                            <td>@pessoa.NomeCompleto</td>
+                                            <td>@pessoa.DataNascimento.FormatarData()</td>
+                                            <td>@pessoa.NomeMae</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('#cpf').focus();
+        $('.link-pessoa-fisica').on('click', function () {
+            event.preventDefault();
+            var cpf = $(this).attr('data-cpf');
+            $.ajax({
+                url: '@Url.Action("PesquisarPessoaFisicaPorCPF", "AreaRestrita")',
+                type: 'POST',
+                data: 'txtCpfPesquisaPorCpf=' + cpf,
+                context: $('#divResultadoPesquisaPF'),
+                success: function (result) {
+                    $('#divResultadoPesquisaPF').html(result);
+                    $('#divResultadoPesquisaPF').fadeIn(500);
+                    $('#btnNovaPesquisa').fadeIn(2500);
+                    $('#divLoading').hide();
+                },
+                beforeSend: function () {
+                    $('#divFiltros').hide();
+                    $('#divLoading').show();
+                },
+                error: function (a, b, c) {
+                    alert(a.responseText.replace('"', '').replace('"', ''));
+                }
+            });
+        });
+    });
+</script>

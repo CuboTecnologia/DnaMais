@@ -1,0 +1,84 @@
+﻿@using DNAMais.Framework
+
+@{
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+
+    string area = ViewContext.RouteData.DataTokens["area"].ToString();
+    string controller = ViewContext.Controller.ValueProvider.GetValue("Controller").RawValue.ToString();
+    string action = ViewContext.Controller.ValueProvider.GetValue("Action").RawValue.ToString();
+
+    bool locked = ViewData["LOCKED"] == null ? false : (bool)ViewData["LOCKED"];
+
+    string enctype = null;
+
+    if (ViewBag.EncType != null)
+    {
+        enctype = (string)ViewBag.EncType;
+    }
+}
+<div class="separator bottom"></div>
+
+<div class="innerLR">
+
+    @Html.Partial("~/Views/Shared/_DivChanges.cshtml")
+
+    @using (Html.DnaMaisBeginForm(area, controller, action, (object)Model.Id, "frmStandard", true, enctype))
+    {
+        using (Html.DnaMaisBeginContent((string)ViewBag.TituloPagina))
+        {
+            <div class="row-fluid">
+                @RenderSection("cadastro", false)
+            </div>
+
+            if (!locked)
+            {
+                @Html.Partial("~/Views/Shared/_StandardMessages.cshtml")
+
+                @Html.Partial("~/Views/Shared/_StandardButtons.cshtml")
+
+            }
+            else
+            {
+                <div class="form-actions">
+                    @Html.DnaMaisButton("Index", "btnVoltar", ViewData["messageReturn"].ToString(), "default", "arrow-circle-left")
+                </div>
+            }
+
+        }
+    }
+
+    @RenderSection("adicionais", false)
+
+</div>
+
+@section scripts
+{
+    @Scripts.Render("~/scripts/jqueryvalidation")
+
+    @RenderSection("validacoes", false)
+
+    <script type="text/javascript">
+        var changes = false;
+
+        $(document).ready(function () {
+            $("#frmStandard").find('input[type=text],textarea').each(function () {
+                $(this).keypress(changeDetected);
+            });
+            $("#frmStandard").find('input[type=checkbox],input[type=radio]').each(function () {
+                $(this).click(changeDetected);
+            });
+            $("#frmStandard").find('select').each(function () {
+                $(this).change(changeDetected);
+            });
+
+            $("#frmStandard").find('input[type=text]:enabled,textarea:enabled,input[type=checkbox]:enabled,input[type=radio]:enabled,select:enabled').first().focus();
+
+            $('#divChanges').hide();
+            $('#btnCancelar').click(function () {
+                //changeAlert('Url.Action("Index", controller)');
+                window.history.back();
+            });
+        });
+
+    </script>
+}

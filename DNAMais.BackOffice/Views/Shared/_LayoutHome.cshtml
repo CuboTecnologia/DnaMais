@@ -1,0 +1,341 @@
+﻿@using DNAMais.Domain.Entidades
+
+@{
+    if (Session["user"] == null)
+    {
+        Response.Redirect("~/Autenticacao/Index");
+    }
+}
+
+<!doctype html>
+<html class="fixed">
+<head>
+
+    <!-- Basic -->
+    <meta charset="UTF-8">
+
+    <title>DNA+ | BackOffice</title>
+    <meta name="keywords" content="DNA+ BackOffice" />
+    <meta name="description" content="DNA+ BackOffice">
+    <meta name="author" content="DNA+ BackOffice">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/assets/images/favicon.ico" type="image/x-icon" />
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <!-- Web Fonts  -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+
+    <!-- Vendor CSS -->
+    @Styles.Render("~/css/bootstrap")
+    <link rel="stylesheet" href="~/assets/vendor/font-awesome/css/font-awesome.css" />
+    @Styles.Render("~/css/magnificpopup")
+    @Styles.Render("~/css/datepicker")
+
+    <!-- Specific Page Vendor CSS -->
+  
+    @Styles.Render("~/css/jquery")
+    @Styles.Render("~/css/multiselect")
+    @Styles.Render("~/css/morris")
+    @Styles.Render("~/css/select2")
+    @*@Styles.Render("~/css/datatables")*@
+    @*<link href="~/assets/stylesheets/jquery.dataTables.min.css" rel="stylesheet" />*@
+    @*<link href="~/assets/vendor/jquery-datatables/media/css/jquery.dataTables.min.css" rel="stylesheet" />*@
+    <link href="~/assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" rel="stylesheet" />
+
+    <!-- Theme CSS -->
+    @Styles.Render("~/css/theme")
+
+    <!-- Skin CSS -->
+    @Styles.Render("~/css/default")
+
+    <!-- Theme Custom CSS -->
+    @Styles.Render("~/css/themecustom")
+
+    <!-- Head Libs -->
+    @Scripts.Render("~/Scripts/modernizr")
+
+    <!-- Vendor -->
+    @Scripts.Render("~/Scripts/jquery")
+    @Scripts.Render("~/Scripts/bootstrap")
+    @Scripts.Render("~/Scripts/nanoscroller")
+
+
+</head>
+<body>
+    <section class="body">
+
+        <!-- start: header -->
+        <header class="header">
+            <div class="logo-container">
+                <a href="~/Home" class="logo">
+                    <img src="~/assets/images/LogoDNAMais.png" height="35" alt="DNA+" />
+                </a>
+                <div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
+                    <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+                </div>
+            </div>
+
+            <!-- start: search & user box -->
+            <div class="header-right">
+                <div id="userbox" class="userbox">
+                    <a href="#" data-toggle="dropdown">
+                        <figure class="profile-picture">
+                            <img src="~/assets/images/!logged-user.jpg" alt="Joseph Doe" class="img-circle" data-lock-picture="assets/images/!logged-user.jpg" />
+                        </figure>
+                        <div class="profile-info" data-lock-name="Administrador" data-lock-email="email@email.com">
+                            <span class="name">@(((UsuarioBackOffice)HttpContext.Current.Session["user"]).Nome)</span>
+                            <span class="role">@(((UsuarioBackOffice)HttpContext.Current.Session["user"]).Login)</span>
+                        </div>
+
+                        <i class="fa custom-caret"></i>
+                    </a>
+
+                    <div class="dropdown-menu">
+                        <ul class="list-unstyled">
+                            <li class="divider"></li>
+                            <li>
+                                <a role="menuitem" tabindex="-1" href="#"><i class="fa fa-user"></i> Perfil</a>
+                            </li>
+                            <li>
+                                <a role="menuitem" tabindex="-1" href="#" data-lock-screen="true"><i class="fa fa-lock"></i> Bloquear Tela</a>
+                            </li>
+                            <li>
+                                <a role="menuitem" tabindex="-1" href="~/Autenticacao/LogOff"><i class="fa fa-power-off"></i> Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- end: search & user box -->
+        </header>
+        <!-- end: header -->
+
+        <div class="inner-wrapper">
+            <!-- start: sidebar -->
+            <aside id="sidebar-left" class="sidebar-left">
+
+                <div class="sidebar-header" style="background-color:#171717">
+                    <div class="sidebar-title" style="background-color:#171717">
+
+                    </div>
+                    <div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
+                        <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+                    </div>
+                </div>
+
+                <div class="nano">
+                    <div class="nano-content">
+                        <nav id="menu" class="nav-main" role="navigation">
+                            <ul class="nav nav-main">
+                                <li class="nav-parent">
+                                    <a>
+                                        <i class="fa fa-send" aria-hidden="true"></i>
+                                        <span>Newsletter</span>
+                                    </a>
+                                    <ul class="nav nav-children">
+                                        <li id="MENU-NEWSLETTER-NAO-CONFIRMADA">
+                                            <a href="@Url.Action("Index", "NewsletterNaoConfirmada", new { area = "Newsletter" })">
+                                                Não Confirmadas
+                                            </a>
+                                        </li>
+                                        <li id="MENU-NEWSLETTER-CONFIRMADA">
+                                            <a href="@Url.Action("Index", "NewsletterConfirmada", new { area = "Newsletter" })">
+                                                Confirmadas
+                                            </a>
+                                        </li>
+                                        <li id="MENU-NEWSLETTER-CANCELADA">
+                                            <a href="@Url.Action("Index", "NewsletterCancelada", new { area = "Newsletter" })">
+                                                Canceladas
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-parent">
+                                    <a>
+                                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                                        <span>Mensagens</span>
+                                    </a>
+                                    <ul class="nav nav-children">
+                                        <li id="MENU-MENSAGEM-NAO-RESPONDIDA">
+                                            <a href="@Url.Action("Index", "MensagensNaoRespondidas", new { area = "Mensagens" })">
+                                                Não Respondidas
+                                            </a>
+                                        </li>
+                                        <li id="MENU-MENSAGEM-RESPONDIDA">
+                                            <a href="@Url.Action("Index","MensagensRespondidas", new { area = "Mensagens" })">
+                                                Respondidas
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-parent">
+                                    <a>
+                                        <i class="fa fa-archive" aria-hidden="true"></i>
+                                        <span>Configurações Produto</span>
+                                    </a>
+                                    <ul class="nav nav-children">
+                                        <li id="MENU-CATEGORIA-PRODUTO">
+                                            <a href="@Url.Action("Index", "CategoriaProdutoFaixa", new { area = "ConfiguracoesProduto" }) ">
+                                                Categorias
+                                            </a>
+                                        </li>
+                                        <li id="MENU-PRODUTO">
+                                            <a href="@Url.Action("Index", "Produto", new { area = "ConfiguracoesProduto" }) ">
+                                                Produtos
+                                            </a>
+                                        </li>
+                                        <li id="MENU-ITEM-PRODUTO">
+                                            <a href="@Url.Action("Index", "ItemProduto", new { area = "ConfiguracoesProduto" }) ">
+                                                Itens de Produto
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-parent">
+                                    <a>
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        <span>Clientes & Contratos</span>
+                                    </a>
+                                    <ul class="nav nav-children">
+                                        <li id="MENU-CLIENTE">
+                                            <a href="@Url.Action("Index", "ClienteEmpresa", new { area = "Cadastros" }) ">
+                                                Clientes
+                                            </a>
+                                        </li>
+                                        <li id="MENU-CONTRATO">
+                                            <a href="@Url.Action("Index", "ContratoEmpresa", new { area = "Cadastros" })">
+                                                Contratos
+                                            </a>
+                                        </li>
+                                        <li id="MENU-FATURAMENTO">
+                                            <a href="#">
+                                                Faturamento
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-parent">
+                                    <a>
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                        <span>Acesso Clientes</span>
+                                    </a>
+                                    <ul class="nav nav-children">
+                                        <li id="MENU-GRUPO-USUARIO-CLIENTE">
+                                            <a href="@Url.Action("Index", "GrupoUsuarioCliente", new { area = "ControleAcessoCliente" })">
+                                                Grupo de Usuários
+                                            </a>
+                                        </li>
+                                        <li id="MENU-USUARIO-CLIENTE">
+                                            <a href="@Url.Action("Index", "UsuarioCliente", new { area = "ControleAcessoCliente" })">
+                                                Usuários Cliente
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-parent">
+                                    <a>
+                                        <i class="fa fa-unlock" aria-hidden="true"></i>
+                                        <span>Acesso BackOffice</span>
+                                    </a>
+                                    <ul class="nav nav-children">
+                                        <li id="MENU-PERFIL-ACESSO-BACKOFFICE">
+                                            <a href="@Url.Action("Index", "PerfilAcessoBackOffice", new { area = "ControleAcesso" })">
+                                                Perfis de Acesso
+                                            </a>
+                                        </li>
+                                        <li id="MENU-USUARIO-BACKOFFICE">
+                                            <a href="@Url.Action("Index", "UsuarioBackOffice", new { area = "ControleAcesso" })">
+                                                Usuários BackOffice
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-parent">
+                                    <a>
+                                        <i class="fa fa-bookmark" aria-hidden="true"></i>
+                                        <span>Cadastros Gerais</span>
+                                    </a>
+                                    <ul class="nav nav-children">
+                                        <li id="MENU-RAMO-ATIVIDADE">
+                                            <a href="@Url.Action("Index", "RamoAtividade", new { area = "Cadastros" })">
+                                                Ramos de Atividade
+                                            </a>
+                                        </li>
+                                        <li id="MENU-TIPO-CONTATO">
+                                            <a href="@Url.Action("Index", "TipoContato", new { area = "Cadastros" })">
+                                                Tipos de Contato
+                                            </a>
+                                        </li>
+                                        <li id="MENU-TIPO-ENDERECO">
+                                            <a href="@Url.Action("Index", "TipoEndereco", new { area = "Cadastros" })">
+                                                Tipos de Endereço
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+
+                    <script>
+                        // Preserve Scroll Position
+                        if (typeof localStorage !== 'undefined') {
+                            if (localStorage.getItem('sidebar-left-position') !== null) {
+                                var initialPosition = localStorage.getItem('sidebar-left-position'),
+                                    sidebarLeft = document.querySelector('#sidebar-left .nano-content');
+
+                                sidebarLeft.scrollTop = initialPosition;
+                            }
+                        }
+                    </script>
+
+                </div>
+
+            </aside>
+            <!-- end: sidebar -->
+            <section role="main" class="content-body">
+                <!-- start: page -->
+                <header class="page-header">
+                    <h2>@ViewBag.TituloPagina</h2>
+                </header>
+                @RenderBody()
+                <!-- end: page -->
+            </section>
+        </div>
+    </section>
+
+    <!-- Specific Page Vendor -->
+    @Scripts.Render("~/Scripts/select2")
+    @*@Scripts.Render("/Scripts/datatables")*@
+    <script src="~/assets/vendor/jquery-datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/vendor/jquery-datatables/extras/TableTools/js/dataTables.tableTools.js"></script>
+    <script src="~/assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script>
+    <script src="~/assets/javascripts/tables/examples.datatables.default.js"></script>
+    <script src="~/assets/javascripts/tables/examples.datatables.row.with.details.js"></script>
+    <script src="~/assets/javascripts/tables/examples.datatables.tabletools.js"></script>
+
+    <script src="~/assets/javascripts/dnamais.js"></script>
+
+    <script type="text/javascript">
+        function posicionarMenu(habilitado) {
+            $('.nav-parent').parents().removeClass('nav-expanded');
+            $('li').removeClass('nav-active');
+            $('#' + habilitado).closest('.nav-parent').addClass('nav-expanded');
+            $('#' + habilitado).attr('class', 'nav-active');
+        }
+
+        posicionarMenu('@((string)ViewBag.Menu)');
+    </script>
+
+<!-- Theme Base, Components and Settings -->
+    <!-- Theme Custom -->
+    <!-- Theme Initialization Files -->
+    @Scripts.Render("~/Scripts/theme")
+
+    @RenderSection("scripts", false)
+
+</body>
+</html>

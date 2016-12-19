@@ -1,0 +1,54 @@
+﻿<div class="col-md-3">
+    <div class="newsletter">
+        <h4>Newsletter</h4>
+        <p>Mantenha-se atualizado sobre os nossos produtos e serviços. Informe seu nome e e-mail e inscreva-se em nosso newsletter.</p>
+
+        <div id="messageNewsletter"></div>
+
+        @using (Html.BeginForm("SaveNewsletter", "Newsletter", FormMethod.Post, new { id = "frmNewsletter" }))
+        {
+            <div class="input-group">
+                <input class="form-control" style="border-radius: 4px; width: 250px;" placeholder="Informe seu nome" name="newsletterName" type="text">
+            </div>
+            <br />
+            <div class="input-group">
+                <input class="form-control" placeholder="Informe seu e-mail" name="newsletterEmail" type="text" id="txtEmail">
+                <span class="input-group-btn">
+                    <button id="btnSendNewsletter" class="btn btn-default" type="submit">Enviar 
+                    <img src="~/img/loader.gif" id="loadingGif" style="display:none" /></button>
+                </span>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $('#btnSendNewsletter').click(function (e) {
+
+            $('#loadingGif').show();
+
+            var action = $('#frmNewsletter').attr('action');
+
+            e.preventDefault();
+
+            $.ajax({
+                url: action,
+                data: $('#frmNewsletter').serialize(),
+                type: 'POST',
+                context: $('#messageNewsletter'),
+                success: function (result) {
+                    $(this).hide();
+                    $(this).html(result);
+                    $(this).fadeIn(1500);
+                    $('#loadingGif').delay(5000).fadeOut(2000);
+                },
+                error: function () {
+                    alert('Ocorreu erro');
+                    $('#loadingGif').delay(5000).fadeOut(2000);
+                }
+            });
+        });
+    });
+</script>

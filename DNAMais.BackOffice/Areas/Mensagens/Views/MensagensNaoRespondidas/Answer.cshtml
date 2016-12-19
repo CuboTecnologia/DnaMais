@@ -1,0 +1,92 @@
+﻿@using DNAMais.Domain.Entidades
+@using DNAMais.Framework
+@using DNAMais.BackOffice.Facades
+
+@model MensagemContato
+
+@{
+    Layout = "~/Views/Shared/_Listagem.cshtml";
+
+    ViewBag.Title = "DNA+ :: Mensagens";
+    ViewBag.TituloPagina = "Mensagens";
+    ViewBag.TituloGrid = "Responder Mensagem de " + Model.Nome;
+
+    ViewData["messageAnswer"] = "Responder mensagem";
+    ViewData["messageReturn"] = "Voltar para lista de mensagens";
+
+}
+
+@section grid
+{
+    @using (Html.BeginForm("Answer", "MensagensNaoRespondidas", FormMethod.Post))
+    {
+        <table class="table table-bordered table-hover mb-none">
+            <thead>
+                <tr>
+                    <th>N.</th>
+                    <th>Nome</th>
+                    <th>E-Mail</th>
+                    <th>Data do Envio</th>
+                    <th>Título/Assunto</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Model.Id</td>
+                    <td>@Model.Nome</td>
+                    <td>@Model.Email</td>
+                    <td>@Model.DataRegistro</td>
+                    <td>@Model.Assunto</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered table-hover mb-none">
+            <thead>
+                <tr>
+                    <th>Mensagem</th>
+                </tr>
+            </thead>
+            <tr>
+                <td>
+                    <p class="text-justify text-md" style="line-height:30px; text-indent: 25px;">@Model.Conteudo</p>
+                </td>
+            </tr>
+        </table>
+        <table class="table table-bordered table-hover mb-none">
+            <thead>
+                <tr>
+                    <th>Digitar Resposta</th>
+                </tr>
+            </thead>
+            <tr>
+                <td>
+                    <div class="comment-text-area">
+                        @Html.TextAreaFor(m => m.DescricaoResposta, 15, 177, new { @autofocus = "autofocus", @class = "text-justify text-md textinput" })
+                    </div>
+                </td>
+
+                @Html.HiddenFor(m => m.Nome)
+                @Html.HiddenFor(m => m.Email)
+                @Html.HiddenFor(m => m.Assunto)
+                @Html.HiddenFor(m => m.Conteudo)
+                @Html.HiddenFor(m => m.DataRegistro)
+                @Html.HiddenFor(m => m.Telefone)
+                @Html.HiddenFor(m => m.Celular)
+
+            </tr>
+        </table>
+
+        <hr />
+
+        <button class="btn btn-icon btn-primary" type="submit"><i class="fa fa-arrow-circle-right"></i>Encaminhar Resposta</button>
+
+        @Html.DnaMaisButton("Index", "btnVoltar", ViewData["messageReturn"].ToString(), "default", "arrow-circle-left")
+    }
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#myTable').DataTable();
+
+    });
+</script>

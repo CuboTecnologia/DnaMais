@@ -1,0 +1,114 @@
+﻿@using DNAMais.Domain.Entidades
+@using DNAMais.Framework
+@using DNAMais.BackOffice.Facades;
+
+@model UsuarioCliente
+
+@{
+    Layout = "~/Views/Shared/_Cadastro.cshtml";
+
+    ViewBag.Title = "DNA+ :: Usuários Cliente";
+    ViewBag.TituloPagina = "Usuário Cliente";
+
+    //VARIAVEIS PARA UTILIZAÇÃO EM VISOES SHARED
+    ViewData["messageSuccess"] = "Usuário Cliente registrado com sucesso";
+    ViewData["messageReturn"] = "Voltar para lista de Usuários Cliente";
+
+    bool locked = ViewData["LOCKED"] == null ? false : (bool)ViewData["LOCKED"];
+
+    List<SelectListItem> clientes = new ClienteEmpresaFacade(null).ListarClientesEmpresa().ToList().Select(i => new SelectListItem
+    {
+        Value = i.Id.ToString(),
+        Text = i.NomeFantasia
+    }).ToList();
+
+    clientes.Insert(0, new SelectListItem { Value = "", Text = "Selecione uma Empresa Cliente" });
+}
+
+@section cadastro
+{
+    @if (Request.HttpMethod == "GET" || !ViewData.ModelState.IsValid)
+    {
+        <div style="width:100%;">
+
+            @Html.HiddenFor(
+                expression: m => m.Id)
+
+            @Html.DnaMaisDropDownListFor(
+                expression: m => m.IdClienteEmpresa,
+                disabled: locked,
+                itens: clientes,
+                width: 300)
+
+            @Html.DnaMaisTextBoxFor(
+                expression: m => m.Nome,
+                width: 300,
+                disabled: locked)
+
+            @if (Model.Cpf == null)
+            {
+                @Html.DnaMaisTextBoxCPFFor(
+                expression: m => m.Cpf,
+                width: 300,
+                disabled: locked)
+            }
+            else
+            {
+                @Html.DnaMaisTextBoxCPFFor(
+                expression: m => m.Cpf,
+                width: 300,
+                disabled: locked)
+                
+                
+            }
+
+            @Html.DnaMaisTextBoxFor(
+                expression: m => m.Email,
+                width: 300,
+                disabled: locked)
+
+            @Html.DnaMaisTextBoxFor(
+                expression: m => m.Login,
+                width: 150,
+                disabled: locked)
+
+            @if (Model.Id == null)
+            {
+                @Html.DnaMaisTextBoxFor(
+                    expression: m => m.Senha,
+                    width: 300,
+                    disabled: locked)
+            }
+            else
+            {
+                @Html.Hidden(
+                name: "Senha",
+                value: Model.Senha)
+            }
+
+            @if (Model.Master == true)
+            {
+                <div class="form-group">
+                    @Html.CheckBox("Master", true, new { style = "margin-top: 13px;" })
+                    <label class="col-md-2 control-label">Usuário Master</label>
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+                    @Html.CheckBox("Master", false, new { style = "margin-top: 13px;" })
+                    <label class="col-md-2 control-label">Usuário Master</label>
+                </div>
+            }
+
+            <hr class="separator" />
+
+        </div>
+
+    }
+}
+
+@section validacoes
+{
+    @Html.Validations((UsuarioCliente)Model)
+}

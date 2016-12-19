@@ -1,0 +1,89 @@
+﻿@using DNAMais.Domain.Entidades
+@using DNAMais.Framework
+@using DNAMais.BackOffice.Facades;
+
+@{
+    ViewBag.Title = "DNA+ :: Produto Faixa";
+    ViewBag.TituloPagina = "Produto Faixa";
+    ViewBag.TituloGrid = "Produto Faixa";
+    Layout = "~/Views/Shared/_Listagem.cshtml";
+
+    string mensagemExclusao = "Tem certeza que deseja remover este Usuário Cliente?";
+
+    bool locked = ViewData["LOCKED"] == null ? false : (bool)ViewData["LOCKED"];
+
+
+    List<SelectListItem> Categorias = new CategoriaProdutoFacade(null).ListarTodasCategorias().ToList().Select(i => new SelectListItem
+    {
+        Value = i.Codigo.ToString(),
+        Text = i.Codigo + " - " + i.Nome
+    }).ToList();
+
+    Categorias.Insert(0, new SelectListItem { Value = "", Text = "Selecione uma Categoria" });
+
+}
+
+
+@section grid {
+
+    <div class="col-lg-12" style="width:100%;">
+
+        @Html.DnaMaisDropDownList(
+         "Categoria",
+         "idCategoria",
+         null,
+         itens: Categorias,
+         width: 300,
+        disabled: locked
+
+        )
+    </div>
+
+    <div style="margin-top:60px;" id="categoriaFaxa">
+
+    </div>
+
+
+
+    <script>
+        $(document).ready(function () {
+
+            var idCategoria = getUrlParameter('idCategoria');
+
+            if (idCategoria != "") {
+
+                $("#idCategoria").val(idCategoria);
+
+                CarregarCategoriaFaixas(idCategoria);
+            }
+
+            $("#idCategoria").change(function () {
+
+                var idCategoria = $("#idCategoria").val();
+
+                console.log(idCategoria);
+
+                CarregarCategoriaFaixas(idCategoria);
+
+            });
+        });
+
+        function CarregarCategoriaFaixas(idCategoria) {
+            $.ajax(
+            {
+                type: 'GET',
+                url: '/ConfiguracoesProduto/CategoriaProdutoFaixa/CategoriaFaixa/' + idCategoria,
+                success: function (data) {
+                    $('#categoriaFaxa').html(data);
+                }
+            });
+        }
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        };
+    </script>
+}
+

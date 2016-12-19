@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "DNA+ | Modelos Estatísticos";
+}
+
+@Html.Partial("Services/StatisticalModels/_TitleBarStatisticalModels")
+
+<div class="container">
+    @Html.Partial("Services/StatisticalModels/_HeadingStatisticalModels")
+    <div class="row">
+        <div class="col-md-9">
+            @Html.Partial("Services/StatisticalModels/_IntroStatisticalModels")
+            @Html.Partial("Services/StatisticalModels/_FirstBoxStatisticalModels")
+            @Html.Partial("Services/StatisticalModels/_SecondBoxStatisticalModels")
+            @Html.Partial("Services/StatisticalModels/_ThirdBoxStatisticalModels")
+            @Html.Partial("Services/StatisticalModels/_ButtonStatisticalModels")
+        </div>
+        @Html.Partial("Services/StatisticalModels/_SideMenuStatisticalModels")
+    </div>
+</div>
+
+<hr />
+
+<script>
+
+    $(document).ready(function () {
+        $("#servicesMenu").addClass("active");
+    });
+
+</script>

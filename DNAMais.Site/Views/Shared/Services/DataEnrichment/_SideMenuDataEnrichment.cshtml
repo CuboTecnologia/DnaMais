@@ -1,0 +1,19 @@
+﻿<hr class="visible-xs visible-sm" />
+
+<div class="col-md-3">
+    <blockquote class="blockquote-primary">
+        <h4 class="heading-primary">Outros Produtos</h4>
+
+        <h5><a href="@Url.Action("DataTreatment","Services")">Tratamento e Higienização de Dados</a></h5>
+        @Html.Partial("Services/DataTreatment/_SideMenuTextDataTreatment")
+        <p><a href="@Url.Action("DataTreatment","Services")">Saiba Mais!</a></p>
+
+        <h5><a href="@Url.Action("QualifiedMailing","Services")">Mailing Qualificado</a></h5>
+        @Html.Partial("Services/QualifiedMailing/_SideMenuTextQualifiedMailing")
+        <p><a href="@Url.Action("QualifiedMailing","Services")">Saiba Mais!</a></p>
+
+        <h5><a href="@Url.Action("ProspectingSolutions","Services")">Soluções de Prospecção</a></h5>
+        @Html.Partial("Services/ProspectingSolutions/_SideMenuTextProspectingSolutions")
+        <p><a href="@Url.Action("ProspectingSolutions", "Services")">Saiba Mais!</a></p>
+    </blockquote>
+</div>

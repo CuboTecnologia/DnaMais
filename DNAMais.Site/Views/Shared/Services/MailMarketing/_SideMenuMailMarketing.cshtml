@@ -1,0 +1,19 @@
+﻿<hr class="visible-xs visible-sm" />
+
+<div class="col-md-3">
+    <blockquote class="blockquote-primary">
+        <h4 class="heading-primary">Outros Produtos</h4>
+
+        <h5><a href="@Url.Action("DataEnrichment","Services")">Enriquecimento de Dados</a></h5>
+        @Html.Partial("Services/DataEnrichment/_SideMenuTextDataEnrichment")
+        <p><a href="@Url.Action("DataEnrichment","Services")">Saiba Mais!</a></p>
+
+        <h5><a href="@Url.Action("DataTreatment","Services")">Tratamento e Higienização de Dados</a></h5>
+        @Html.Partial("Services/DataTreatment/_SideMenuTextDataTreatment")
+        <p><a href="@Url.Action("DataTreatment","Services")">Saiba Mais!</a></p>
+
+        <h5><a href="@Url.Action("Search","Services")">Pesquisa CPF / CNPJ</a></h5>
+        @Html.Partial("Services/Search/_SideMenuTextSearch")
+        <p><a href="@Url.Action("Search","Services")">Saiba Mais!</a></p>
+    </blockquote>
+</div>

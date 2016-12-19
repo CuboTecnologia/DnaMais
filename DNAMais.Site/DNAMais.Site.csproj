@@ -1,0 +1,1455 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{179C7983-6FB9-4F6D-AEF1-847A7BCAB981}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DNAMais.Site</RootNamespace>
+    <AssemblyName>DNAMais.Site</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess">
+      <HintPath>..\packages\Oracle.ManagedDataAccess.12.1.2400\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess.EntityFramework">
+      <HintPath>..\packages\Oracle.ManagedDataAccess.EntityFramework.12.1.2400\lib\net45\Oracle.ManagedDataAccess.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="Controllers\AboutController.cs" />
+    <Compile Include="Controllers\BlogController.cs" />
+    <Compile Include="Controllers\ContactController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\AreaRestritaController.cs" />
+    <Compile Include="Controllers\MensagemContatoController.cs" />
+    <Compile Include="Controllers\NewsletterController.cs" />
+    <Compile Include="Controllers\ServicesController.cs" />
+    <Compile Include="Facades\AutenticacaoFacade.cs" />
+    <Compile Include="Facades\Base\BaseFacade.cs" />
+    <Compile Include="Facades\PessoaJuridicaFacade.cs" />
+    <Compile Include="Facades\EnderecoFacade.cs" />
+    <Compile Include="Facades\MensagemContatoFacade.cs" />
+    <Compile Include="Facades\PessoaFisicaFacade.cs" />
+    <Compile Include="Facades\NewsletterFacade.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ControleArquivoModel.cs" />
+    <Compile Include="Models\LayoutEntradaModel.cs" />
+    <Compile Include="Models\LayoutSaidaModel.cs" />
+    <Compile Include="Models\StatusModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="css\bootstrap-fileinput-master\css\fileinput.css" />
+    <Content Include="css\bootstrap-fileinput-master\css\fileinput.min.css" />
+    <Content Include="css\bootstrap-fileinput-master\examples\index.html" />
+    <Content Include="css\bootstrap-fileinput-master\img\loading-sm.gif" />
+    <Content Include="css\bootstrap-fileinput-master\img\loading.gif" />
+    <Content Include="css\custom.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="css\demos\demo-corporate-law-office.css" />
+    <Content Include="css\fonts\star.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="css\jquery.dataTables.css" />
+    <Content Include="css\skins\default.css" />
+    <Content Include="css\skins\skin-corporate-3.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="css\skins\skin-corporate-4.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="css\skins\skin-corporate-5.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="css\skins\skin-corporate-6.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="css\skins\skin-corporate-7.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="css\skins\skin-corporate-8.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="css\skins\skin-corporate-digital-agency.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="css\skins\skin-corporate-hosting.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="css\skins\skin-corporate-law-office.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="css\theme-animate.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="css\theme-blog.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="css\theme-elements.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="css\theme-shop.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="css\theme.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailCommunication\EmailInscricaoNewsletter.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="fonts\revicons\revicons.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="img\aboutus.jpg" />
+    <Content Include="img\admin-banner.png" />
+    <Content Include="img\apple-touch-icon.png" />
+    <Content Include="img\arrows-dark.png" />
+    <Content Include="img\arrows.png" />
+    <Content Include="img\avatar-2.jpg" />
+    <Content Include="img\avatar-3.jpg" />
+    <Content Include="img\avatar-4.jpg" />
+    <Content Include="img\avatar.jpg" />
+    <Content Include="img\benefits\benefits-1-thumb.jpg" />
+    <Content Include="img\benefits\benefits-1.jpg" />
+    <Content Include="img\benefits\benefits-2-thumb.jpg" />
+    <Content Include="img\benefits\benefits-2.jpg" />
+    <Content Include="img\benefits\benefits-3-thumb.jpg" />
+    <Content Include="img\benefits\benefits-3.jpg" />
+    <Content Include="img\benefits\benefits-4-thumb.jpg" />
+    <Content Include="img\benefits\benefits-4.jpg" />
+    <Content Include="img\benefits\benefits-5-thumb.jpg" />
+    <Content Include="img\benefits\benefits-5.jpg" />
+    <Content Include="img\benefits\benefits-6-thumb.jpg" />
+    <Content Include="img\benefits\benefits-6.jpg" />
+    <Content Include="img\blank.gif" />
+    <Content Include="img\blog01.jpg" />
+    <Content Include="img\blog02.jpg" />
+    <Content Include="img\blog03.jpg" />
+    <Content Include="img\blog04.jpg" />
+    <Content Include="img\blog05.jpg" />
+    <Content Include="img\blog06.jpg" />
+    <Content Include="img\blogmin01.jpg" />
+    <Content Include="img\blogmin02.jpg" />
+    <Content Include="img\blogmin03.jpg" />
+    <Content Include="img\blog\blog-hosting-1.jpg" />
+    <Content Include="img\blog\blog-hosting-2.jpg" />
+    <Content Include="img\blog\blog-hosting-3.jpg" />
+    <Content Include="img\blog\blog-image-1.jpg" />
+    <Content Include="img\blog\blog-image-2.jpg" />
+    <Content Include="img\blog\blog-image-3.jpg" />
+    <Content Include="img\blog\blog-law-1.jpg" />
+    <Content Include="img\blog\blog-law-2.jpg" />
+    <Content Include="img\blog\blog-medium-image-1.jpg" />
+    <Content Include="img\blog\blog-medium-image-2.jpg" />
+    <Content Include="img\blog\blog-medium-image-3.jpg" />
+    <Content Include="img\blog\blog-thumb-1.jpg" />
+    <Content Include="img\blog\blog-thumb-2.jpg" />
+    <Content Include="img\blog\blog-thumb-3.jpg" />
+    <Content Include="img\blog\blog-vintage-1.jpg" />
+    <Content Include="img\blog\blog-vintage-2.jpg" />
+    <Content Include="img\blog\blog-vintage-3.jpg" />
+    <Content Include="img\blog\blog-vintage-4.jpg" />
+    <Content Include="img\clients\client-1-dna.jpg" />
+    <Content Include="img\clients\client-1.jpg" />
+    <Content Include="img\clients\client-2-dna.jpg" />
+    <Content Include="img\clients\client-2.jpg" />
+    <Content Include="img\clients\client-3.jpg" />
+    <Content Include="img\clients\client-4.jpg" />
+    <Content Include="img\custom-header-bg-2.jpg" />
+    <Content Include="img\custom-header-bg.jpg" />
+    <Content Include="img\custom-header.png" />
+    <Content Include="img\custom-underline.png" />
+    <Content Include="img\dark-and-light-dna.jpg" />
+    <Content Include="img\dark-and-light.jpg" />
+    <Content Include="img\device.png" />
+    <Content Include="img\favicon.ico" />
+    <Content Include="img\flags.png" />
+    <Content Include="img\gallery\gallery-1.jpg" />
+    <Content Include="img\gallery\gallery-10.jpg" />
+    <Content Include="img\gallery\gallery-11.jpg" />
+    <Content Include="img\gallery\gallery-2.jpg" />
+    <Content Include="img\gallery\gallery-3.jpg" />
+    <Content Include="img\gallery\gallery-4.jpg" />
+    <Content Include="img\gallery\gallery-5.jpg" />
+    <Content Include="img\gallery\gallery-6.jpg" />
+    <Content Include="img\gallery\gallery-7.jpg" />
+    <Content Include="img\gallery\gallery-8.jpg" />
+    <Content Include="img\gallery\gallery-9.jpg" />
+    <Content Include="img\history-thumb-dark.png" />
+    <Content Include="img\history-thumb.png" />
+    <Content Include="img\holder.png" />
+    <Content Include="img\home-concept-dark.png" />
+    <Content Include="img\home-concept-icons-dark.png" />
+    <Content Include="img\home-concept-icons.png" />
+    <Content Include="img\home-concept-item-1.png" />
+    <Content Include="img\home-concept-item-2.png" />
+    <Content Include="img\home-concept-item-3.png" />
+    <Content Include="img\home-concept-item-dark.png" />
+    <Content Include="img\home-concept-item.png" />
+    <Content Include="img\home-concept-shadow.png" />
+    <Content Include="img\home-concept.png" />
+    <Content Include="img\icons\accident-law.png" />
+    <Content Include="img\icons\business-law.png" />
+    <Content Include="img\icons\capital-law.png" />
+    <Content Include="img\icons\criminal-law.png" />
+    <Content Include="img\icons\divorce-law.png" />
+    <Content Include="img\icons\health-law.png" />
+    <Content Include="img\icons\icon-user-16.png" />
+    <Content Include="img\icons\icon-user-24.png" />
+    <Content Include="img\icons\icon-user-48.png" />
+    <Content Include="img\icons\marketing-grey.png" />
+    <Content Include="img\icons\marketing.png" />
+    <Content Include="img\icons\seo-grey.png" />
+    <Content Include="img\icons\seo.png" />
+    <Content Include="img\icons\support-grey.png" />
+    <Content Include="img\icons\support.png" />
+    <Content Include="img\landing-concept-item-1.png" />
+    <Content Include="img\landing-concept-item-2.png" />
+    <Content Include="img\landing-concept-item-3.png" />
+    <Content Include="img\landing-concept-item-4.png" />
+    <Content Include="img\landing-concept-item-5.png" />
+    <Content Include="img\landing-concept-item-6.png" />
+    <Content Include="img\landing-page-style-switcher.png" />
+    <Content Include="img\layout-styles-offline.png" />
+    <Content Include="img\layout-styles-online.png" />
+    <Content Include="img\layout-styles.png" />
+    <Content Include="img\loading.gif" />
+    <Content Include="img\logo-big.png" />
+    <Content Include="img\logo-dark.png" />
+    <Content Include="img\logo-default-slim-dark.png" />
+    <Content Include="img\logo-default-slim.png" />
+    <Content Include="img\logo-default.png" />
+    <Content Include="img\logo-footer-dark.png" />
+    <Content Include="img\logo-footer-dna.png" />
+    <Content Include="img\logo-footer-small.png" />
+    <Content Include="img\logo-footer.png" />
+    <Content Include="img\logo-old.png" />
+    <Content Include="img\logo.png" />
+    <Content Include="img\LogoDNA.png" />
+    <Content Include="img\LogoDNAMaisFooter.png" />
+    <Content Include="img\LogoDNAMaisNewsletter.png" />
+    <Content Include="img\logos\logo-1.png" />
+    <Content Include="img\logos\logo-10.png" />
+    <Content Include="img\logos\logo-2.png" />
+    <Content Include="img\logos\logo-3.png" />
+    <Content Include="img\logos\logo-4.png" />
+    <Content Include="img\logos\logo-5.png" />
+    <Content Include="img\logos\logo-6.png" />
+    <Content Include="img\logos\logo-7.png" />
+    <Content Include="img\logos\logo-8.png" />
+    <Content Include="img\logos\logo-9.png" />
+    <Content Include="img\map-2.png" />
+    <Content Include="img\map-color-2.png" />
+    <Content Include="img\map-dark.png" />
+    <Content Include="img\map.png" />
+    <Content Include="img\mockup-porto.png" />
+    <Content Include="img\office-1.jpg" />
+    <Content Include="img\office-2.jpg" />
+    <Content Include="img\office-3.jpg" />
+    <Content Include="img\office-4.jpg" />
+    <Content Include="img\our-office-1.jpg" />
+    <Content Include="img\our-office-2.jpg" />
+    <Content Include="img\our-office-3.jpg" />
+    <Content Include="img\our-office-4.jpg" />
+    <Content Include="img\our-office-5.jpg" />
+    <Content Include="img\our-office-6.jpg" />
+    <Content Include="img\our-office-7.jpg" />
+    <Content Include="img\our-office-8.jpg" />
+    <Content Include="img\parallax-hosting.jpg" />
+    <Content Include="img\parallax-image-2.jpg" />
+    <Content Include="img\parallax-image-dna.jpg" />
+    <Content Include="img\parallax-image-law.jpg" />
+    <Content Include="img\parallax-image.jpg" />
+    <Content Include="img\parallax-landing.jpg" />
+    <Content Include="img\parallax-law.jpg" />
+    <Content Include="img\parallax-people.jpg" />
+    <Content Include="img\parallax-transparent.jpg" />
+    <Content Include="img\parallax.jpg" />
+    <Content Include="img\patterns\az_subtle.png" />
+    <Content Include="img\patterns\blizzard.png" />
+    <Content Include="img\patterns\bright_squares.png" />
+    <Content Include="img\patterns\denim.png" />
+    <Content Include="img\patterns\fancy.jpg" />
+    <Content Include="img\patterns\fancy_deboss.png" />
+    <Content Include="img\patterns\gray_jean.png" />
+    <Content Include="img\patterns\honey_im_subtle.png" />
+    <Content Include="img\patterns\linedpaper.png" />
+    <Content Include="img\patterns\linen.png" />
+    <Content Include="img\patterns\pw_maze_white.png" />
+    <Content Include="img\patterns\random_grey_variations.png" />
+    <Content Include="img\patterns\skin_side_up.png" />
+    <Content Include="img\patterns\stitched_wool.png" />
+    <Content Include="img\patterns\straws.png" />
+    <Content Include="img\patterns\stripes.png" />
+    <Content Include="img\patterns\subtle_grunge.png" />
+    <Content Include="img\patterns\swirl_pattern.png" />
+    <Content Include="img\patterns\textured_stripes.png" />
+    <Content Include="img\patterns\wild_oliva.png" />
+    <Content Include="img\patterns\worn_dots.png" />
+    <Content Include="img\pin.png" />
+    <Content Include="img\porto-preview-1.jpg" />
+    <Content Include="img\previews\areas\content-1.png" />
+    <Content Include="img\previews\areas\content-2.png" />
+    <Content Include="img\previews\areas\content-3.png" />
+    <Content Include="img\previews\areas\content-4.png" />
+    <Content Include="img\previews\areas\content-5.png" />
+    <Content Include="img\previews\areas\content-6.png" />
+    <Content Include="img\previews\areas\content-7.png" />
+    <Content Include="img\previews\areas\content-8.png" />
+    <Content Include="img\previews\areas\content-9.png" />
+    <Content Include="img\previews\areas\footer-1.png" />
+    <Content Include="img\previews\areas\footer-2.png" />
+    <Content Include="img\previews\areas\footer-3.png" />
+    <Content Include="img\previews\areas\header-1.png" />
+    <Content Include="img\previews\areas\header-2.png" />
+    <Content Include="img\previews\areas\header-3.png" />
+    <Content Include="img\previews\areas\header-4.png" />
+    <Content Include="img\previews\preview-classic-color.jpg" />
+    <Content Include="img\previews\preview-classic-light.jpg" />
+    <Content Include="img\previews\preview-classic-video-light.jpg" />
+    <Content Include="img\previews\preview-classic-video.jpg" />
+    <Content Include="img\previews\preview-classic.jpg" />
+    <Content Include="img\previews\preview-corporate-digital-agency.jpg" />
+    <Content Include="img\previews\preview-corporate-hosting.jpg" />
+    <Content Include="img\previews\preview-corporate-law-office.jpg" />
+    <Content Include="img\previews\preview-corporate-version2.jpg" />
+    <Content Include="img\previews\preview-corporate-version3.jpg" />
+    <Content Include="img\previews\preview-corporate-version4.jpg" />
+    <Content Include="img\previews\preview-corporate-version5.jpg" />
+    <Content Include="img\previews\preview-corporate-version6.jpg" />
+    <Content Include="img\previews\preview-corporate-version7.jpg" />
+    <Content Include="img\previews\preview-corporate-version8.jpg" />
+    <Content Include="img\previews\preview-corporate-version9.jpg" />
+    <Content Include="img\previews\preview-corporate.jpg" />
+    <Content Include="img\previews\preview-one-page.jpg" />
+    <Content Include="img\products\product-1.jpg" />
+    <Content Include="img\products\product-10.jpg" />
+    <Content Include="img\products\product-11.jpg" />
+    <Content Include="img\products\product-12.jpg" />
+    <Content Include="img\products\product-13.jpg" />
+    <Content Include="img\products\product-2.jpg" />
+    <Content Include="img\products\product-3.jpg" />
+    <Content Include="img\products\product-4.jpg" />
+    <Content Include="img\products\product-5.jpg" />
+    <Content Include="img\products\product-6.jpg" />
+    <Content Include="img\products\product-7-2.jpg" />
+    <Content Include="img\products\product-7-3.jpg" />
+    <Content Include="img\products\product-7.jpg" />
+    <Content Include="img\products\product-8.jpg" />
+    <Content Include="img\products\product-9.jpg" />
+    <Content Include="img\produtos.jpg" />
+    <Content Include="img\profile01.jpg" />
+    <Content Include="img\profile02.jpg" />
+    <Content Include="img\profile03.jpg" />
+    <Content Include="img\profile04.jpg" />
+    <Content Include="img\profile05.jpg" />
+    <Content Include="img\profileautor.jpg" />
+    <Content Include="img\projects\project-1-2.jpg" />
+    <Content Include="img\projects\project-1-short-2.jpg" />
+    <Content Include="img\projects\project-1-short.jpg" />
+    <Content Include="img\projects\project-1.jpg" />
+    <Content Include="img\projects\project-10.jpg" />
+    <Content Include="img\projects\project-11.jpg" />
+    <Content Include="img\projects\project-12.jpg" />
+    <Content Include="img\projects\project-13.jpg" />
+    <Content Include="img\projects\project-14.jpg" />
+    <Content Include="img\projects\project-15.jpg" />
+    <Content Include="img\projects\project-16.jpg" />
+    <Content Include="img\projects\project-17.jpg" />
+    <Content Include="img\projects\project-18.jpg" />
+    <Content Include="img\projects\project-19.jpg" />
+    <Content Include="img\projects\project-2-2.jpg" />
+    <Content Include="img\projects\project-2-3.jpg" />
+    <Content Include="img\projects\project-2-short.jpg" />
+    <Content Include="img\projects\project-2.jpg" />
+    <Content Include="img\projects\project-20.jpg" />
+    <Content Include="img\projects\project-21.jpg" />
+    <Content Include="img\projects\project-22.jpg" />
+    <Content Include="img\projects\project-23.jpg" />
+    <Content Include="img\projects\project-24.jpg" />
+    <Content Include="img\projects\project-25.jpg" />
+    <Content Include="img\projects\project-26.jpg" />
+    <Content Include="img\projects\project-27-detail.jpg" />
+    <Content Include="img\projects\project-27-short-transparent.png" />
+    <Content Include="img\projects\project-27-short.jpg" />
+    <Content Include="img\projects\project-27.jpg" />
+    <Content Include="img\projects\project-28.jpg" />
+    <Content Include="img\projects\project-29.jpg" />
+    <Content Include="img\projects\project-3.jpg" />
+    <Content Include="img\projects\project-4.jpg" />
+    <Content Include="img\projects\project-5.jpg" />
+    <Content Include="img\projects\project-6.jpg" />
+    <Content Include="img\projects\project-7.jpg" />
+    <Content Include="img\projects\project-8.jpg" />
+    <Content Include="img\projects\project-9.jpg" />
+    <Content Include="img\projects\project-carousel-1.png" />
+    <Content Include="img\projects\project-carousel-2.png" />
+    <Content Include="img\projects\project-carousel-3.png" />
+    <Content Include="img\projects\project-carousel-4.png" />
+    <Content Include="img\projects\project-carousel-5.png" />
+    <Content Include="img\projects\project-carousel-6.png" />
+    <Content Include="img\projects\project-carousel-7.png" />
+    <Content Include="img\projects\project-full-width-2.jpg" />
+    <Content Include="img\projects\project-full-width.jpg" />
+    <Content Include="img\projects\project-home-1.jpg" />
+    <Content Include="img\projects\project-home-2.jpg" />
+    <Content Include="img\projects\project-home-3.jpg" />
+    <Content Include="img\projects\project-masonry-1-2.jpg" />
+    <Content Include="img\projects\project-masonry-1.jpg" />
+    <Content Include="img\projects\project-masonry-2.jpg" />
+    <Content Include="img\projects\project-masonry-24.jpg" />
+    <Content Include="img\projects\project-masonry-25.jpg" />
+    <Content Include="img\projects\project-masonry-26.jpg" />
+    <Content Include="img\projects\project-masonry-27.jpg" />
+    <Content Include="img\projects\project-masonry-28.jpg" />
+    <Content Include="img\projects\project-masonry-29.jpg" />
+    <Content Include="img\projects\project-masonry-3.jpg" />
+    <Content Include="img\projects\project-masonry-5.jpg" />
+    <Content Include="img\projects\project-masonry-6.jpg" />
+    <Content Include="img\projects\project-masonry-7.jpg" />
+    <Content Include="img\projects\project-masonry.jpg" />
+    <Content Include="img\projects\project-short-2.jpg" />
+    <Content Include="img\projects\project-short-3.jpg" />
+    <Content Include="img\projects\project-short.jpg" />
+    <Content Include="img\projects\project-thumb.jpg" />
+    <Content Include="img\projects\project.jpg" />
+    <Content Include="img\responsive-ready.png" />
+    <Content Include="img\slides\dark-cover.jpg" />
+    <Content Include="img\slides\landing-page-slide-1.jpg" />
+    <Content Include="img\slides\light-cover.jpg" />
+    <Content Include="img\slides\mobile-device.png" />
+    <Content Include="img\slides\slide-1.jpg" />
+    <Content Include="img\slides\slide-2.jpg" />
+    <Content Include="img\slides\slide-bg-3-dna.jpg" />
+    <Content Include="img\slides\slide-bg-3.jpg" />
+    <Content Include="img\slides\slide-bg-4-dna.jpg" />
+    <Content Include="img\slides\slide-bg-4.jpg" />
+    <Content Include="img\slides\slide-bg-5-dna.jpg" />
+    <Content Include="img\slides\slide-bg-5.jpg" />
+    <Content Include="img\slides\slide-bg-full-2-dark.jpg" />
+    <Content Include="img\slides\slide-bg-full-2.jpg" />
+    <Content Include="img\slides\slide-bg-full-3-dark.jpg" />
+    <Content Include="img\slides\slide-bg-full-4-dark.jpg" />
+    <Content Include="img\slides\slide-bg-full-5-dark.jpg" />
+    <Content Include="img\slides\slide-bg-full.jpg" />
+    <Content Include="img\slides\slide-bg-light.jpg" />
+    <Content Include="img\slides\slide-bg.jpg" />
+    <Content Include="img\slides\slide-concept-2-1.png" />
+    <Content Include="img\slides\slide-concept-2-2.png" />
+    <Content Include="img\slides\slide-concept-2-3.png" />
+    <Content Include="img\slides\slide-concept-2-4.png" />
+    <Content Include="img\slides\slide-concept-2-5.png" />
+    <Content Include="img\slides\slide-concept-draft.png" />
+    <Content Include="img\slides\slide-concept.png" />
+    <Content Include="img\slides\slide-corporate-1.jpg" />
+    <Content Include="img\slides\slide-corporate-2.jpg" />
+    <Content Include="img\slides\slide-corporate-3.jpg" />
+    <Content Include="img\slides\slide-corporate-4.jpg" />
+    <Content Include="img\slides\slide-corporate-5.jpg" />
+    <Content Include="img\slides\slide-corporate-6.jpg" />
+    <Content Include="img\slides\slide-corporate-7.jpg" />
+    <Content Include="img\slides\slide-corporate-8.jpg" />
+    <Content Include="img\slides\slide-corporate-9.jpg" />
+    <Content Include="img\slides\slide-corporate-hosting.jpg" />
+    <Content Include="img\slides\slide-corporate-law-office-1.jpg" />
+    <Content Include="img\slides\slide-corporate-law-office-2-thumb.jpg" />
+    <Content Include="img\slides\slide-corporate-law-office-2.jpg" />
+    <Content Include="img\slides\slide-corporate-law-office-3.jpg" />
+    <Content Include="img\slides\slide-light-1.jpg" />
+    <Content Include="img\slides\slide-light-1.png" />
+    <Content Include="img\slides\slide-light-2.png" />
+    <Content Include="img\slides\slide-title-border-light.png" />
+    <Content Include="img\slides\slide-title-border.png" />
+    <Content Include="img\style-switcher.png" />
+    <Content Include="img\team\team-1.jpg" />
+    <Content Include="img\team\team-10.jpg" />
+    <Content Include="img\team\team-11.jpg" />
+    <Content Include="img\team\team-12.jpg" />
+    <Content Include="img\team\team-13.jpg" />
+    <Content Include="img\team\team-14.jpg" />
+    <Content Include="img\team\team-15.jpg" />
+    <Content Include="img\team\team-16.jpg" />
+    <Content Include="img\team\team-17.jpg" />
+    <Content Include="img\team\team-18.jpg" />
+    <Content Include="img\team\team-19.jpg" />
+    <Content Include="img\team\team-2.jpg" />
+    <Content Include="img\team\team-20.jpg" />
+    <Content Include="img\team\team-22.jpg" />
+    <Content Include="img\team\team-23.jpg" />
+    <Content Include="img\team\team-24.jpg" />
+    <Content Include="img\team\team-25.jpg" />
+    <Content Include="img\team\team-3.jpg" />
+    <Content Include="img\team\team-4.jpg" />
+    <Content Include="img\team\team-5.jpg" />
+    <Content Include="img\team\team-6.jpg" />
+    <Content Include="img\team\team-7.jpg" />
+    <Content Include="img\team\team-8.jpg" />
+    <Content Include="img\team\team-9.jpg" />
+    <Content Include="img\top-quality-documentation.png" />
+    <Content Include="img\updates.png" />
+    <Content Include="img\video-overlay-dark.png" />
+    <Content Include="img\video-overlay.png" />
+    <Content Include="img\vimeo-1.jpg" />
+    <Content Include="img\youtube-1.jpg" />
+    <Content Include="js\contractServicesFtp.js" />
+    <Content Include="js\contractServicesVehicle.js" />
+    <Content Include="js\contractServicesPj.js" />
+    <Content Include="js\contractServicesPf.js" />
+    <Content Include="js\custom.js" />
+    <Content Include="js\demos\demo-corporate-law-office.js" />
+    <Content Include="js\dnamais.js" />
+    <Content Include="js\examples\examples.carousels.js" />
+    <Content Include="js\examples\examples.gallery.js" />
+    <Content Include="js\examples\examples.lightboxes.js" />
+    <Content Include="js\examples\examples.portfolio.js" />
+    <Content Include="js\fileinput.js" />
+    <Content Include="js\fileinput.min.js" />
+    <Content Include="js\functionsFtp.js" />
+    <Content Include="js\functionsVehicle.js" />
+    <Content Include="js\functionsPj.js" />
+    <Content Include="js\functionsPf.js" />
+    <Content Include="js\jquery.dataTables.min.js" />
+    <Content Include="js\theme.init.js" />
+    <Content Include="js\theme.js" />
+    <Content Include="js\views\view.contact.js" />
+    <Content Include="js\views\view.home.js" />
+    <Content Include="js\views\view.hosting.js" />
+    <Content Include="TextInputEffects\TextInputEffects\css\demo.css" />
+    <Content Include="TextInputEffects\TextInputEffects\css\normalize.css" />
+    <Content Include="TextInputEffects\TextInputEffects\css\set1.css" />
+    <Content Include="TextInputEffects\TextInputEffects\css\set2.css" />
+    <Content Include="TextInputEffects\TextInputEffects\fonts\codropsicons\codropsicons.svg" />
+    <Content Include="TextInputEffects\TextInputEffects\fonts\codropsicons\license.txt" />
+    <Content Include="TextInputEffects\TextInputEffects\fonts\font-awesome-4.2.0\css\font-awesome.min.css" />
+    <Content Include="TextInputEffects\TextInputEffects\fonts\font-awesome-4.2.0\fonts\fontawesome-webfont.svg" />
+    <Content Include="TextInputEffects\TextInputEffects\img\related\MinimalForm.png" />
+    <Content Include="TextInputEffects\TextInputEffects\img\related\SelectInspiration.png" />
+    <Content Include="TextInputEffects\TextInputEffects\img\search.svg" />
+    <Content Include="TextInputEffects\TextInputEffects\index.html" />
+    <Content Include="TextInputEffects\TextInputEffects\index2.html" />
+    <Content Include="TextInputEffects\TextInputEffects\js\classie.js" />
+    <Content Include="vendor\bootpag\bootpag.js" />
+    <Content Include="vendor\bootstrap-rtl\bootstrap-rtl.css" />
+    <Content Include="vendor\bootstrap\css\bootstrap-theme.css" />
+    <Content Include="vendor\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="vendor\bootstrap\css\bootstrap.css" />
+    <Content Include="vendor\bootstrap\css\bootstrap.min.css" />
+    <Content Include="vendor\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="vendor\bootstrap\js\bootstrap.js" />
+    <Content Include="vendor\bootstrap\js\bootstrap.min.js" />
+    <Content Include="vendor\bootstrap\js\npm.js" />
+    <Content Include="vendor\circle-flip-slideshow\css\component.css" />
+    <Content Include="vendor\circle-flip-slideshow\js\jquery.flipshow.js" />
+    <Content Include="vendor\circle-flip-slideshow\js\jquery.flipshow.min.js" />
+    <Content Include="vendor\circle-flip-slideshow\README.txt" />
+    <Content Include="vendor\common\common.js" />
+    <Content Include="vendor\common\common.min.js" />
+    <Content Include="vendor\font-awesome\css\font-awesome.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="vendor\font-awesome\css\font-awesome.min.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="vendor\font-awesome\fonts\fontawesome-webfont.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="vendor\font-awesome\HELP-US-OUT.txt" />
+    <Content Include="vendor\isotope\jquery.isotope.min.js" />
+    <Content Include="vendor\jquery-cookie\jquery-cookie.js" />
+    <Content Include="vendor\jquery-cookie\jquery-cookie.min.js" />
+    <Content Include="vendor\jquery.appear\jquery.appear.js" />
+    <Content Include="vendor\jquery.appear\jquery.appear.min.js" />
+    <Content Include="vendor\jquery.easing\jquery.easing.js" />
+    <Content Include="vendor\jquery.easing\jquery.easing.min.js" />
+    <Content Include="vendor\jquery.easy-pie-chart\jquery.easy-pie-chart.js" />
+    <Content Include="vendor\jquery.easy-pie-chart\jquery.easy-pie-chart.min.js" />
+    <Content Include="vendor\jquery.gmap\jquery.gmap.js" />
+    <Content Include="vendor\jquery.gmap\jquery.gmap.min.js" />
+    <Content Include="vendor\jquery.lazyload\jquery.lazyload.js" />
+    <Content Include="vendor\jquery.lazyload\jquery.lazyload.min.js" />
+    <Content Include="vendor\jquery.lazyload\jquery.scrollstop.js" />
+    <Content Include="vendor\jquery.stellar\jquery.stellar.js" />
+    <Content Include="vendor\jquery.stellar\jquery.stellar.min.js" />
+    <Content Include="vendor\jquery.validation\jquery.validation.js" />
+    <Content Include="vendor\jquery.validation\jquery.validation.min.js" />
+    <Content Include="vendor\jquery\images\ui-icons_444444_256x240.png" />
+    <Content Include="vendor\jquery\images\ui-icons_555555_256x240.png" />
+    <Content Include="vendor\jquery\images\ui-icons_777620_256x240.png" />
+    <Content Include="vendor\jquery\images\ui-icons_777777_256x240.png" />
+    <Content Include="vendor\jquery\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="vendor\jquery\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="vendor\jquery\jquery-ui.css" />
+    <Content Include="vendor\jquery\jquery-ui.js" />
+    <Content Include="vendor\jquery\jquery-ui.structure.css" />
+    <Content Include="vendor\jquery\jquery-ui.theme.css" />
+    <Content Include="vendor\jquery\jquery.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="vendor\jquery\jquery.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="vendor\magnific-popup\jquery.magnific-popup.js" />
+    <Content Include="vendor\magnific-popup\jquery.magnific-popup.min.js" />
+    <Content Include="vendor\magnific-popup\magnific-popup.css" />
+    <Content Include="vendor\magnific-popup\magnific-popup.min.css" />
+    <Content Include="vendor\modernizr\modernizr.min.js" />
+    <Content Include="vendor\nivo-slider\bar\arrows.png" />
+    <Content Include="vendor\nivo-slider\bar\bar.css" />
+    <Content Include="vendor\nivo-slider\bar\bullets.png" />
+    <Content Include="vendor\nivo-slider\bar\loading.gif" />
+    <Content Include="vendor\nivo-slider\dark\arrows.png" />
+    <Content Include="vendor\nivo-slider\dark\bullets.png" />
+    <Content Include="vendor\nivo-slider\dark\dark.css" />
+    <Content Include="vendor\nivo-slider\dark\loading.gif" />
+    <Content Include="vendor\nivo-slider\default\arrows.png" />
+    <Content Include="vendor\nivo-slider\default\bullets.png" />
+    <Content Include="vendor\nivo-slider\default\default.css" />
+    <Content Include="vendor\nivo-slider\default\loading.gif" />
+    <Content Include="vendor\nivo-slider\jquery.nivo.slider.js" />
+    <Content Include="vendor\nivo-slider\jquery.nivo.slider.min.js" />
+    <Content Include="vendor\nivo-slider\light\arrows.png" />
+    <Content Include="vendor\nivo-slider\light\bullets.png" />
+    <Content Include="vendor\nivo-slider\light\light.css" />
+    <Content Include="vendor\nivo-slider\light\loading.gif" />
+    <Content Include="vendor\nivo-slider\nivo-slider.css" />
+    <Content Include="vendor\owl.carousel\assets\ajax-loader.gif" />
+    <Content Include="vendor\owl.carousel\assets\owl.carousel.css" />
+    <Content Include="vendor\owl.carousel\assets\owl.carousel.min.css" />
+    <Content Include="vendor\owl.carousel\assets\owl.theme.default.css" />
+    <Content Include="vendor\owl.carousel\assets\owl.theme.default.min.css" />
+    <Content Include="vendor\owl.carousel\assets\owl.theme.green.css" />
+    <Content Include="vendor\owl.carousel\assets\owl.theme.green.min.css" />
+    <Content Include="vendor\owl.carousel\assets\owl.video.play.png" />
+    <Content Include="vendor\owl.carousel\owl.carousel.js" />
+    <Content Include="vendor\owl.carousel\owl.carousel.min.js" />
+    <Content Include="vendor\requirejs\requirejs.js" />
+    <Content Include="vendor\respond\respond.js" />
+    <Content Include="vendor\rs-plugin\addon-visual-editor\readme.txt" />
+    <Content Include="vendor\rs-plugin\assets\coloredbg.png" />
+    <Content Include="vendor\rs-plugin\assets\gridtile.png" />
+    <Content Include="vendor\rs-plugin\assets\gridtile_3x3.png" />
+    <Content Include="vendor\rs-plugin\assets\gridtile_3x3_white.png" />
+    <Content Include="vendor\rs-plugin\assets\gridtile_white.png" />
+    <Content Include="vendor\rs-plugin\assets\loader.gif" />
+    <Content Include="vendor\rs-plugin\assets\sources\fb.png" />
+    <Content Include="vendor\rs-plugin\assets\sources\fr.png" />
+    <Content Include="vendor\rs-plugin\assets\sources\ig.png" />
+    <Content Include="vendor\rs-plugin\assets\sources\post.png" />
+    <Content Include="vendor\rs-plugin\assets\sources\revolution_slide1.png" />
+    <Content Include="vendor\rs-plugin\assets\sources\revolution_slide2.png" />
+    <Content Include="vendor\rs-plugin\assets\sources\tw.png" />
+    <Content Include="vendor\rs-plugin\assets\sources\vm.png" />
+    <Content Include="vendor\rs-plugin\assets\sources\wc.png" />
+    <Content Include="vendor\rs-plugin\assets\sources\yt.png" />
+    <Content Include="vendor\rs-plugin\css\closedhand.cur" />
+    <Content Include="vendor\rs-plugin\css\layers.css" />
+    <Content Include="vendor\rs-plugin\css\navigation-skins\ares.css" />
+    <Content Include="vendor\rs-plugin\css\navigation-skins\custom.css" />
+    <Content Include="vendor\rs-plugin\css\navigation-skins\dione.css" />
+    <Content Include="vendor\rs-plugin\css\navigation-skins\erinyen.css" />
+    <Content Include="vendor\rs-plugin\css\navigation-skins\gyges.css" />
+    <Content Include="vendor\rs-plugin\css\navigation-skins\hades.css" />
+    <Content Include="vendor\rs-plugin\css\navigation-skins\hebe.css" />
+    <Content Include="vendor\rs-plugin\css\navigation-skins\hephaistos.css" />
+    <Content Include="vendor\rs-plugin\css\navigation-skins\hermes.css" />
+    <Content Include="vendor\rs-plugin\css\navigation-skins\hesperiden.css" />
+    <Content Include="vendor\rs-plugin\css\navigation-skins\metis.css" />
+    <Content Include="vendor\rs-plugin\css\navigation-skins\persephone.css" />
+    <Content Include="vendor\rs-plugin\css\navigation-skins\uranus.css" />
+    <Content Include="vendor\rs-plugin\css\navigation-skins\zeus.css" />
+    <Content Include="vendor\rs-plugin\css\navigation.css" />
+    <Content Include="vendor\rs-plugin\css\openhand.cur" />
+    <Content Include="vendor\rs-plugin\css\settings.css" />
+    <Content Include="vendor\rs-plugin\fonts\font-awesome\css\font-awesome.css" />
+    <Content Include="vendor\rs-plugin\fonts\font-awesome\css\font-awesome.min.css" />
+    <Content Include="vendor\rs-plugin\fonts\font-awesome\fonts\fontawesome-webfont.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="vendor\rs-plugin\fonts\pe-icon-7-stroke\css\helper.css" />
+    <Content Include="vendor\rs-plugin\fonts\pe-icon-7-stroke\css\pe-icon-7-stroke.css" />
+    <Content Include="vendor\rs-plugin\fonts\pe-icon-7-stroke\fonts\Pe-icon-7-stroke.svg" />
+    <Content Include="vendor\rs-plugin\fonts\revicons\index.php" />
+    <Content Include="vendor\rs-plugin\fonts\revicons\revicons.eot" />
+    <Content Include="vendor\rs-plugin\fonts\revicons\revicons.svg" />
+    <Content Include="vendor\rs-plugin\fonts\revicons\revicons.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="vendor\rs-plugin\fonts\revicons\revicons.woff">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="vendor\rs-plugin\js\extensions\revolution.extension.actions.min.js" />
+    <Content Include="vendor\rs-plugin\js\extensions\revolution.extension.carousel.min.js" />
+    <Content Include="vendor\rs-plugin\js\extensions\revolution.extension.kenburn.min.js" />
+    <Content Include="vendor\rs-plugin\js\extensions\revolution.extension.layeranimation.min.js" />
+    <Content Include="vendor\rs-plugin\js\extensions\revolution.extension.migration.min.js" />
+    <Content Include="vendor\rs-plugin\js\extensions\revolution.extension.navigation.min.js" />
+    <Content Include="vendor\rs-plugin\js\extensions\revolution.extension.parallax.min.js" />
+    <Content Include="vendor\rs-plugin\js\extensions\revolution.extension.slideanims.min.js" />
+    <Content Include="vendor\rs-plugin\js\extensions\revolution.extension.video.min copy.js" />
+    <Content Include="vendor\rs-plugin\js\extensions\revolution.extension.video.min.js" />
+    <Content Include="vendor\rs-plugin\js\extensions\source\revolution.extension.actions.js" />
+    <Content Include="vendor\rs-plugin\js\extensions\source\revolution.extension.carousel.js" />
+    <Content Include="vendor\rs-plugin\js\extensions\source\revolution.extension.kenburn.js" />
+    <Content Include="vendor\rs-plugin\js\extensions\source\revolution.extension.layeranimation.js" />
+    <Content Include="vendor\rs-plugin\js\extensions\source\revolution.extension.migration.js" />
+    <Content Include="vendor\rs-plugin\js\extensions\source\revolution.extension.navigation.js" />
+    <Content Include="vendor\rs-plugin\js\extensions\source\revolution.extension.parallax.js" />
+    <Content Include="vendor\rs-plugin\js\extensions\source\revolution.extension.slideanims.js" />
+    <Content Include="vendor\rs-plugin\js\extensions\source\revolution.extension.video.js" />
+    <Content Include="vendor\rs-plugin\js\jquery.themepunch.enablelog.js" />
+    <Content Include="vendor\rs-plugin\js\jquery.themepunch.revolution.min.js" />
+    <Content Include="vendor\rs-plugin\js\jquery.themepunch.tools.min.js" />
+    <Content Include="vendor\rs-plugin\js\source\jquery.themepunch.enablelog.js" />
+    <Content Include="vendor\rs-plugin\js\source\jquery.themepunch.revolution.js" />
+    <Content Include="vendor\rs-plugin\js\source\jquery.themepunch.tools.min.js" />
+    <Content Include="vendor\simple-line-icons\css\simple-line-icons.css" />
+    <Content Include="vendor\simple-line-icons\css\simple-line-icons.min.css" />
+    <Content Include="vendor\simple-line-icons\fonts\Simple-Line-Icons.svg" />
+    <Content Include="vendor\vide\vide.js" />
+    <Content Include="vendor\vide\vide.min.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_LayoutHome.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Home\_FullBannerHome.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="css\fonts\star.eot">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="css\fonts\star.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="css\fonts\star.woff">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="vendor\bootstrap\css\bootstrap-theme.css.map" />
+    <Content Include="vendor\bootstrap\css\bootstrap-theme.min.css.map" />
+    <Content Include="vendor\bootstrap\css\bootstrap.css.map" />
+    <Content Include="vendor\bootstrap\css\bootstrap.min.css.map" />
+    <Content Include="vendor\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="vendor\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="vendor\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="vendor\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="vendor\font-awesome\bower.json" />
+    <Content Include="vendor\font-awesome\css\font-awesome.css.map">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="vendor\font-awesome\fonts\fontawesome-webfont.eot">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="vendor\font-awesome\fonts\fontawesome-webfont.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="vendor\font-awesome\fonts\fontawesome-webfont.woff">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="vendor\font-awesome\fonts\fontawesome-webfont.woff2">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="vendor\font-awesome\fonts\FontAwesome.otf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="vendor\font-awesome\less\animated.less" />
+    <Content Include="vendor\font-awesome\less\bordered-pulled.less" />
+    <Content Include="vendor\font-awesome\less\core.less" />
+    <Content Include="vendor\font-awesome\less\fixed-width.less" />
+    <Content Include="vendor\font-awesome\less\font-awesome.less" />
+    <Content Include="vendor\font-awesome\less\icons.less" />
+    <Content Include="vendor\font-awesome\less\larger.less" />
+    <Content Include="vendor\font-awesome\less\list.less" />
+    <Content Include="vendor\font-awesome\less\mixins.less" />
+    <Content Include="vendor\font-awesome\less\path.less" />
+    <Content Include="vendor\font-awesome\less\rotated-flipped.less" />
+    <Content Include="vendor\font-awesome\less\stacked.less" />
+    <Content Include="vendor\font-awesome\less\variables.less" />
+    <Content Include="vendor\font-awesome\scss\font-awesome.scss" />
+    <Content Include="vendor\font-awesome\scss\_animated.scss" />
+    <Content Include="vendor\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="vendor\font-awesome\scss\_core.scss" />
+    <Content Include="vendor\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="vendor\font-awesome\scss\_icons.scss" />
+    <Content Include="vendor\font-awesome\scss\_larger.scss" />
+    <Content Include="vendor\font-awesome\scss\_list.scss" />
+    <Content Include="vendor\font-awesome\scss\_mixins.scss" />
+    <Content Include="vendor\font-awesome\scss\_path.scss" />
+    <Content Include="vendor\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="vendor\font-awesome\scss\_stacked.scss" />
+    <Content Include="vendor\font-awesome\scss\_variables.scss" />
+    <Content Include="vendor\owl.carousel\LICENSE" />
+    <Content Include="vendor\owl.carousel\README.md" />
+    <Content Include="vendor\rs-plugin\addon-visual-editor\visual-editor-extension.zip" />
+    <Content Include="vendor\rs-plugin\css\index.php" />
+    <Content Include="vendor\rs-plugin\fonts\font-awesome\fonts\fontawesome-webfont.eot">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="vendor\rs-plugin\fonts\font-awesome\fonts\fontawesome-webfont.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="vendor\rs-plugin\fonts\font-awesome\fonts\fontawesome-webfont.woff">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="vendor\rs-plugin\fonts\font-awesome\fonts\fontawesome-webfont.woff2">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="vendor\rs-plugin\fonts\font-awesome\fonts\FontAwesome.otf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="vendor\rs-plugin\fonts\font-awesome\index.php" />
+    <Content Include="vendor\rs-plugin\fonts\index.php">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="vendor\rs-plugin\fonts\pe-icon-7-stroke\css\index.php" />
+    <Content Include="vendor\rs-plugin\fonts\pe-icon-7-stroke\fonts\index.php" />
+    <Content Include="vendor\rs-plugin\fonts\pe-icon-7-stroke\fonts\Pe-icon-7-stroke.eot" />
+    <Content Include="vendor\rs-plugin\fonts\pe-icon-7-stroke\fonts\Pe-icon-7-stroke.ttf" />
+    <Content Include="vendor\rs-plugin\fonts\pe-icon-7-stroke\fonts\Pe-icon-7-stroke.woff" />
+    <Content Include="vendor\rs-plugin\fonts\pe-icon-7-stroke\index.php" />
+    <Content Include="vendor\rs-plugin\js\extensions\index.php" />
+    <Content Include="vendor\rs-plugin\js\extensions\source\index.php" />
+    <Content Include="vendor\rs-plugin\js\index.php" />
+    <Content Include="vendor\rs-plugin\js\source\index.php" />
+    <Content Include="vendor\rs-plugin\php\facebook\class-facebook.php" />
+    <Content Include="vendor\rs-plugin\php\flickr\class-flickr.php" />
+    <Content Include="vendor\rs-plugin\php\instagram\class-instagram.php" />
+    <Content Include="vendor\rs-plugin\php\twitter\class-twitter.php" />
+    <Content Include="vendor\rs-plugin\php\twitter\connection\Application.php" />
+    <Content Include="vendor\rs-plugin\php\twitter\connection\ConnectionAbstract.php" />
+    <Content Include="vendor\rs-plugin\php\twitter\connection\User.php" />
+    <Content Include="vendor\rs-plugin\php\twitter\RestApi.php" />
+    <Content Include="vendor\rs-plugin\php\vimeo\class-vimeo.php" />
+    <Content Include="vendor\rs-plugin\php\youtube\class-youtube.php" />
+    <Content Include="vendor\simple-line-icons\bower.json" />
+    <Content Include="vendor\simple-line-icons\fonts\Simple-Line-Icons.eot" />
+    <Content Include="vendor\simple-line-icons\fonts\Simple-Line-Icons.ttf" />
+    <Content Include="vendor\simple-line-icons\fonts\Simple-Line-Icons.woff" />
+    <Content Include="vendor\simple-line-icons\less\simple-line-icons.less" />
+    <Content Include="vendor\simple-line-icons\package.json" />
+    <Content Include="vendor\simple-line-icons\README.md" />
+    <Content Include="vendor\simple-line-icons\scss\simple-line-icons.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Home\_ProductsHome.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Home\_PostsHome.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Home\_TestimonialHome.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Contact\Location.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Contact\Propose.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Contact\Propose\_TitleBarPropose.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Contact\Propose\_FormPropose.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Contact\Propose\_SideMenuPropose.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Services\QualifiedMailing.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\QualifiedMailing\_TitleBarMailing.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\QualifiedMailing\_HeadingMailing.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\QualifiedMailing\_FirstBoxMailing.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\QualifiedMailing\_SecondBoxMailing.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\QualifiedMailing\_ThirdBoxMailing.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\QualifiedMailing\_ButtonMailing.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\QualifiedMailing\_SideMenuMailing.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Contact\Location\_TitleBarLocation.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Contact\Location\_MapLocation.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Contact\Location\_AddressLocation.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Contact\Location\_BusinessHoursLocation.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Blog\BlogList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Blog\List\_TitleBarBlogList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Blog\List\_PostsBlogList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Blog\List\_PaginationBlogList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Blog\List\_SearchBlogList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Blog\List\_CategoriesBlogList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Blog\List\_PopularRecentTabsBlogList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Blog\List\_FacebookPluginBlogList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Blog\BlogPost.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Blog\Post\_TitleBarBlogPost.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Blog\Post\_BannerBlogPost.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Blog\Post\_ContentBlogPost.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Blog\Post\_DateBlogPost.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Blog\Post\_ShareLinksBlogPost.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Blog\Post\_AuthorBlogPost.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Blog\Post\_CommentsBlogPost.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Blog\Post\_SearchBlogPost.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Blog\Post\_CategoriesBlogPost.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Services\DataEnrichment.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Services\DataTreatment.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Services\AssigningDocs.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Services\MailMarketing.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Services\Sms.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Services\ProspectingSolutions.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\DataEnrichment\_TitleBarDataEnrichment.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\DataEnrichment\_HeadingDataEnrichment.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\DataEnrichment\_FirstBoxDataEnrichment.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\DataEnrichment\_SecondBoxDataEnrichment.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\DataEnrichment\_ThirdBoxDataEnrichment.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\DataEnrichment\_ButtonDataEnrichment.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\DataEnrichment\_SideMenuDataEnrichment.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\DataTreatment\_TitleBarDataTreatment.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\DataTreatment\_HeadingDataTreatment.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\DataTreatment\_FirstBoxDataTreatment.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\DataTreatment\_SecondBoxDataTreatment.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\DataTreatment\_ThirdBoxDataTreatment.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\DataTreatment\_ButtonDataTreatment.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\DataTreatment\_SideMenuDataTreatment.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\AssigningDocs\_TitleBarAssigningDocs.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\AssigningDocs\_HeadingAssigningDocs.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\AssigningDocs\_FirstBoxAssigningDocs.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\AssigningDocs\_SecondBoxAssigningDocs.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\AssigningDocs\_ThirdBoxAssigningDocs.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\AssigningDocs\_ButtonAssigningDocs.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\AssigningDocs\_SideMenuAssigningDocs.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\MailMarketing\_TitleBarMailMarketing.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\MailMarketing\_HeadingMailMarketing.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\MailMarketing\_FirstBoxMailMarketing.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\MailMarketing\_SecondBoxMailMarketing.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\MailMarketing\_ThirdBoxMailMarketing.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\MailMarketing\_ButtonMailMarketing.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\MailMarketing\_SideMenuMailMarketing.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\Sms\_TitleBarSms.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\Sms\_HeadingSms.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\Sms\_FirstBoxSms.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\Sms\_SecondBoxSms.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\Sms\_ThirdBoxSms.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\Sms\_ButtonSms.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\Sms\_SideMenuSms.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\ProspectingSolutions\_TitleBarProspecting.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\ProspectingSolutions\_HeadingProspecting.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\ProspectingSolutions\_IntroProspecting.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\ProspectingSolutions\_FirstBoxProspecting.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\ProspectingSolutions\_SecondBoxProspecting.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\ProspectingSolutions\_ButtonProspecting.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\ProspectingSolutions\_SideMenuProspecting.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Blog\Post\_PopularRecentTabsBlogPost.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Blog\Post\_FacebookPluginBlogPost.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\About\AboutUs.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\About\_TitleBarAboutUs.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\About\_DescriptionAboutUs.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\About\_ImageAboutUs.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\About\_MVVAboutUs.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\DataEnrichment\_OnlineServiceDataEnrichment.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\QualifiedMailing\_OnlineServiceQualifiedMailing.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\About\_OurHistoryAboutUs.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\About\_CallToActionAboutUs.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Services\Search.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\Search\_TitleBarSearch.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\Search\_HeadingSearch.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\Search\_IntroSearch.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\Search\_BoxSearch.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\Search\_ButtonSearch.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\Search\_SideMenuSearch.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\Search\_OnlineServiceSearch.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Services\AllServices.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\AllServices\_TitleBarAllServices.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\AllServices\_HeadingAllServices.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\AllServices\_ServicesAllServices.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Services\AllServices\_CallToActionServices.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_NewsletterFooter.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DNAMais.Domain.Services\DNAMais.Domain.Services.csproj">
+      <Project>{c43f6364-a880-4ace-bbfa-878c99f6b43c}</Project>
+      <Name>DNAMais.Domain.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DNAMais.Domain\DNAMais.Domain.csproj">
+      <Project>{a6e1ef7c-d622-4362-b780-ea6171a55185}</Project>
+      <Name>DNAMais.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DNAMais.Framework\DNAMais.Framework.csproj">
+      <Project>{a6c06abb-4570-4f8e-8a53-724d670bc11c}</Project>
+      <Name>DNAMais.Framework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_NewsletterSuccess.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_NewsletterError.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Newsletter\SubscriptionEmailNewsletter.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\revicons\index.php" />
+    <Content Include="fonts\revicons\revicons.eot" />
+    <Content Include="fonts\revicons\revicons.ttf" />
+    <Content Include="fonts\revicons\revicons.woff" />
+    <Content Include="css\bootstrap-fileinput-master\.gitignore" />
+    <Content Include="css\bootstrap-fileinput-master\bower.json" />
+    <Content Include="css\bootstrap-fileinput-master\CHANGE.md" />
+    <Content Include="css\bootstrap-fileinput-master\composer.json" />
+    <Content Include="css\bootstrap-fileinput-master\LICENSE.md" />
+    <Content Include="css\bootstrap-fileinput-master\nuget\build.bat" />
+    <Content Include="css\bootstrap-fileinput-master\nuget\Package.nuspec" />
+    <Content Include="css\bootstrap-fileinput-master\package.json" />
+    <Content Include="css\bootstrap-fileinput-master\README.md" />
+    <None Include="Properties\PublishProfiles\Homologacao.pubxml" />
+    <None Include="Properties\PublishProfiles\ServidorTeste.pubxml" />
+    <Content Include="Views\Shared\About\_GalleryAboutUs.cshtml" />
+    <Content Include="Views\Newsletter\_NewsletterSubscriptionConfirmed.cshtml" />
+    <Content Include="Views\Newsletter\_NewsletterSubscriptionNotOptIn.cshtml" />
+    <Content Include="vendor\jquery\jquery-ui-1.11.4.custom.zip" />
+    <Content Include="Views\Shared\_LayoutLogged.cshtml" />
+    <Content Include="Views\AreaRestrita\ProdutosContratados.cshtml" />
+    <Content Include="Views\Shared\Login\Logged\_HeadingLogged.cshtml" />
+    <Content Include="Views\Shared\Login\Logged\_TitleBarLogged.cshtml" />
+    <Content Include="Views\AreaRestrita\PesquisaPessoaFisica.cshtml" />
+    <Content Include="Views\AreaRestrita\PesquisaPessoaJuridica.cshtml" />
+    <Content Include="Views\AreaRestrita\PesquisaFtp.cshtml" />
+    <Content Include="TextInputEffects\TextInputEffects\fonts\codropsicons\codropsicons.eot" />
+    <Content Include="TextInputEffects\TextInputEffects\fonts\codropsicons\codropsicons.ttf" />
+    <Content Include="TextInputEffects\TextInputEffects\fonts\codropsicons\codropsicons.woff" />
+    <Content Include="TextInputEffects\TextInputEffects\fonts\font-awesome-4.2.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="TextInputEffects\TextInputEffects\fonts\font-awesome-4.2.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="TextInputEffects\TextInputEffects\fonts\font-awesome-4.2.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="Views\Services\StatisticalModels.cshtml" />
+    <Content Include="Views\Shared\Services\StatisticalModels\_TitleBarStatisticalModels.cshtml" />
+    <Content Include="Views\Shared\Services\StatisticalModels\_HeadingStatisticalModels.cshtml" />
+    <Content Include="Views\Shared\Services\StatisticalModels\_FirstBoxStatisticalModels.cshtml" />
+    <Content Include="Views\Shared\Services\StatisticalModels\_SecondBoxStatisticalModels.cshtml" />
+    <Content Include="Views\Shared\Services\StatisticalModels\_ThirdBoxStatisticalModels.cshtml" />
+    <Content Include="Views\Shared\Services\StatisticalModels\_ButtonStatisticalModels.cshtml" />
+    <Content Include="Views\Shared\Services\StatisticalModels\_SideMenuStatisticalModels.cshtml" />
+    <Content Include="Views\Shared\Services\StatisticalModels\_IntroStatisticalModels.cshtml" />
+    <Content Include="Views\Shared\Services\QualifiedMailing\_SideMenuTextQualifiedMailing.cshtml" />
+    <Content Include="Views\Shared\Services\Search\_SideMenuTextSearch.cshtml" />
+    <Content Include="Views\Shared\Services\ProspectingSolutions\_SideMenuTextProspectingSolutions.cshtml" />
+    <Content Include="Views\Shared\Services\DataTreatment\_SideMenuTextDataTreatment.cshtml" />
+    <Content Include="Views\Shared\Services\AssigningDocs\_SideMenuTextAssigningDocs.cshtml" />
+    <Content Include="Views\Shared\Services\DataEnrichment\_SideMenuTextDataEnrichment.cshtml" />
+    <Content Include="Views\Shared\Services\MailMarketing\_SideMenuTextMailMarketing.cshtml" />
+    <Content Include="Views\Shared\Services\Sms\_SideMenuTextSms.cshtml" />
+    <Content Include="Views\Shared\Services\Search\_SideMenuTextSearchPj.cshtml" />
+    <Content Include="Views\Shared\Services\ProspectingSolutions\_SideMenuTextProspectingExpansion.cshtml" />
+    <Content Include="Views\Shared\Home\_AllServicesTextSms.cshtml" />
+    <Content Include="Views\Shared\Home\_AllServicesTextSearch.cshtml" />
+    <Content Include="Views\Shared\Home\_AllServicesTextSearchPj.cshtml" />
+    <Content Include="Views\Shared\Home\_AllServicesTextQualifiedMailing.cshtml" />
+    <Content Include="Views\Shared\Home\_AllServicesTextProspectingSolutions.cshtml" />
+    <Content Include="Views\Shared\Home\_AllServicesTextProspectingExpansion.cshtml" />
+    <Content Include="Views\Shared\Home\_AllServicesTextMailMarketing.cshtml" />
+    <Content Include="Views\Shared\Home\_AllServicesTextDataTreatment.cshtml" />
+    <Content Include="Views\Shared\Home\_AllServicesTextDataEnrichment.cshtml" />
+    <Content Include="Views\Shared\Home\_AllServicesTextAssigningDocs.cshtml" />
+    <Content Include="Views\Shared\Login\Pf\_ButtonsDefaultPf.cshtml" />
+    <Content Include="Views\Shared\Login\Pf\_ButtonsPhaseTwoPf.cshtml" />
+    <Content Include="Views\Shared\Login\Pf\_TextBoxPf.cshtml" />
+    <Content Include="Views\Shared\Login\Pj\_ButtonsDefaultPj.cshtml" />
+    <Content Include="Views\Shared\Login\Pj\_ButtonsPhaseTwoPj.cshtml" />
+    <Content Include="Views\Shared\Login\Pj\_TextBoxPj.cshtml" />
+    <Content Include="Views\Shared\Login\Vehicle\_ButtonsDefaultVehicle.cshtml" />
+    <Content Include="Views\Shared\Login\Vehicle\_ButtonsPhaseTwoVehicle.cshtml" />
+    <Content Include="Views\Shared\Login\Vehicle\_TextBoxVehicle.cshtml" />
+    <Content Include="Views\Shared\Login\Ftp\_ButtonsDefaultFtp.cshtml" />
+    <Content Include="Views\Shared\Login\Ftp\_ButtonsPhaseTwoFtp.cshtml" />
+    <Content Include="Views\Shared\Login\Ftp\_TextBoxFtp.cshtml" />
+    <Content Include="Views\Shared\Login\Pj\_HeadingPj.cshtml" />
+    <Content Include="Views\Shared\Login\Pf\_TitleBarPf.cshtml" />
+    <Content Include="Views\Shared\Login\Pj\_TitleBarPj.cshtml" />
+    <Content Include="Views\Shared\Login\Ftp\_TitleBarFtp.cshtml" />
+    <Content Include="Views\Shared\Login\Ftp\_HeadingFtp.cshtml" />
+    <Content Include="Views\AreaRestrita\_FiltroPesquisaPessoaFisicaPorCPF.cshtml" />
+    <Content Include="Views\AreaRestrita\_FiltroPesquisaPessoaFisicaPorEndereco.cshtml" />
+    <Content Include="Views\AreaRestrita\_FiltroPesquisaPessoaFisicaPorNome.cshtml" />
+    <Content Include="Views\AreaRestrita\_FiltroPesquisaPessoaFisicaPorTelefone.cshtml" />
+    <Content Include="Views\AreaRestrita\_ResultadoPesquisaPessoaFisica.cshtml" />
+    <None Include="Properties\PublishProfiles\Teste.pubxml" />
+    <Content Include="Views\AreaRestrita\_ResultadoPesquisaPessoaFisicaLista.cshtml" />
+    <Content Include="Views\AreaRestrita\_Loading.cshtml" />
+    <Content Include="Views\AreaRestrita\_ResultadoNaoEncontrado.cshtml" />
+    <Content Include="Views\AreaRestrita\_Municipios.cshtml" />
+    <Content Include="Views\AreaRestrita\_FiltroPesquisaPessoaJuridicaPorCNPJ.cshtml" />
+    <Content Include="Views\AreaRestrita\_FiltroPesquisaPessoaJuridicaPorNome.cshtml" />
+    <Content Include="Views\AreaRestrita\_FiltroPesquisaPessoaJuridicaPorTelefone.cshtml" />
+    <Content Include="Views\AreaRestrita\_ResultadoPesquisaPessoaJuridica.cshtml" />
+    <Content Include="Views\AreaRestrita\_ResultadoPesquisaPessoaJuridicaLista.cshtml" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:39730/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

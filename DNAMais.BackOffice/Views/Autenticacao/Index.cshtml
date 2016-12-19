@@ -1,0 +1,96 @@
+﻿@using DNAMais.Domain.DTO
+@using DNAMais.Framework
+
+@model LoginUser
+
+@{
+    ViewBag.Title = "DNA+";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<div class="panel panel-sign">
+    <div class="panel-title-sign mt-xl text-right">
+        <h2 class="title text-uppercase text-weight-bold m-none"><i class="fa fa-user mr-xs"></i> Acesso BackOffice</h2>
+    </div>
+    <div class="panel-body">
+        <form class="form-signin" method="post" action="~/Autenticacao/Authenticate" autocomplete="off">
+
+            <div class="form-group mb-lg">
+                <label>Usuário</label>
+                <div class="input-group input-group-icon">
+                    <input id="login" name="login" type="text" class="form-control input-lg" value="@Model.Login" autofocus="autofocus" required="required"/>
+                    <span class="input-group-addon">
+                        <span class="icon icon-lg">
+                            <i class="fa fa-user"></i>
+                        </span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group mb-lg">
+                <!--
+                <div class="clearfix">
+                    <label class="pull-left">Senha</label>
+                    <a href="#" class="pull-right">Esqueci minha senha</a>
+                </div>
+                    -->
+                <label>Senha</label>
+                <div class="input-group input-group-icon">
+                    <input name="password" type="password" class="form-control input-lg" value="@Model.Password" required="required" />
+                    <span class="input-group-addon">
+                        <span class="icon icon-lg">
+                            <i class="fa fa-lock"></i>
+                        </span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-8">
+                    @*<div class="checkbox-custom checkbox-default">
+                        <input id="RememberMe" name="rememberme" type="checkbox" />
+                        <label for="RememberMe">Remember Me</label>
+                    </div>*@
+                </div>
+                <div class="col-sm-4 text-right">
+                    <button type="submit" class="btn btn-danger hidden-xs">Acesse</button>
+                    <button type="submit" class="btn btn-danger btn-block btn-lg visible-xs mt-lg">Acesse</button>
+                </div>
+            </div>
+            <br />
+            @Html.Partial("~/Views/Shared/_StandardMessages.cshtml")
+
+        </form>
+    </div>
+</div>
+
+@*<div id="login">
+    <form class="form-signin" method="post" action="~/Autenticacao/Authenticate" autocomplete="off">
+        <h3 class="glyphicons unlock form-signin-heading"><i></i> Acesso</h3>
+        <div class="uniformjs">
+            @Html.TextBoxFor(m => m.Login, new { @class = "input-block-level", placeholder = "Login" })
+            @Html.PasswordFor(m => m.Password, new { @class = "input-block-level", placeholder = "Senha" })
+        </div>
+        <button class="btn btn-large btn-primary" type="submit">Acesse</button>
+        @if (Request.HttpMethod == "GET" || !ViewData.ModelState.IsValid)
+        {
+            <div class="separator bottom"></div>
+            <h3>Erro.</h3>
+        }
+    </form>
+</div>*@
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            if ($('#login').val() == '') {
+                $('#login').focus();
+            }
+            else {
+                $('#password').focus();
+            }
+        });
+    </script>
+}

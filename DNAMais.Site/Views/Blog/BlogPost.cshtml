@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "DNA+ | Post";
+}
+
+@Html.Partial("Blog/Post/_TitleBarBlogPost")
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="blog-posts single-post">
+                <article class="post post-large blog-single-post">
+                    @Html.Partial("Blog/Post/_BannerBlogPost")
+                    @Html.Partial("Blog/Post/_DateBlogPost")
+                    <div class="post-content">
+                        @Html.Partial("Blog/Post/_ContentBlogPost")
+                        @Html.Partial("Blog/Post/_ShareLinksBlogPost")
+                        @Html.Partial("Blog/Post/_AuthorBlogPost")
+                        @Html.Partial("Blog/Post/_CommentsBlogPost")
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <aside class="sidebar">
+                @Html.Partial("Blog/Post/_SearchBlogPost")
+                @Html.Partial("Blog/Post/_CategoriesBlogPost")
+                @*@Html.Partial("Blog/Post/_PopularRecentTabsBlogPost")
+                  @Html.Partial("Blog/Post/_FacebookPluginBlogPost")*@
+            </aside>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $("#blogMenu").addClass("active");
+    });
+
+</script>

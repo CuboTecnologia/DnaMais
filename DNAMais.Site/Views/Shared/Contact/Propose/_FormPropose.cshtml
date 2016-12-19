@@ -1,0 +1,54 @@
+﻿<div class="col-md-9">
+    <h2 class="mb-sm mt-sm">Preencha seus <strong>Dados</strong></h2>
+    @using (Html.BeginForm("EnviarMensagem", "MensagemContato", FormMethod.Post))
+    {
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-6">
+                    <label>Seu nome *</label>
+                    <input type="text" value="" data-msg-required="Por favor, insira seu nome." maxlength="100" class="form-control" name="nome" required>
+                </div>
+                <div class="col-md-6">
+                    <label>Seu endereço de e-mail. *</label>
+                    <input type="email" value="" data-msg-required="Por favor, insira seu endereço de e-mail." data-msg-email="Please enter a valid email address." maxlength="100" class="form-control" name="email" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <label>Assunto</label>
+                    <input type="text" value="" data-msg-required="Por favor, insira um assunto." maxlength="100" class="form-control" name="assuntoVisualizacao" id="assuntoVisualizacao" required>
+                    <input type="hidden" name="assunto" id="assunto" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-6">
+                    <label>Telefone para Contato *</label>
+                    <input type="text" value="" data-msg-required="Por favor, insira um telefone para contato." maxlength="100" class="form-control" name="telefone" required>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <label>Celular para Contato</label>
+                        <input type="text" value="" maxlength="100" class="form-control" name="celular" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <label>Mensagem *</label>
+                    <textarea maxlength="4000" data-msg-required="Por favor, insira sua mensagem para nós!." rows="10" class="form-control" name="conteudo" required></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <input type="submit" id="btnSubmit" value="Enviar mensagem" class="btn btn-primary btn-lg mb-xlg" data-loading-text="Carregando...">
+            </div>
+        </div>
+    }
+</div>

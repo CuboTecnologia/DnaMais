@@ -1,0 +1,65 @@
+﻿@using DNAMais.Domain.Entidades
+@using DNAMais.Framework
+@using DNAMais.BackOffice.Facades
+
+@model GrupoUsuarioCliente
+
+@{
+    Layout = "~/Views/Shared/_Cadastro.cshtml";
+
+    ViewBag.Title = "DNA+ :: Grupos de Usuários Cliente";
+    ViewBag.TituloPagina = "Grupo de Usuário Cliente";
+
+    //VARIAVEIS PARA UTILIZAÇÃO EM VISOES SHARED
+    ViewData["messageSuccess"] = "Grupo de Usuário Cliente registrado com sucesso";
+    ViewData["messageReturn"] = "Voltar para lista de Grupos de Usuários Cliente";
+
+    bool locked = ViewData["LOCKED"] == null ? false : (bool)ViewData["LOCKED"];
+
+    List<SelectListItem> clientes = new ClienteEmpresaFacade(null).ListarClientesEmpresa().ToList().Select(i => new SelectListItem
+    {
+        Value = i.Id.ToString(),
+        Text = i.NomeFantasia
+    }).ToList();
+
+    clientes.Insert(0, new SelectListItem { Value = "", Text = "Selecione uma Empresa Cliente" });
+}
+
+@section cadastro
+{
+    @if (Request.HttpMethod == "GET" || !ViewData.ModelState.IsValid)
+    {
+        <div style="width:100%;">
+
+            @Html.HiddenFor(
+             expression: m => m.Id)
+
+            @Html.HiddenFor(
+             expression: m => m.IdUsuarioClienteCadastro)
+
+            @Html.DnaMaisDropDownListFor(
+                expression: m => m.IdClienteEmpresa,
+                disabled: locked,
+                itens: clientes,
+                width: 300)
+            
+            @Html.DnaMaisTextBoxFor(
+                expression: m => m.Nome,
+                width: 300,
+                disabled: locked)
+
+            @Html.DnaMaisTextAreaFor(
+                expression: m => m.Descricao,
+                width: 300,
+                rows: 5,
+                disabled: locked)
+
+            <hr class="separator" />
+        </div>
+    }
+}
+
+@section validacoes
+{
+    @Html.Validations((GrupoUsuarioCliente)Model)
+}

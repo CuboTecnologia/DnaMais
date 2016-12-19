@@ -1,0 +1,42 @@
+﻿<div class="row">
+    <form id="frmPesquisaNome" action="@Url.Action("PesquisarPessoaJuridicaPorNome", "AreaRestrita")" method="post" autocomplete="off">
+        <div class="col-md-12">
+            <label>Nome</label>
+            <input type="text" class="form-control" id="txtNomePesquisaPorNome" name="txtNomePesquisaPorNome" style="width: 400px;" maxlength="100" />
+        </div>
+
+        <div class="col-md-12" style="margin-top: 20px;">
+            <input type="submit" value="Pesquisar" class="btn btn-danger" />
+        </div>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#frmPesquisaNome').on('submit', function (event) {
+            if (!$('#frmPesquisaNome').valid()) {
+                return;
+            }
+            event.preventDefault();
+            $.ajax({
+                url: this.action,
+                type: 'GET',
+                data: $(this).serialize(),
+                context: $('#divResultadoPesquisaPJ'),
+                success: function (result) {
+                    $('#divResultadoPesquisaPJ').html(result);
+                    $('#divResultadoPesquisaPJ').fadeIn(500);
+                    $('#btnNovaPesquisa').fadeIn(2500);
+                    $('#divLoading').hide();
+                },
+                beforeSend: function () {
+                    $('#divFiltros').hide();
+                    $('#divLoading').show();
+                },
+                error: function (a, b, c) {
+                    alert(a.responseText.replace('"', '').replace('"', ''));
+                }
+            });
+        });
+    });
+</script>

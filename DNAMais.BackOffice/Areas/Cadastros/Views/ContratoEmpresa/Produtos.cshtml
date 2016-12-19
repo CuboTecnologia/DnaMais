@@ -1,0 +1,76 @@
+﻿@using DNAMais.Domain.Entidades
+@using DNAMais.Framework
+@using DNAMais.BackOffice.Facades
+
+@model IEnumerable<Produto>
+
+@{
+    Layout = "~/Views/Shared/_Listagem.cshtml";
+
+    ViewBag.Title = "DNA+ :: Produtos";
+    ViewBag.TituloPagina = "Produtos";
+    ViewBag.TituloGrid = "Contrato Número: " + ViewBag.NumeroContrato + " - " + "Empresa: " + ViewBag.NomeEmpresa;
+
+    ViewData["messageAnswer"] = "Salvar";
+    ViewData["messageReturn"] = "Voltar para lista de contratos";
+
+}
+
+@section grid
+{
+
+    <h3>Produtos</h3>
+
+    @using (Html.BeginForm("Produtos", "ContratoEmpresa", FormMethod.Post))
+    {
+
+        <table class="table table-bordered table-hover mb-none">
+
+            <thead>
+                <tr>
+                    <th>Categoria</th>
+                    <th>Código</th>
+                    <th>Produto</th>
+                    <th></th>
+                </tr>
+            </thead>
+            @foreach (var item in Model)
+            {
+                <tbody>
+                    <tr>
+                        <td>@item.CategoriaProduto.Nome</td>
+                        <td>@item.Id</td>
+                        <td>@item.Nome</td>
+
+
+                        @if ((ViewBag.Produtos as ICollection<ContratoEmpresaProduto>).Where(w => w.CodigoProduto == item.Id).FirstOrDefault() != null)
+                        {
+                            <td>
+                                <input type="checkbox" id="produtosSelecionados" name="produtosSelecionados" checked="checked" value="@item.Id" />
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                <input type="checkbox" id="produtosSelecionados" name="produtosSelecionados" value="@item.Id" />
+                            </td>
+                        }
+
+                    </tr>
+                </tbody>
+            }
+
+
+        </table>
+
+        @Html.Hidden("idContrato", (object)ViewBag.IdContrato)
+
+        <hr />
+
+        <button class="btn btn-icon btn-danger" type="submit"><i class="fa fa-arrow-circle-right"></i>Salvar</button>
+
+        @Html.DnaMaisButton("Index", "btnVoltar", ViewData["messageReturn"].ToString(), "default", "arrow-circle-left")
+
+    }
+
+}
