@@ -145,10 +145,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AreaRestritaModel.cs" />
     <Compile Include="Models\ControleArquivoModel.cs" />
     <Compile Include="Models\LayoutEntradaModel.cs" />
     <Compile Include="Models\LayoutSaidaModel.cs" />
     <Compile Include="Models\StatusModel.cs" />
+    <Compile Include="Models\UsuarioBackofficeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1417,6 +1419,7 @@
     <Content Include="Views\AreaRestrita\_FiltroPesquisaPessoaJuridicaPorTelefone.cshtml" />
     <Content Include="Views\AreaRestrita\_ResultadoPesquisaPessoaJuridica.cshtml" />
     <Content Include="Views\AreaRestrita\_ResultadoPesquisaPessoaJuridicaLista.cshtml" />
+    <Content Include="Views\Shared\_PartialHeaderLogged.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

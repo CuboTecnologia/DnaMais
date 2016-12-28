@@ -18,12 +18,19 @@ namespace DNAMais.Infrastructure.Data.Contexts
     {
         public static void WriteLog(string log)
         {
-            StreamWriter arquivoLog = new StreamWriter("C:\\temp\\logDna.txt", true);
+            try
+            {
+                StreamWriter arquivoLog = new StreamWriter("C:\\temp\\logDna.txt", true);
 
-            arquivoLog.WriteLine(log);
+                arquivoLog.WriteLine(log);
 
-            arquivoLog.Close();
-            arquivoLog.Dispose();
+                arquivoLog.Close();
+                arquivoLog.Dispose();
+            }
+            catch (Exception ex)
+            {
+                var x = ex.Message;
+            }
         }
     }
 
@@ -179,7 +186,7 @@ namespace DNAMais.Infrastructure.Data.Contexts
 
         public DbSet<CategoriaProduto> CategoriaProduto { get; set; }
 
-        public DbSet<CategoriaProdutoFaixa> CategoriaProdutoFaixa{ get; set; }
+        public DbSet<CategoriaProdutoFaixa> CategoriaProdutoFaixa { get; set; }
 
         public DbSet<InfoUf> InfoUfs { get; set; }
         public DbSet<InfoMunicipio> InfoMunicipios { get; set; }
@@ -197,7 +204,7 @@ namespace DNAMais.Infrastructure.Data.Contexts
         public DbSet<ContratoEmpresaPrecificacao> ContratosEmpresasPrecificacoes { get; set; }
         public DbSet<ContratoEmpresaProduto> ContratosEmpresasProdutos { get; set; }
 
-        public DbSet<TransacaoConsulta> TransacoesConsultas{ get; set; }
+        public DbSet<TransacaoConsulta> TransacoesConsultas { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

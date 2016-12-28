@@ -56,22 +56,42 @@ namespace DNAMais.Site.Controllers
 
         public ActionResult ProdutosContratados()
         {
-            return View();
+            var model = new AreaRestritaModel()
+            {
+                UsuarioBackoffice = CarregaDadosUsuarioBackoffice()
+            };
+
+            return View(model);
         }
 
         public ActionResult PesquisaPessoaFisica()
         {
-            return View();
+            var model = new AreaRestritaModel()
+            {
+                UsuarioBackoffice = CarregaDadosUsuarioBackoffice()
+            };
+
+            return View(model);
         }
 
         public ActionResult PesquisaPessoaJuridica()
         {
-            return View();
+            var model = new AreaRestritaModel()
+            {
+                UsuarioBackoffice = CarregaDadosUsuarioBackoffice()
+            };
+
+            return View(model);
         }
 
         public ActionResult PesquisaVeiculo()
         {
-            return View();
+            var model = new AreaRestritaModel()
+            {
+                UsuarioBackoffice = CarregaDadosUsuarioBackoffice()
+            };
+
+            return View(model);
         }
 
         public ActionResult ListarMunicipios(string uf)
@@ -101,8 +121,8 @@ namespace DNAMais.Site.Controllers
                 return PartialView("_ResultadoNaoEncontrado");
             }
         }
-		
-		public ActionResult PesquisarPessoaFisicaPorCEP(string txtCepPesquisaPorEndereco)
+
+        public ActionResult PesquisarPessoaFisicaPorCEP(string txtCepPesquisaPorEndereco)
         {
             TransacaoConsulta transacao = new TransacaoConsulta();
 
@@ -400,14 +420,15 @@ namespace DNAMais.Site.Controllers
             bool encontrou = false;
             string[] extensoes = file.FileName.Split('.');
 
-            string[] extensoesPermitidas = new string[] { "TXT", "CSV", "XLS","XLSX" };  //txt , csv, xls, xlsx
+            string[] extensoesPermitidas = new string[] { "TXT", "CSV", "XLS", "XLSX" };  //txt , csv, xls, xlsx
 
 
             for (int i = 0; i < extensoesPermitidas.Length; i++)
             {
-                if (extensoesPermitidas[i] == extensoes[(extensoes.Length - 1)].ToUpper()) {
+                if (extensoesPermitidas[i] == extensoes[(extensoes.Length - 1)].ToUpper())
+                {
 
-                    encontrou = true;              
+                    encontrou = true;
                 }
             }
 
@@ -439,7 +460,7 @@ namespace DNAMais.Site.Controllers
 
                         TempData["msg"] = "<script>alert('Enviado com Sucesso!');</script>";
 
-                       
+
 
                         return View(ViewBag.ListaArquivoEntradaFtp);
                     }
@@ -489,5 +510,19 @@ namespace DNAMais.Site.Controllers
             return new NetworkCredential(username, password);
         }
         #endregion
+
+        public UsuarioBackofficeModel CarregaDadosUsuarioBackoffice()
+        {
+            var usuarioBackoffice = new UsuarioBackofficeModel()
+            {
+                Id = ((UsuarioBackOffice)Session["user"]).Id,
+                Nome = ((UsuarioBackOffice)Session["user"]).Nome,
+                Email = ((UsuarioBackOffice)Session["user"]).Email,
+                IdPerfil = ((UsuarioBackOffice)Session["user"]).IdPerfil,
+                Login = ((UsuarioBackOffice)Session["user"]).Login
+            };
+
+            return usuarioBackoffice;
+        }
     }
 }

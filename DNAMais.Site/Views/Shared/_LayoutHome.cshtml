@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model DNAMais.Domain.DTO.LoginUser
+<!DOCTYPE html>
 <html>
 <head>
     <title>@ViewBag.Title</title>
@@ -139,27 +140,31 @@
                         <h4 class="modal-title" id="formModalLabel">Acesse o Sistema</h4>
                     </div>
                     <div class="modal-body">
-                        <form id="demo-form" class="form-horizontal mb-lg" novalidate="novalidate">
+                        @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @id = "formAreaRestrita", @class = "form-horizontal mb-lg", @autocomplete = "off" }))
+                        {
                             <div class="form-group mt-lg">
                                 <label class="col-sm-3 control-label">Usuário</label>
                                 <div class="col-sm-9">
-                                    <input type="text" name="user" id="txtUser" class="form-control" placeholder="Insira seu usuário" required />
+                                    @Html.TextBoxFor(x => x.Login, new { @class = "form-control", @placeholder = "Insira seu usuário" })
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Senha</label>
                                 <div class="col-sm-9">
-                                    <input type="password" name="password" class="form-control" placeholder="Insira sua senha" required />
+                                    @Html.PasswordFor(x => x.Password, new { @class = "form-control", @placeholder = "Insira sua senha" })
                                 </div>
                             </div>
                             <div class="text-right">
                                 <a href="#">Esqueceu sua senha?</a>
                             </div>
-                        </form>
+                        }
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="btnClose" class="btn btn-default" data-dismiss="modal">Fechar</button>
                         <button type="button" id="btnLogin" class="btn btn-primary">Efetuar Login</button>
+                    </div>
+                    <div id="messageError" class="alert alert-danger collapse" role="alert" style="margin-left: 20px; margin-right: 20px;">
+                        <strong>Alerta!&nbsp;</strong>Usuário ou senha inválidos.
                     </div>
                 </div>
             </div>
@@ -220,7 +225,7 @@
                             </a>
                         </div>
                         <div class="col-md-7">
-                            <p>© Copyright 2016. Todos os direitos reservados.</p>
+                            <p>© Copyright @DateTime.Now.Year. Todos os direitos reservados.</p>
                         </div>
                         @*<div class="col-md-3">
                                 <nav id="sub-menu">
@@ -278,7 +283,7 @@
 
     $("#formModal").on("shown.bs.modal", function () {
         setTimeout(function () {
-            $("#txtUser").focus();
+            $("#Login").focus();
         }, 500);
     });
 
@@ -310,10 +315,51 @@
 
         //});
 
-        $('#btnLogin').on('click', function () {
-            location.href = "@Url.Action("ProdutosContratados", "AreaRestrita")"
+        $('#Login').keypress(function () {
+            $("#messageError").hide();
         });
 
+        $('#formModal').keydown(function (event) {
+            var keyCode = (event.keyCode ? event.keyCode : event.which);
+            if (keyCode == 13) {
+                $('#btnLogin').trigger('click');
+            }
+        });
+
+        $('#Password').keypress(function (event) {
+            $("#messageError").hide();
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode == '13') {
+                $('#btnLogin').click();
+            }
+        });
+
+        $('#btnLogin').on('click', function (e) {
+            e.preventDefault();
+
+            if ($("#Login").val() != "" && $("#Password").val() != "") {
+                //location.href = "@Url.Action("ProdutosContratados", "AreaRestrita")";
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("Index", "Home")",
+                    data: $('#formAreaRestrita').serialize(),
+                    success: function (msg) {
+                        location.href = "@Url.Action("ProdutosContratados", "AreaRestrita")";
+                    },
+                    error: function () {
+                        alert("failure");
+                    }
+                });
+            } else {
+                $("#messageError").show();
+            }
+
+        });
+
+        $('#formModal').on('shown.bs.modal', function () {
+            $("#Login").val("");
+            $("#Password").val("");
+        });
     });
 
 </script>
