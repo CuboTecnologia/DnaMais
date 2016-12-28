@@ -160,6 +160,7 @@
                         }
                     </div>
                     <div class="modal-footer">
+                        <span id="loadingImage"></span>
                         <button type="button" id="btnClose" class="btn btn-default" data-dismiss="modal">Fechar</button>
                         <button type="button" id="btnLogin" class="btn btn-primary">Efetuar Login</button>
                     </div>
@@ -198,6 +199,7 @@
                                     <p><i class="fa fa-map-marker"></i><strong>Endereço:</strong> Av. Brigadeiro Luiz Antonio, 2696, Conj.401 - Jardim Paulista / São Paulo - SP</p>
                                 </li>
                                 <li>
+                                    <p><i class="fa fa-phone"></i><strong>Telefone:</strong> +55 11 3211-2202</p>
                                     <p><i class="fa fa-phone"></i><strong>Telefone:</strong> +55 11 2039-1550</p>
                                 </li>
                                 <li>
@@ -343,10 +345,15 @@
                     type: "POST",
                     url: "@Url.Action("Index", "Home")",
                     data: $('#formAreaRestrita').serialize(),
-                    success: function (msg) {
+                    cache: false,
+                    beforeSend: function () {
+                        $('#btnLogin').prop("disabled", true);
+                        $('#loadingImage').html("<img src='/img/loading.gif' />");
+                    }, success: function (msg) {
                         location.href = "@Url.Action("ProdutosContratados", "AreaRestrita")";
                     },
                     error: function () {
+                        $('#btnLogin').prop("disabled", false);
                         alert("failure");
                     }
                 });

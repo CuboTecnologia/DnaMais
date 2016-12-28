@@ -46,5 +46,13 @@ namespace DNAMais.Site.Controllers
                 return View("Index", user);
             }
         }
+
+        public ActionResult LogOut()
+        {
+            FormsAuthentication.SignOut();
+            Session.Abandon();
+
+            return RedirectToAction("Index");
+        }
     }
 }

@@ -350,6 +350,11 @@ namespace DNAMais.Site.Controllers
 
         public ActionResult PesquisaFtp()
         {
+            var model = new AreaRestritaModel()
+            {
+                UsuarioBackoffice = CarregaDadosUsuarioBackoffice()
+            };
+
             var caminho = ConfigurationManager.AppSettings["FtpUrl"];
             var uri = new Uri(caminho);
             var ftp = (FtpWebRequest)WebRequest.Create(uri);
@@ -398,7 +403,7 @@ namespace DNAMais.Site.Controllers
             ViewBag.ListaArquivoSaidaFtp = listaArquivoSaidaFtp;
 
 
-            return View(ViewBag.ListaArquivoEntradaFtp);
+            return View(model);
         }
 
         #endregion
