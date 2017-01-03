@@ -25,15 +25,16 @@
             if (!$('#frmPesquisaTelefone').valid()) {
                 return;
             }
+
             event.preventDefault();
             $.ajax({
                 url: this.action,
                 type: 'GET',
                 data: $(this).serialize(),
-                context: $('#divResultadoPesquisaPJ'),
+                context: $('#divDetalhePesquisaPJ'),
                 success: function (result) {
-                    $('#divResultadoPesquisaPJ').html(result);
-                    $('#divResultadoPesquisaPJ').fadeIn(500);
+                    $('#divDetalhePesquisaPJ').html(result);
+                    $('#divDetalhePesquisaPJ').fadeIn(500);
                     $('#btnNovaPesquisa').fadeIn(2500);
                     $('#divLoading').hide();
                 },

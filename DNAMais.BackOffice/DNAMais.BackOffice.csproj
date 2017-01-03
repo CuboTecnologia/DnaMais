@@ -181,6 +181,7 @@
     <Compile Include="Helpers\DnaMaisHelperForm.cs" />
     <Compile Include="Helpers\DnaMaisHelperFormValidation.cs" />
     <Compile Include="Helpers\DnaMaisHelperMessage.cs" />
+    <Compile Include="Helpers\DnaMaisHelperModelState.cs" />
     <Compile Include="Helpers\DnaMaisHelperRadioButtonList.cs" />
     <Compile Include="Helpers\DnaMaisHelperTab.cs" />
     <Compile Include="Helpers\DnaMaisHelperTable.cs" />
@@ -1537,6 +1538,9 @@
     <Content Include="assets\vendor\summernote\summernote.js" />
     <Content Include="assets\vendor\summernote\summernote.min.js" />
     <Content Include="Global.asax" />
+    <None Include="Scripts\jquery-1.6.3-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.6.3.js" />
+    <Content Include="Scripts\jquery-1.6.3.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Areas\ControleAcessoCliente\Views\UsuarioCliente\Cadastro.cshtml" />

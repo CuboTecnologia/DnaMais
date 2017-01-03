@@ -25,7 +25,7 @@ namespace DNAMais.Domain.Services.Consultas
 
         public IQueryable<InfoMunicipio> ListarPorUf(string uf)
         {
-            return repoMunicipio.Filter(i => i.SiglaUF == uf);
+            return repoMunicipio.Filter(i => i.SiglaUF == uf).OrderBy(x => x.Nome);
         }
     }
 }

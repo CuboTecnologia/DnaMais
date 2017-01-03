@@ -16,7 +16,7 @@
 
     WebGridColumn coluna1 = grid.Column(columnName: "Id", header: "No.", format: @<span>@(item.Id)</span>, style: "col-md-1");
     WebGridColumn coluna2 = grid.Column(columnName: "Nome", header: "Nome", format: @<span>@(item.Nome)</span>, style: "col-md-3");
-    WebGridColumn coluna3 = grid.Column(columnName: "Usuario", header: "Usuário", format: @<span>@(item.UsuarioBackOffice.Nome)</span>, style: "col-md-3");
+    WebGridColumn coluna3 = grid.Column(columnName: "Usuario", header: "Usuário", format: @<span>@(item.UsuarioBackOffice.Nome)</span>, style: "col-md-2");
     WebGridColumn coluna4 = grid.Column(columnName: "DataCadastro", header: "Data Cadastro", format: @<span>@(((DateTime)item.DataCadastro).FormatarDataHora())</span>, style: "col-md-2");
 }
 

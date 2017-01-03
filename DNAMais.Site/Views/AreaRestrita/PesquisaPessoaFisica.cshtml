@@ -26,7 +26,7 @@
 
     <div class="row">
         <div class="col-md-12" id="divFiltros">
-            <div class="tabs tabs-secondary">
+            <div id="tabs" class="tabs tabs-secondary">
                 <ul class="nav nav-tabs">
                     <li class="active">
                         <a href="#tabCpf" id="cpf" data-toggle="tab"><i class="fa fa-user"></i>&nbsp;CPF</a>
@@ -60,11 +60,15 @@
     </div>
     <div class="row">
         <input type="button" value="Nova Consulta" class="btn btn-danger btn-lg btn-borders pull-right" id="btnNovaPesquisa" />
-        <div id="divResultadoPesquisaPF">
+        <input type="button" value="Voltar" class="btn btn-info btn-lg btn-borders pull-right jsVoltar" style="margin-right: 10px"  />
+        <div id="divListaPesquisaPF">
+        </div>
+        <div id="divDetalhePesquisaPF">
         </div>
         <div id="divLoading">
             @Html.Partial("_Loading")
         </div>
+        <input type="button" value="Voltar" class="btn btn-info btn-lg btn-borders pull-right jsVoltar" style="margin-bottom: 20px;" />
     </div>
 </div>
 
@@ -73,42 +77,60 @@
     $(document).ready(function () {
         $('#txtCpfPesquisaPorCpf').focus();
         $('#btnNovaPesquisa').hide();
-        $('#divResultadoPesquisaPF').hide();
+        $('#divListaPesquisaPF').hide();
+        $('#divDetalhePesquisaPF').hide();
         $('#divLoading').hide();
+        $('.jsVoltar').hide();
 
         $('#btnNovaPesquisa').click(function () {
+            event.preventDefault();
             $('#btnNovaPesquisa').fadeOut(500);
-            $('#divResultadoPesquisaPF').fadeOut(500);
+            $('#divListaPesquisaPF').fadeOut(500);
+            $('#divDetalhePesquisaPF').fadeOut(500);
             $('#divFiltros').fadeIn(500);
         });
 
+        $('.jsVoltar').click(function () {
+            event.preventDefault();
+            $('.jsVoltar').fadeOut(500);
+            $('#divDetalhePesquisaPF').fadeOut(500);
+            $('#divListaPesquisaPF').fadeIn(500);
+        });
 
-        //$("a[data-toggle=tab]").click(function (e) {
+        $(document).on("keyup", function (event) {
+            event.preventDefault();
+            if (event.which == 13) {
+                if (!$('#btnNovaPesquisa').is(':visible')) {
+                    $('form').submit();
+                }
+            }
+        });
+        $("a[data-toggle=tab]").click(function (e) {
             
-        //    var abaClicada = e.target.id;
+            var abaClicada = e.target.id;
 
-        //    if (abaClicada == "cpf") {
-        //        setTimeout(function () {
-        //            $('#txtCpfPesquisaPorCpf').focus();
-        //        }, 1);
-        //    }
-        //    else if (abaClicada == "endereco") {
-        //        setTimeout(function () {
-        //            $('#txtCepPesquisaPorEndereco').focus();
-        //        });
-        //    }
-        //    else if (abaClicada == "nome") {
-        //        setTimeout(function () {
-        //            $('#txtNome').focus();
-        //        }, 1);
-        //    }
-        //    else if (abaClicada == "telefone") {
-        //        setTimeout(function () {
-        //            $('#txtDdd').focus();
-        //        }, 1);
-        //    }
+            if (abaClicada == "cpf") {
+                setTimeout(function () {
+                    $('#txtCpfPesquisaPorCpf').focus();
+                }, 1);
+            }
+            else if (abaClicada == "endereco") {
+                setTimeout(function () {
+                    $('#txtCepPesquisaPorEndereco').focus();
+                });
+            }
+            else if (abaClicada == "nome") {
+                setTimeout(function () {
+                    $('#txtNomePesquisaPorNome').focus();
+                }, 1);
+            }
+            else if (abaClicada == "telefone") {
+                setTimeout(function () {
+                    $('#txtDddPesquisaPorTelefone').focus();
+                }, 1);
+            }
 
-        //});
+        });
 
     });
 

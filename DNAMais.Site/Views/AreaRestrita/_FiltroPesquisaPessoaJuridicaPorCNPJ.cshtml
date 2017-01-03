@@ -2,7 +2,7 @@
     <form id="frmPesquisaCNPJ" action="@Url.Action("PesquisarPessoaJuridicaPorCNPJ", "AreaRestrita")" method="post" autocomplete="off">
         <div class="col-md-12">
             <label>CNPJ</label>
-            <input type="text" class="form-control" id="txtCnpjPesquisaPorCnpj" name="txtCnpjPesquisaPorCnpj" style="width: 250px;" onkeypress="return onlyNumbers(event);" onkeyup="maskCNPJ(this, event);" maxlength="18" />
+            <input type="text" class="form-control" id="txtCnpjPesquisaPorCnpj" name="txtCnpjPesquisaPorCnpj" style="width: 250px;" onkeypress="return onlyNumbers(event);" onkeyup="maskCNPJ(this, event);" maxlength="18"  />
         </div>
 
         <div class="col-md-12" style="margin-top: 20px;">
@@ -23,10 +23,10 @@
                 url: this.action,
                 type: 'GET',
                 data: $(this).serialize(),
-                context: $('#divResultadoPesquisaPJ'),
+                context: $('#divDetalhePesquisaPJ'),
                 success: function (result) {
-                    $('#divResultadoPesquisaPJ').html(result);
-                    $('#divResultadoPesquisaPJ').fadeIn(500);
+                    $('#divDetalhePesquisaPJ').html(result);
+                    $('#divDetalhePesquisaPJ').fadeIn(500);
                     $('#btnNovaPesquisa').fadeIn(2500);
                     $('#divLoading').hide();
                 },

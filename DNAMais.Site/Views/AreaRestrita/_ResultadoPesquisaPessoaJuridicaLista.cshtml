@@ -18,13 +18,13 @@
                     <div class="row">
                         <div class="col-md-12">
                             <i class="icon-featured fa fa-user pull-left mr-lg"></i>
-                            <h2>Pessoas Físicas Encontradas</h2>
+                            <h2>Pessoas Jurídicas Encontradas</h2>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
 
-                            <table class="table table-striped">
+                            <table id="dtLista" class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -72,12 +72,13 @@
                 url: '@Url.Action("PesquisarPessoaJuridicaPorCNPJ", "AreaRestrita")',
                 type: 'POST',
                 data: 'txtCnpjPesquisaPorCnpj=' + cnpj,
-                context: $('#divResultadoPesquisaPJ'),
+                context: $('#divDetalhePesquisaPJ'),
                 success: function (result) {
-                    $('#divResultadoPesquisaPJ').html(result);
-                    $('#divResultadoPesquisaPJ').fadeIn(500);
-                    $('#btnNovaPesquisa').fadeIn(2500);
+                    $('#divListaPesquisaPJ').hide();
                     $('#divLoading').hide();
+                    $('#divDetalhePesquisaPJ').html(result);
+                    $('#divDetalhePesquisaPJ').fadeIn(500);
+                    $('.jsVoltar').fadeIn(2500);
                 },
                 beforeSend: function () {
                     $('#divFiltros').hide();
@@ -88,5 +89,35 @@
                 }
             });
         });
+
+
+        var dtDados = $('#dtLista').DataTable({
+            "oLanguage": {
+                "sProcessing": "Processando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "N&#227;o foram encontrados resultados",
+                "sInfo": "Mostrando de _START_ at&#233; _END_ de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando de 0 at&#233; 0 de 0 registros",
+                "sInfoFiltered": "(filtrado de _MAX_ registros no total)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "oPaginate": {
+                    "sFirst": "Primeiro",
+                    "sPrevious": "Anterior",
+                    "sNext": "Seguinte",
+                    "sLast": "&#218;ltimo"
+                }
+            },
+            "bRetrieve": true,
+            "bAutoWidth": false,
+            "bProcessing": true,
+            "bStateSave": false,
+            "paging": true,
+            "searching": true,
+            "info": true,
+            "bServerSide": false
+        });
+
     });
 </script>

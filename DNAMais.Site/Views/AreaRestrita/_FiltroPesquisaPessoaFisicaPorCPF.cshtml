@@ -23,10 +23,10 @@
                 url: this.action,
                 type: 'GET',
                 data: $(this).serialize(),
-                context: $('#divResultadoPesquisaPF'),
+                context: $('#divDetalhePesquisaPF'),
                 success: function (result) {
-                    $('#divResultadoPesquisaPF').html(result);
-                    $('#divResultadoPesquisaPF').fadeIn(500);
+                    $('#divListaPesquisaPF').html(result);
+                    $('#divListaPesquisaPF').fadeIn(500);
                     $('#btnNovaPesquisa').fadeIn(2500);
                     $('#divLoading').hide();
                 },

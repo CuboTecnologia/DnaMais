@@ -43,7 +43,7 @@ namespace DNAMais.BackOffice.Helpers
             controle.InnerHtml = input.ToString();
 
             var div = new TagBuilder("div");
-            div.Attributes["class"] = "control-group";
+            div.Attributes["class"] = "form-group";
             div.InnerHtml = label.ToString() + controle.ToString();
 
             //superDiv.InnerHtml = div.ToString();

@@ -25,7 +25,7 @@ namespace DNAMais.BackOffice.Helpers
 
             foreach (ModelState ms in ModelState.Values)
             {
-                if (ms.Value == null)
+                if (ms == null)
                 {
                     continue;
                 }

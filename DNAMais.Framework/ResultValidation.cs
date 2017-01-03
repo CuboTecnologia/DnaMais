@@ -21,9 +21,11 @@ namespace DNAMais.Framework
 
         public void AddMessage(string field, string message)
         {
-            this.Fields.Add(new ResultValidationField(
-                field,
-                message));
+            if (field.Trim() != string.Empty)
+                this.Fields.Add(new ResultValidationField(field, message));
+            else
+                this.Message = message;
+
             this.Ok = false;
         }
 

@@ -12,7 +12,7 @@
     WebGrid grid = new WebGrid(Model, canSort: false);
 
     WebGridColumn coluna1 = grid.Column(columnName: "Id", header: "No.", format: @<span>@(item.Id)</span>, style: "col-md-1");
-    WebGridColumn coluna2 = grid.Column(columnName: "Cnpj", header: "CNPJ", format: @<span>@(   ((string)item.Cnpj).FormatarCNPJ())</span>, style: "col-md-2");
+    WebGridColumn coluna2 = grid.Column(columnName: "Cnpj", header: "CNPJ", format: @<span>@(((string)item.Cnpj).FormatarCNPJ())</span>, style: "col-md-2");
     WebGridColumn coluna3 = grid.Column(columnName: "RazaoSocial", header: "Razão Social", format: @<span>@(item.RazaoSocial)</span>, style: "col-md-2");
     WebGridColumn coluna4 = grid.Column(columnName: "NomeFantasia", header: "Nome Fantasia", format: @<span>@(item.NomeFantasia)</span>, style: "col-md-2");
     WebGridColumn coluna5 = grid.Column(columnName: "RamoAtividade", header: "Ramo Atividade", format: @<span>@(item.RamoAtividade.Nome)</span>, style: "col-md-1");

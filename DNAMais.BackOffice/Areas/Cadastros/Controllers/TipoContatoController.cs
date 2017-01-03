@@ -60,6 +60,16 @@ namespace DNAMais.BackOffice.Areas.Cadastros.Controllers
         public ActionResult Create(TipoContato tipoContato)
         {
             facade.IncluirTipoContato(tipoContato);
+
+            if (ModelState.IsValid)
+            {
+                var x = "1";
+            }
+            else
+            {
+                var x = Helpers.DnaMaisHelperModelState.GetErrors(ModelState);
+            }
+
             return View("Cadastro", tipoContato);
         }
 

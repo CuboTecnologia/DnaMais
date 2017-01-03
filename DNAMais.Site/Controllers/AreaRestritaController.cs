@@ -518,16 +518,23 @@ namespace DNAMais.Site.Controllers
 
         public UsuarioBackofficeModel CarregaDadosUsuarioBackoffice()
         {
-            var usuarioBackoffice = new UsuarioBackofficeModel()
+            if (Session["user"] != null)
             {
-                Id = ((UsuarioBackOffice)Session["user"]).Id,
-                Nome = ((UsuarioBackOffice)Session["user"]).Nome,
-                Email = ((UsuarioBackOffice)Session["user"]).Email,
-                IdPerfil = ((UsuarioBackOffice)Session["user"]).IdPerfil,
-                Login = ((UsuarioBackOffice)Session["user"]).Login
-            };
+                var usuarioBackoffice = new UsuarioBackofficeModel()
+                {
+                    Id = ((UsuarioBackOffice)Session["user"]).Id,
+                    Nome = ((UsuarioBackOffice)Session["user"]).Nome,
+                    Email = ((UsuarioBackOffice)Session["user"]).Email,
+                    IdPerfil = ((UsuarioBackOffice)Session["user"]).IdPerfil,
+                    Login = ((UsuarioBackOffice)Session["user"]).Login
+                };
 
-            return usuarioBackoffice;
+                return usuarioBackoffice;
+            }
+            else
+            {
+                return new UsuarioBackofficeModel();
+            }
         }
     }
 }

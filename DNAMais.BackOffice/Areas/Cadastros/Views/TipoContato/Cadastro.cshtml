@@ -20,7 +20,7 @@
 {
     @if (Request.HttpMethod == "GET" || !ViewData.ModelState.IsValid)
     {
-        <div style="width:100%;">
+        <div style="width: 100%;">
 
             @Html.DnaMaisTextBoxFor(
                 expression: m => m.Nome,

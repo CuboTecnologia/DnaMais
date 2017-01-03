@@ -52,12 +52,16 @@
         </div>
     </div>
     <div class="row">
-        <input type="button" value="Nova Consulta" class="btn btn-default btn-lg btn-borders pull-right" id="btnNovaPesquisa" />
-        <div id="divResultadoPesquisaPJ">
+        <input type="button" value="Nova Consulta" class="btn btn-danger btn-lg btn-borders pull-right" id="btnNovaPesquisa" />
+        <input type="button" value="Voltar" class="btn btn-info btn-lg btn-borders pull-right jsVoltar" style="margin-right: 10px"  />
+        <div id="divListaPesquisaPJ">
+        </div>
+        <div id="divDetalhePesquisaPJ">
         </div>
         <div id="divLoading">
             @Html.Partial("_Loading")
         </div>
+        <input type="button" value="Voltar" class="btn btn-info btn-lg btn-borders pull-right jsVoltar" style="margin-bottom: 20px;" />
     </div>
 </div>
 
@@ -66,14 +70,56 @@
     $(document).ready(function () {
         $('#txtCnpjPesquisaPorCnpj').focus();
         $('#btnNovaPesquisa').hide();
-        $('#divResultadoPesquisaPJ').hide();
+        $('#divListaPesquisaPJ').hide();
+        $('#divDetalhePesquisaPJ').hide();
         $('#divLoading').hide();
+        $('.jsVoltar').hide();
 
         $('#btnNovaPesquisa').click(function () {
             $('#btnNovaPesquisa').fadeOut(500);
-            $('#divResultadoPesquisaPJ').fadeOut(500);
+            $('#divListaPesquisaPJ').fadeOut(500);
+            $('#divDetalhePesquisaPJ').fadeOut(500);
             $('#divFiltros').fadeIn(500);
         });
+
+        $('.jsVoltar').click(function () {
+            event.preventDefault();
+            $('.jsVoltar').fadeOut(500);
+            $('#divDetalhePesquisaPJ').hide();
+            $('#divListaPesquisaPJ').fadeIn(500);
+        });
+
+        $(document).on("keyup", function (event) {
+            event.preventDefault();
+            if (event.which == 13) {
+                if (!$('#btnNovaPesquisa').is(':visible')) {
+                    $('form').submit();
+                }
+            }
+        });
+
+        $("a[data-toggle=tab]").click(function (e) {
+
+            var abaClicada = e.target.id;
+
+            if (abaClicada == "cnpj") {
+                setTimeout(function () {
+                    $('#txtCnpjPesquisaPorCnpj').focus();
+                }, 1);
+            }
+            else if (abaClicada == "nome") {
+                setTimeout(function () {
+                    $('#txtNomePesquisaPorNome').focus();
+                }, 1);
+            }
+            else if (abaClicada == "telefone") {
+                setTimeout(function () {
+                    $('#txtDddPesquisaPorTelefone').focus();
+                }, 1);
+            }
+
+        });
+
     });
 
 </script>
