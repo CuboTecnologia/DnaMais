@@ -61,19 +61,19 @@ namespace DNAMais.Domain.Services.Consultas
             StringBuilder sql = new StringBuilder();
 
             sql.Append("SELECT ");
-            sql.Append("ID_PESSOA_FISICA         AS Id, ");
-            sql.Append("NR_CPF                   AS Cpf, ");
-            sql.Append("NM_COMPLETO              AS NomeCompleto, ");
-            sql.Append("NM_MAE                   AS NomeMae, ");
-            sql.Append("DT_NASCIMENTO            AS DataNascimento, ");
-            sql.Append("NR_IDADE                 AS Idade, ");
-            sql.Append("SG_SEXO                  AS Sexo, ");
-            sql.Append("CD_SITUACAO_CADASTRAL_PF AS CodigoSituacaoCadastral, ");
-            sql.Append("ID_ORIGEM_DADOS          AS IdOrigemDados, ");
-            sql.Append("DT_INCLUSAO              AS DataInclusao, ");
-            sql.Append("DT_ULTIMA_ATUALIZACAO    AS DataUltimaAtualizacao ");
-            sql.Append("FROM DNAINFO.PESSOA_FISICA ");
-            sql.Append("WHERE NR_CPF = '" + cpf.PadLeft(11, '0') + "'");
+            sql.Append(" ID_PESSOA_FISICA         AS Id, ");
+            sql.Append(" NR_CPF                   AS Cpf, ");
+            sql.Append(" NM_COMPLETO              AS NomeCompleto, ");
+            sql.Append(" NM_MAE                   AS NomeMae, ");
+            sql.Append(" DT_NASCIMENTO            AS DataNascimento, ");
+            sql.Append(" NR_IDADE                 AS Idade, ");
+            sql.Append(" SG_SEXO                  AS Sexo, ");
+            sql.Append(" CD_SITUACAO_CADASTRAL_PF AS CodigoSituacaoCadastral, ");
+            sql.Append(" ID_ORIGEM_DADOS          AS IdOrigemDados, ");
+            sql.Append(" DT_INCLUSAO              AS DataInclusao, ");
+            sql.Append(" DT_ULTIMA_ATUALIZACAO    AS DataUltimaAtualizacao ");
+            sql.Append(" FROM DNAINFO.PESSOA_FISICA ");
+            sql.Append(" WHERE NR_CPF = '" + cpf.PadLeft(11, '0') + "'");
 
             InfoPessoaFisica pessoa = context.PessoasFisicas.SqlQuery(sql.ToString()).FirstOrDefault();
 
@@ -82,6 +82,8 @@ namespace DNAMais.Domain.Services.Consultas
             {
                 repoTransacao.Add(transacao);
                 context.SaveChanges();
+
+                ConsultarQSA(pessoa.Cpf);
             }
 
             return pessoa;
@@ -262,5 +264,52 @@ namespace DNAMais.Domain.Services.Consultas
 
             return pessoas;
         }
+
+        public List<InfoPessoaFisicaQsa> ConsultarQSA(string cpf)
+        {
+            try
+            {
+                cpf = cpf.LimparCaracteresCPF();
+
+                StringBuilder sql = new StringBuilder();
+
+                sql.Append(" SELECT ");
+                sql.Append(" Q.ID_PESSOA_JURIDICA_QSA       AS Id, ");
+                sql.Append(" Q.ID_PESSOA_JURIDICA           AS IdPessoaJuridica, ");
+                sql.Append(" Q.NR_CNPJ                      AS CNPJ, ");
+                sql.Append(" Q.NR_DOCUMENTO_SOCIO           AS DocumentoSocio, ");
+                sql.Append(" Q.NM_NOME_SOCIO                AS NomeSocio, ");
+                sql.Append(" Q.DS_QUALIFICACAO              AS Qualificacao, ");
+                sql.Append(" Q.DT_DATA_ENTRADA_SOCIEDADE    AS DataEntradaSociedade, ");
+                sql.Append(" Q.VL_VALOR_PARTICIPACAO        AS ValorParticipacao, ");
+                sql.Append(" Q.DS_ARQUIVO                   AS Arquivo, ");
+                sql.Append(" Q.NR_ID_TABLE                  AS IdTable, ");
+                sql.Append(" Q.NR_OLD_SOCIO                 AS OldSocio, ");
+                sql.Append(" Q.DT_CONSULTA                  AS DataConsulta, ");
+                sql.Append(" Q.NR_ORDEM_SOC                 AS OrdemSocio, ");
+                sql.Append(" Q.NR_FLAG                      AS Flag, ");
+                sql.Append(" Q.NM_RAZAO_SOCIAL              AS RazaoSocial, ");
+                sql.Append(" Q.NM_FANTASIA                  AS NomeFantasia ");
+
+                sql.Append(" FROM DNAINFO.VW_PESSOA_JURIDICA_QSA Q");
+                sql.Append(" WHERE Q.NR_DOCUMENTO_SOCIO = '" + cpf.PadLeft(11, '0') + "'");
+
+                List<InfoPessoaFisicaQsa> qsa = context.QsaPessoasFisicas.SqlQuery(sql.ToString()).ToList();
+
+                if (qsa != null)
+                {
+                    context.SaveChanges();
+                }
+
+                return qsa;
+            }
+            catch (Exception ex)
+            {
+                var x = ex.Message;
+            }
+
+            return null;
+        }
+
     }
 }

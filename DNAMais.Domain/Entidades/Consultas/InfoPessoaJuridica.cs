@@ -100,6 +100,7 @@ namespace DNAMais.Domain.Entidades.Consultas
         public virtual ICollection<InfoPessoaJuridicaEmail> Emails { get; set; }
         public virtual ICollection<InfoPessoaJuridicaEndereco> Enderecos { get; set; }
         public virtual ICollection<InfoPessoaJuridicaTelefone> Telefones { get; set; }
+        public virtual ICollection<InfoPessoaJuridicaQsa> QSA { get; set; }
 
         #endregion
 

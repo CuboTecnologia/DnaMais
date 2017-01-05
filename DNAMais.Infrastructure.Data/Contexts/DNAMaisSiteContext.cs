@@ -190,16 +190,20 @@ namespace DNAMais.Infrastructure.Data.Contexts
 
         public DbSet<InfoUf> InfoUfs { get; set; }
         public DbSet<InfoMunicipio> InfoMunicipios { get; set; }
+        
         public DbSet<InfoPessoaFisica> PessoasFisicas { get; set; }
         public DbSet<InfoPessoaFisicaEndereco> EnderecosPessoasFisicas { get; set; }
         public DbSet<InfoPessoaFisicaTelefone> TelefonesPessoasFisicas { get; set; }
         public DbSet<InfoPessoaFisicaEmail> EmailsPessoasFisicas { get; set; }
         public DbSet<InfoPessoaFisicaComplementar> PessoasFisicasDadosComplementares { get; set; }
         public DbSet<InfoPessoaFisicaProfissional> PessoasFisicasDadosProfissionais { get; set; }
+        public DbSet<InfoPessoaFisicaQsa> QsaPessoasFisicas { get; set; }
+
         public DbSet<InfoPessoaJuridica> PessoasJuridicas { get; set; }
         public DbSet<InfoPessoaJuridicaEndereco> EnderecosPessoasJuridicas { get; set; }
         public DbSet<InfoPessoaJuridicaTelefone> TelefonesPessoasJuridicas { get; set; }
         public DbSet<InfoPessoaJuridicaEmail> EmailsPessoasJuridicas { get; set; }
+        public DbSet<InfoPessoaJuridicaQsa> QsaPessoasJuridicas { get; set; }
 
         public DbSet<ContratoEmpresaPrecificacao> ContratosEmpresasPrecificacoes { get; set; }
         public DbSet<ContratoEmpresaProduto> ContratosEmpresasProdutos { get; set; }
@@ -219,6 +223,8 @@ namespace DNAMais.Infrastructure.Data.Contexts
             //    });
 
             //base.OnModelCreating(modelBuilder);
+
+            //modelBuilder.Ignore<InfoPessoaFisicaQsa>();
         }
 
     }

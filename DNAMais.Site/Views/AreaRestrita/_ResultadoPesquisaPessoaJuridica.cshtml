@@ -276,5 +276,71 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="featured-box featured-box-secondary featured-box-text-left">
+                    <div class="box-content">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <i class="icon-featured fa fa-users pull-left mr-lg"></i>
+                                <h2>Sócios desta Empresa</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>CNPJ/CPF</th>
+                                            <th>Nome do Sócio</th>
+                                            <th>Qualificação</th>
+                                            <th>Data entrada na sociedade</th>
+                                            <th>Participação</th>
+                                        </tr>
+                                    </thead>
+                                    @if (Model.Enderecos != null)
+                                    {
+                                    <tbody>
+                                        @{
+                                            int indexQsa = 0;
+                                            string documentoSocio = string.Empty;
+                                        }
+                                        @foreach (InfoPessoaJuridicaQsa qsa in Model.QSA.ToList().OrderByDescending(i => i.NomeSocio))
+                                        {
+                                            indexQsa++;
+                                            documentoSocio = string.Empty;
+                                            
+                                            if (qsa.DocumentoSocio != null)
+                                            {
+                                                if (qsa.DocumentoSocio.Trim().Length == 14)
+                                                {
+                                                    documentoSocio = qsa.DocumentoSocio.FormatarCNPJ();
+                                                }
+                                                else if (qsa.DocumentoSocio.Trim().Length == 11)
+                                                {
+                                                    documentoSocio = qsa.DocumentoSocio.FormatarCPF();
+                                                }
+                                            }
+                                            
+                                            <tr>
+                                                <td>@indexQsa</td>
+                                                <td>@documentoSocio</td>
+                                                <td>@qsa.NomeSocio</td>
+                                                <td>@qsa.Qualificacao</td>
+                                                <td>@qsa.DataEntradaSociedade.FormatarData()</td>
+                                                <td>@qsa.ValorParticipacao@(qsa.ValorParticipacao != null ? "%" : "")</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 

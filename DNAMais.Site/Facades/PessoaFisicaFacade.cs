@@ -79,5 +79,10 @@ namespace DNAMais.Site.Facades
         {
             return service.ConsultarPorTelefone(numeroDdd, numeroTelefone, idClienteEmpresa, idContratoEmpresa, idUsuarioCliente, out transacao);
         }
+
+        public List<InfoPessoaFisicaQsa> ConsultarPessoaFisicaQSA(string cpf)
+        {
+            return service.ConsultarQSA(cpf);
+        }
     }
 }

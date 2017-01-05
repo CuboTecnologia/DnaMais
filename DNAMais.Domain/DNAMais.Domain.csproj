@@ -56,6 +56,8 @@
     <Compile Include="Entidades\ClienteEmpresaContatoEmail.cs" />
     <Compile Include="Entidades\ClienteEmpresaContatoFone.cs" />
     <Compile Include="Entidades\ClienteEmpresaEndereco.cs" />
+    <Compile Include="Entidades\Consultas\InfoPessoaFisicaQsa.cs" />
+    <Compile Include="Entidades\Consultas\InfoPessoaJuridicaQsa.cs" />
     <Compile Include="Entidades\Consultas\InfoPessoaJuridicaEndereco.cs" />
     <Compile Include="Entidades\Consultas\InfoOperadoraTelefonia.cs" />
     <Compile Include="Entidades\Consultas\InfoPessoaJuridicaTelefone.cs" />
