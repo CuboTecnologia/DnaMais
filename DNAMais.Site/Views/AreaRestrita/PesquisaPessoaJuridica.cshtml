@@ -52,6 +52,7 @@
         </div>
     </div>
     <div class="row">
+        <input type="hidden" value="" id="hdnOrigemPesquisa" />
         <input type="button" value="Nova Consulta" class="btn btn-danger btn-lg btn-borders pull-right" id="btnNovaPesquisa" />
         <input type="button" value="Voltar" class="btn btn-info btn-lg btn-borders pull-right jsVoltar" style="margin-right: 10px"  />
         <div id="divListaPesquisaPJ">
@@ -85,8 +86,15 @@
         $('.jsVoltar').click(function () {
             event.preventDefault();
             $('.jsVoltar').fadeOut(500);
-            $('#divDetalhePesquisaPJ').hide();
-            $('#divListaPesquisaPJ').fadeIn(500);
+
+            if ($('#hdnOrigemPesquisa').val() == "filtro") {
+                $('#divDetalhePesquisaPJ').fadeIn(500);
+                $('#divListaPesquisaPJ').hide();
+            } else {
+                $('#divDetalhePesquisaPJ').hide();
+                $('#divListaPesquisaPJ').fadeIn(500);
+            }
+
         });
 
         $(document).on("keyup", function (event) {

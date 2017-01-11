@@ -18,6 +18,7 @@
                 return;
             }
             event.preventDefault();
+            $('#hdnOrigemPesquisa').val("filtro");
             $.ajax({
                 url: this.action,
                 type: 'GET',

@@ -67,6 +67,7 @@
         $('#cnpj').focus();
         $('.link-pessoa-juridica').on('click', function () {
             event.preventDefault();
+            $('#hdnOrigemPesquisa').val("lista");
             var cnpj = $(this).attr('data-cnpj');
             $.ajax({
                 url: '@Url.Action("PesquisarPessoaJuridicaPorCNPJ", "AreaRestrita")',

@@ -340,7 +340,6 @@
             e.preventDefault();
 
             if ($("#Login").val() != "" && $("#Password").val() != "") {
-                //location.href = "@Url.Action("ProdutosContratados", "AreaRestrita")";
                 $.ajax({
                     type: "POST",
                     url: "@Url.Action("Index", "Home")",

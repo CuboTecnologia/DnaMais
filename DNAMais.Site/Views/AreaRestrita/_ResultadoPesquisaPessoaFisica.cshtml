@@ -12,264 +12,287 @@
         padding-right: 5px;
     }
 
-    .pessoa-dados td:nth-child(even) {
-        font-size: 1.2em;
-        font-weight: bold;
-        text-align: left;
-        line-height: 32px;
-        width: 75%;
+        .pessoa-dados td:nth-child(even) {
+            font-size: 1.2em;
+            font-weight: bold;
+            text-align: left;
+            line-height: 32px;
+            width: 75%;
+        }
+
+    a.tooltip {
+        outline: none;
     }
 
-    a.tooltip {outline:none; }
-    a.tooltip strong {line-height:30px;}
-    a.tooltip:hover {text-decoration:none;} 
-    a.tooltip span {
-        z-index:10;display:none; padding:14px 20px;
-        margin-top:-30px; margin-left:28px;
-        width:300px; line-height:16px;
+        a.tooltip strong {
+            line-height: 30px;
+        }
+
+        a.tooltip:hover {
+            text-decoration: none;
+        }
+
+        a.tooltip span {
+            z-index: 10;
+            display: none;
+            padding: 14px 20px;
+            margin-top: -30px;
+            margin-left: 28px;
+            width: 300px;
+            line-height: 16px;
+        }
+
+        a.tooltip:hover span {
+            display: inline;
+            position: absolute;
+            color: #111;
+            border: 1px solid #DCA;
+            background: #fffAF0;
+        }
+
+    .callout {
+        z-index: 20;
+        position: absolute;
+        top: 30px;
+        border: 0;
+        left: -12px;
     }
-    a.tooltip:hover span{
-        display:inline; position:absolute; color:#111;
-        border:1px solid #DCA; background:#fffAF0;}
-    .callout {z-index:20;position:absolute;top:30px;border:0;left:-12px;}
-    
+
     /*CSS3 extras*/
-    a.tooltip span
-    {
-        border-radius:4px;
+    a.tooltip span {
+        border-radius: 4px;
         box-shadow: 5px 5px 8px #CCC;
     }
 </style>
 
 
 
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="mb-none">Protocolo da Consulta Realizada: <strong>@ViewBag.NumeroTransacao</strong></h2>
+        <h4 class="mb-none">Data/Hora da Consulta: <strong>@ViewBag.DataTransacao</strong></h4>
+    </div>
+</div>
+
+<div class="featured-boxes featured-boxes-style-8">
     <div class="row">
-        <div class="col-md-12">
-            <h2 class="mb-none">Protocolo da Consulta Realizada: <strong>@ViewBag.NumeroTransacao</strong></h2>
-            <h4 class="mb-none">Data/Hora da Consulta: <strong>@ViewBag.DataTransacao</strong></h4>
+        <div class="col-md-6">
+            <div class="featured-box featured-box-secondary featured-box-text-left">
+                <div class="box-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <i class="icon-featured fa fa-user pull-left mr-lg"></i>
+                            <h2>Dados Cadastrais</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="pessoa-dados">
+                                <tr>
+                                    <td>CPF:</td>
+                                    <td>@Model.Cpf.FormatarCPF()</td>
+                                </tr>
+                                <tr>
+                                    <td>Status Receita:</td>
+                                    <td>@(Model.SituacaoCadastral != null ? Model.SituacaoCadastral.Descricao : "Indisponível")</td>
+                                </tr>
+                                <tr>
+                                    <td>Nome Completo:</td>
+                                    <td>@(Model.NomeCompleto ?? "Indisponível")</td>
+                                </tr>
+                                <tr>
+                                    <td>Nome da Mãe:</td>
+                                    <td>@(Model.NomeMae ?? "Indisponível")</td>
+                                </tr>
+                                <tr>
+                                    <td>Sexo:</td>
+                                    <td>@Model.Sexo.FormatarSexo()</td>
+                                </tr>
+                                <tr>
+                                    <td>Data de Nascimento:</td>
+                                    <td>@Model.DataNascimento.FormatarData()</td>
+                                </tr>
+                                <tr>
+                                    <td>Idade:</td>
+                                    <td>@(Model.Idade != null ? Model.Idade.ToString() + " anos" : "Indisponível")</td>
+                                </tr>
+                                <tr>
+                                    <td>Signo:</td>
+                                    <td>@Model.DataNascimento.CalcularSigno()</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="featured-box featured-box-secondary featured-box-text-left">
+                <div class="box-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <i class="icon-featured fa fa-book pull-left mr-lg"></i>
+                            <h2>Informações Complementares</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="pessoa-dados">
+                                <tr>
+                                    <td>RG:</td>
+                                    @if (Model.DadosComplementares != null)
+                                    {
+                                        <td>@(Model.DadosComplementares.NumeroRG ?? "Indisponível")</td>
+                                    }
+                                    else
+                                    {
+                                        <td>Indisponível</td>
+                                    }
+                                </tr>
+                                <tr>
+                                    <td>Título de Eleitor:</td>
+                                    @if (Model.DadosComplementares != null)
+                                    {
+                                        <td>@(Model.DadosComplementares.TituloEleitor ?? "Indisponível")</td>
+                                    }
+                                    else
+                                    {
+                                        <td>Indisponível</td>
+                                    }
+                                </tr>
+                                <tr>
+                                    <td>Estado Civil:</td>
+                                    @if (Model.DadosComplementares != null)
+                                    {
+                                        <td>@(Model.DadosComplementares.EstadoCivil ?? "Indisponível")</td>
+                                    }
+                                    else
+                                    {
+                                        <td>Indisponível</td>
+                                    }
+                                </tr>
+                                <tr>
+                                    <td>Escolaridade:</td>
+                                    @if (Model.DadosProfissionais != null)
+                                    {
+                                        <td>@(Model.DadosProfissionais.GrauEscolaridade != null ? Model.DadosProfissionais.GrauEscolaridade.Descricao : "Indisponível")</td>
+                                    }
+                                    else
+                                    {
+                                        <td>Indisponível</td>
+                                    }
+                                </tr>
+                                <tr>
+                                    <td>Renda Estimada:</td>
+                                    @if (Model.DadosProfissionais != null)
+                                    {
+                                        <td>@(Model.DadosProfissionais.FaixaRenda != null ? Model.DadosProfissionais.FaixaRenda.Descricao : "Indisponível")</td>
+                                    }
+                                    else
+                                    {
+                                        <td>Indisponível</td>
+                                    }
+                                </tr>
+                                <tr>
+                                    <td>Classe Social:</td>
+                                    @if (Model.DadosProfissionais != null)
+                                    {
+                                        <td>@(Model.DadosProfissionais.ClassSocial != null ? Model.DadosProfissionais.ClassSocial.Descricao : "Indisponível")</td>
+                                    }
+                                    else
+                                    {
+                                        <td>Indisponível</td>
+                                    }
+                                </tr>
+                                <tr>
+                                    <td>Óbito:</td>
+                                    <td>Não</td>
+                                </tr>
+                                <tr>
+                                    <td>Data de Óbito:</td>
+                                    <td>-</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <div class="featured-boxes featured-boxes-style-8">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="featured-box featured-box-secondary featured-box-text-left">
-                    <div class="box-content">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <i class="icon-featured fa fa-user pull-left mr-lg"></i>
-                                <h2>Dados Cadastrais</h2>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="pessoa-dados">
-                                    <tr>
-                                        <td>CPF:</td>
-                                        <td>@Model.Cpf.FormatarCPF()</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Status Receita:</td>
-                                        <td>@(Model.SituacaoCadastral != null ? Model.SituacaoCadastral.Descricao : "Indisponível")</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Nome Completo:</td>
-                                        <td>@(Model.NomeCompleto ?? "Indisponível")</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Nome da Mãe:</td>
-                                        <td>@(Model.NomeMae ?? "Indisponível")</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Sexo:</td>
-                                        <td>@Model.Sexo.FormatarSexo()</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Data de Nascimento:</td>
-                                        <td>@Model.DataNascimento.FormatarData()</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Idade:</td>
-                                        <td>@(Model.Idade != null ? Model.Idade.ToString() + " anos" : "Indisponível")</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Signo:</td>
-                                        <td>@Model.DataNascimento.CalcularSigno()</td>
-                                    </tr>
-                                </table>
-                            </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="featured-box featured-box-secondary featured-box-text-left">
+                <div class="box-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <i class="icon-featured fa fa-building pull-left mr-lg"></i>
+                            <h2>Endereços</h2>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="featured-box featured-box-secondary featured-box-text-left">
-                    <div class="box-content">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <i class="icon-featured fa fa-book pull-left mr-lg"></i>
-                                <h2>Informações Complementares</h2>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="pessoa-dados">
-                                    <tr>
-                                        <td>RG:</td>
-                                        @if (Model.DadosComplementares != null)
-                                        {
-                                            <td>@(Model.DadosComplementares.NumeroRG ?? "Indisponível")</td>
-                                        }
-                                        else
-                                        {
-                                            <td>Indisponível</td>
-                                        }
-                                    </tr>
-                                    <tr>
-                                        <td>Título de Eleitor:</td>
-                                        @if (Model.DadosComplementares != null)
-                                        {
-                                            <td>@(Model.DadosComplementares.TituloEleitor ?? "Indisponível")</td>
-                                        }
-                                        else
-                                        {
-                                            <td>Indisponível</td>
-                                        }
-                                    </tr>
-                                    <tr>
-                                        <td>Estado Civil:</td>
-                                        @if (Model.DadosComplementares != null)
-                                        {
-                                            <td>@(Model.DadosComplementares.EstadoCivil ?? "Indisponível")</td>
-                                        }
-                                        else
-                                        {
-                                            <td>Indisponível</td>
-                                        }
-                                    </tr>
-                                    <tr>
-                                        <td>Escolaridade:</td>
-                                        @if (Model.DadosProfissionais != null)
-                                        {
-                                            <td>@(Model.DadosProfissionais.GrauEscolaridade != null ? Model.DadosProfissionais.GrauEscolaridade.Descricao : "Indisponível")</td>
-                                        }
-                                        else
-                                        {
-                                            <td>Indisponível</td>
-                                        }
-                                    </tr>
-                                    <tr>
-                                        <td>Renda Estimada:</td>
-                                        @if (Model.DadosProfissionais != null)
-                                        {
-                                            <td>@(Model.DadosProfissionais.FaixaRenda != null ? Model.DadosProfissionais.FaixaRenda.Descricao : "Indisponível")</td>
-                                        }
-                                        else
-                                        {
-                                            <td>Indisponível</td>
-                                        }
-                                    </tr>
-                                    <tr>
-                                        <td>Classe Social:</td>
-                                        @if (Model.DadosProfissionais != null)
-                                        {
-                                            <td>@(Model.DadosProfissionais.ClassSocial != null ? Model.DadosProfissionais.ClassSocial.Descricao : "Indisponível")</td>
-                                        }
-                                        else
-                                        {
-                                            <td>Indisponível</td>
-                                        }
-                                    </tr>
-                                    <tr>
-                                        <td>Óbito:</td>
-                                        <td>Não</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Data de Óbito:</td>
-                                        <td>-</td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="featured-box featured-box-secondary featured-box-text-left">
-                    <div class="box-content">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <i class="icon-featured fa fa-building pull-left mr-lg"></i>
-                                <h2>Endereços</h2>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
 
-                                <table class="table table-striped">
-                                    <thead>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Logradouro</th>
+                                        <th>Nº</th>
+                                        <th>Complemento</th>
+                                        <th>Bairro</th>
+                                        <th>CEP</th>
+                                        <th>Cidade</th>
+                                        <th>UF</th>
+                                        <th>Moradores</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        int indexEndereco = 0;
+                                    }
+                                    @foreach (InfoPessoaFisicaEndereco endereco in Model.Enderecos.OrderByDescending(i => i.DataUltimaAtualizacao).Take(5).ToList())
+                                    {
+                                        indexEndereco++;
                                         <tr>
-                                            <th>#</th>
-                                            <th>Logradouro</th>
-                                            <th>Nº</th>
-                                            <th>Complemento</th>
-                                            <th>Bairro</th>
-                                            <th>CEP</th>
-                                            <th>Cidade</th>
-                                            <th>UF</th>
-                                            <th>Moradores</th>
+                                            <td>@indexEndereco</td>
+                                            <td>@(endereco.TipoLogradouro + " " + endereco.Logradouro)</td>
+                                            <td>@endereco.NumeroLogradouro</td>
+                                            <td>@endereco.Complemento</td>
+                                            <td>@endereco.Bairro</td>
+                                            <td>@endereco.NumeroCEP.FormatarCEP()</td>
+                                            <td>@endereco.Cidade</td>
+                                            <td>@endereco.SiglaUF</td>
+                                            <td>...</td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        @{
-                                            int indexEndereco = 0;
-                                        }
-                                        @foreach (InfoPessoaFisicaEndereco endereco in Model.Enderecos.OrderByDescending(i => i.DataUltimaAtualizacao).Take(5).ToList())
-                                        {
-                                            indexEndereco++;
-                                            <tr>
-                                                <td>@indexEndereco</td>
-                                                <td>@(endereco.TipoLogradouro + " " + endereco.Logradouro)</td>
-                                                <td>@endereco.NumeroLogradouro</td>
-                                                <td>@endereco.Complemento</td>
-                                                <td>@endereco.Bairro</td>
-                                                <td>@endereco.NumeroCEP.FormatarCEP()</td>
-                                                <td>@endereco.Cidade</td>
-                                                <td>@endereco.SiglaUF</td>
-                                                <td>...</td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
+                                    }
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="featured-box featured-box-secondary featured-box-text-left">
-                    <div class="box-content">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <i class="icon-featured fa fa-phone pull-left mr-lg"></i>
-                                <h2>Telefones</h2>
-                            </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="featured-box featured-box-secondary featured-box-text-left">
+                <div class="box-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <i class="icon-featured fa fa-phone pull-left mr-lg"></i>
+                            <h2>Telefones</h2>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
 
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>DDD</th>
-                                            <th>Número</th>
-                                            <th>
-                                                Bloqueado Procon?&nbsp;
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>DDD</th>
+                                        <th>Número</th>
+                                        <th>Bloqueado Procon?&nbsp;
                                                 <a href="#" class="tooltip">
                                                     <i class="fa fa-question-circle"></i>
                                                     <span>
@@ -278,66 +301,119 @@
                                                         This is the easy-to-use Tooltip driven purely by CSS.
                                                     </span>
                                                 </a>
-                                            </th>
-                                            <th>Data Bloqueio</th>
+                                        </th>
+                                        <th>Data Bloqueio</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        int indexTelefone = 0;
+                                    }
+                                    @foreach (InfoPessoaFisicaTelefone telefone in Model.Telefones.OrderByDescending(i => i.DataUltimaAtualizacao).Take(10).ToList())
+                                    {
+                                        indexTelefone++;
+                                        <tr>
+                                            <td>@indexTelefone</td>
+                                            <td>@telefone.Ddd</td>
+                                            <td>@telefone.Telefone.ToString().FormatarTelefone()</td>
+                                            <td>@(telefone.Procon ?? false ? "Sim" : "")</td>
+                                            <td>@telefone.DataBloqueioProcon.FormatarDataHora()</td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        @{
-                                            int indexTelefone = 0;
-                                        }
-                                        @foreach (InfoPessoaFisicaTelefone telefone in Model.Telefones.OrderByDescending(i => i.DataUltimaAtualizacao).Take(10).ToList())
-                                        {
-                                            indexTelefone++;
-                                            <tr>
-                                                <td>@indexTelefone</td>
-                                                <td>@telefone.Ddd</td>
-                                                <td>@telefone.Telefone.ToString().FormatarTelefone()</td>
-                                                <td>@(telefone.Procon ?? false ? "Sim" : "")</td>
-                                                <td>@telefone.DataBloqueioProcon.FormatarDataHora()</td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
+                                    }
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="featured-box featured-box-secondary featured-box-text-left">
-                    <div class="box-content">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <i class="icon-featured fa fa-envelope pull-left mr-lg"></i>
-                                <h2>E-mails</h2>
-                            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="featured-box featured-box-secondary featured-box-text-left">
+                <div class="box-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <i class="icon-featured fa fa-envelope pull-left mr-lg"></i>
+                            <h2>E-mails</h2>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
 
-                                <table class="table table-striped">
-                                    <thead>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Endereço</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        int indexEmail = 0;
+                                    }
+                                    @foreach (InfoPessoaFisicaEmail email in Model.Emails.OrderByDescending(i => i.DataUltimaAtualizacao).Take(5).ToList())
+                                    {
+                                        indexEmail++;
                                         <tr>
-                                            <th>#</th>
-                                            <th>Endereço</th>
+                                            <td>@indexEmail</td>
+                                            <td>@email.Email</td>
                                         </tr>
-                                    </thead>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="featured-box featured-box-secondary featured-box-text-left">
+                <div class="box-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <i class="icon-featured fa fa-users pull-left mr-lg"></i>
+                            <h2>Participação em Empresas</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>CNPJ</th>
+                                        <th>Razão Social</th>
+                                        <th>Nome Fantasia</th>
+                                    </tr>
+                                </thead>
+                                @if (Model.Qsa != null)
+                                {
                                     <tbody>
                                         @{
-                                            int indexEmail = 0;
+                                    int indexQsa = 0;
+                                    string documentoSocio = string.Empty;
                                         }
-                                        @foreach (InfoPessoaFisicaEmail email in Model.Emails.OrderByDescending(i => i.DataUltimaAtualizacao).Take(5).ToList())
+                                        @foreach (InfoPessoaFisicaQsa qsa in Model.Qsa.ToList().OrderByDescending(i => i.RazaoSocial))
                                         {
-                                            indexEmail++;
+                                            indexQsa++;
+                                            
                                             <tr>
-                                                <td>@indexEmail</td>
-                                                <td>@email.Email</td>
+                                                <td>@indexQsa</td>
+                                                <td>@qsa.CNPJ.FormatarCNPJ()</td>
+@*                                                <td>
+                                                    <a href="#" class="link-pessoa-juridica" data-cnpj="@qsa.CNPJ.LimparCaracteresCPF()">
+                                                        @qsa.CNPJ.FormatarCNPJ()
+                                                    </a>
+                                                </td>*@
+                                                <td>@qsa.RazaoSocial</td>
+                                                <td>@qsa.NomeFantasia</td>
                                             </tr>
                                         }
                                     </tbody>
-                                </table>
-                            </div>
+                                }
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -345,3 +421,36 @@
         </div>
     </div>
 
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $('.link-pessoa-juridica').on('click', function () {
+            event.preventDefault();
+            var cpf = $(this).attr('data-cnpj');
+            $.ajax({
+                url: '@Url.Action("PesquisarPessoaJuridicaPorCNPJ", "AreaRestrita")',
+                type: 'POST',
+                data: 'txtCnpjPesquisaPorCnpj=' + cpf,
+                context: $('#divDetalhePesquisaPF'),
+                success: function (result) {
+                    $('#divListaPesquisaPF').hide();
+                    $('#divLoading').hide();
+                    $('#btnNovaPesquisa').hide();
+                    $('#divDetalhePesquisaPF').html(result);
+                    $('#divDetalhePesquisaPF').fadeIn(500);
+                    $('.jsVoltar').fadeIn(2500);
+                },
+                beforeSend: function () {
+                    $('#divFiltros').hide();
+                    $('#divLoading').show();
+                },
+                error: function (a, b, c) {
+                    alert(a.responseText.replace('"', '').replace('"', ''));
+                }
+            });
+        });
+
+    });
+</script>

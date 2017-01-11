@@ -57,7 +57,7 @@ namespace DNAMais.Domain.Services
             }
             catch (Exception err)
             {
-                returnValidation.AddMessage("", err.Message);
+                returnValidation.AddMessage("", err);
             }
 
             return returnValidation;
@@ -90,7 +90,7 @@ namespace DNAMais.Domain.Services
             }
             catch (Exception err)
             {
-                returnValidation.AddMessage("", err.Message);
+                returnValidation.AddMessage("", err);
             }
 
             return returnValidation;

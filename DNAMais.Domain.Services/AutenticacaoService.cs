@@ -49,15 +49,18 @@ namespace DNAMais.Domain.Services
             if (userByLogin == null)
             {
                 retorno.AddMessage("login", "Usuário/Senha não conferem.");
-                usuarioAutenticado = new UsuarioBackOffice { Login = user.Login, Senha = user.Password };
+                usuarioAutenticado = new UsuarioBackOffice { Login = user.Login, Senha = user.Password,  };
             }
             else if(userByLogin.Senha != Security.Encryption(user.Login + user.Password))
             {
                 retorno.AddMessage("password", "Usuário/Senha não conferem.");
                 usuarioAutenticado = new UsuarioBackOffice { Login = user.Login, Senha = user.Password };
             }
-
-            usuarioAutenticado = userByLogin;
+            else
+            {
+                retorno.Success("usuário validado com sucesso.");
+                usuarioAutenticado = userByLogin;
+            }
 
             return retorno;
         }

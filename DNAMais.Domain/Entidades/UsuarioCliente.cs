@@ -44,7 +44,7 @@ namespace DNAMais.Domain.Entidades
         [Required(ErrorMessage="Informe a senha")]
         [Display(Name = "Senha")]
         [Column("DS_SENHA")]
-        [StringLength(10)]
+        [StringLength(32)]
         public string Senha { get; set; }
 
         [Required(ErrorMessage="Informe o CPF")]

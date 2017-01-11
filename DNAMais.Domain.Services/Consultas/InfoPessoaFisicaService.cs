@@ -81,9 +81,8 @@ namespace DNAMais.Domain.Services.Consultas
             if (pessoa != null)
             {
                 repoTransacao.Add(transacao);
-                context.SaveChanges();
-
                 ConsultarQSA(pessoa.Cpf);
+                context.SaveChanges();
             }
 
             return pessoa;
@@ -275,6 +274,7 @@ namespace DNAMais.Domain.Services.Consultas
 
                 sql.Append(" SELECT ");
                 sql.Append(" Q.ID_PESSOA_JURIDICA_QSA       AS Id, ");
+                sql.Append(" Q.ID_PESSOA_FISICA             AS IdPessoaFisica, ");
                 sql.Append(" Q.ID_PESSOA_JURIDICA           AS IdPessoaJuridica, ");
                 sql.Append(" Q.NR_CNPJ                      AS CNPJ, ");
                 sql.Append(" Q.NR_DOCUMENTO_SOCIO           AS DocumentoSocio, ");
@@ -296,16 +296,13 @@ namespace DNAMais.Domain.Services.Consultas
 
                 List<InfoPessoaFisicaQsa> qsa = context.QsaPessoasFisicas.SqlQuery(sql.ToString()).ToList();
 
-                if (qsa != null)
-                {
-                    context.SaveChanges();
-                }
-
                 return qsa;
             }
             catch (Exception ex)
             {
                 var x = ex.Message;
+
+                return null;
             }
 
             return null;

@@ -13,8 +13,16 @@ namespace DNAMais.Domain.Entidades.Consultas
     {
         #region Propriedades Públicas
 
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Column("ID_PESSOA_JURIDICA_QSA")]
         public long? Id { get; set; }
+
+        [Required]
+        [Column("ID_PESSOA_FISICA")]
+        public long? IdPessoaFisica { get; set; }
+        [ForeignKey("IdPessoaFisica")]
+        public virtual InfoPessoaFisica PessoaFisica { get; set; }
 
         [Column("ID_PESSOA_JURIDICA")]
         public long? IdPessoaJuridica { get; set; }

@@ -64,26 +64,6 @@ namespace DNAMais.Site.Controllers
             return View(model);
         }
 
-        public ActionResult PesquisaPessoaFisica()
-        {
-            var model = new AreaRestritaModel()
-            {
-                UsuarioBackoffice = CarregaDadosUsuarioBackoffice()
-            };
-
-            return View(model);
-        }
-
-        public ActionResult PesquisaPessoaJuridica()
-        {
-            var model = new AreaRestritaModel()
-            {
-                UsuarioBackoffice = CarregaDadosUsuarioBackoffice()
-            };
-
-            return View(model);
-        }
-
         public ActionResult PesquisaVeiculo()
         {
             var model = new AreaRestritaModel()
@@ -98,6 +78,39 @@ namespace DNAMais.Site.Controllers
         {
             ViewBag.UF = uf;
             return PartialView("_Municipios");
+        }
+
+        public UsuarioBackofficeModel CarregaDadosUsuarioBackoffice()
+        {
+            if (Session["user"] != null)
+            {
+                var usuarioBackoffice = new UsuarioBackofficeModel()
+                {
+                    Id = ((UsuarioBackOffice)Session["user"]).Id,
+                    Nome = ((UsuarioBackOffice)Session["user"]).Nome,
+                    Email = ((UsuarioBackOffice)Session["user"]).Email,
+                    IdPerfil = ((UsuarioBackOffice)Session["user"]).IdPerfil,
+                    Login = ((UsuarioBackOffice)Session["user"]).Login
+                };
+
+                return usuarioBackoffice;
+            }
+            else
+            {
+                return new UsuarioBackofficeModel();
+            }
+        }
+
+        #region Pessoa Fisica
+        
+        public ActionResult PesquisaPessoaFisica()
+        {
+            var model = new AreaRestritaModel()
+            {
+                UsuarioBackoffice = CarregaDadosUsuarioBackoffice()
+            };
+
+            return View(model);
         }
 
         public ActionResult PesquisarPessoaFisicaPorCPF(string txtCpfPesquisaPorCpf)
@@ -220,6 +233,20 @@ namespace DNAMais.Site.Controllers
             {
                 return PartialView("_ResultadoNaoEncontrado");
             }
+        }
+
+        #endregion
+
+        #region Pessoa Juridica
+        
+        public ActionResult PesquisaPessoaJuridica()
+        {
+            var model = new AreaRestritaModel()
+            {
+                UsuarioBackoffice = CarregaDadosUsuarioBackoffice()
+            };
+
+            return View(model);
         }
 
         public ActionResult PesquisarPessoaJuridicaPorCNPJ(string txtCnpjPesquisaPorCnpj)
@@ -346,11 +373,13 @@ namespace DNAMais.Site.Controllers
             }
         }
 
-        #region Listar Arquivos Ftp Entrada
+        #endregion
+
+        #region FTP
 
         public ActionResult PesquisaFtp()
         {
-            var model = new AreaRestritaModel()
+            ControleArquivoModel model = new ControleArquivoModel
             {
                 UsuarioBackoffice = CarregaDadosUsuarioBackoffice()
             };
@@ -406,13 +435,13 @@ namespace DNAMais.Site.Controllers
             return View(model);
         }
 
-        #endregion
-
-        #region Listar Arquivos Ftp Entrada [HttpPost]
         [HttpPost]
         public ActionResult PesquisaFtp(HttpPostedFileBase file)
         {
-            ControleArquivoModel model = new ControleArquivoModel();
+            ControleArquivoModel model = new ControleArquivoModel
+            {
+                UsuarioBackoffice = CarregaDadosUsuarioBackoffice()
+            };
 
             model.NomeArquivoEntrada = file.FileName;
             model.Arquivo = file;
@@ -465,9 +494,8 @@ namespace DNAMais.Site.Controllers
 
                         TempData["msg"] = "<script>alert('Enviado com Sucesso!');</script>";
 
-
-
-                        return View(ViewBag.ListaArquivoEntradaFtp);
+                        //return View(ViewBag.ListaArquivoEntradaFtp);
+                        return View(model);
                     }
                     else
                     {
@@ -492,9 +520,7 @@ namespace DNAMais.Site.Controllers
                 throw ex;
             }
         }
-        #endregion
 
-        #region Upload Arquivo Ftp
         private static FtpWebRequest CreateFtpRequest(string fileName)
         {
             var caminho = ConfigurationManager.AppSettings["FtpUrl"];
@@ -505,36 +531,15 @@ namespace DNAMais.Site.Controllers
             ftp.Credentials = CreateCredential();
             return ftp;
         }
-        #endregion
 
-        #region Credential Ftp
         private static NetworkCredential CreateCredential()
         {
             var username = ConfigurationManager.AppSettings["FtpUsername"];
             var password = ConfigurationManager.AppSettings["FtpPassword"];
             return new NetworkCredential(username, password);
         }
+
         #endregion
 
-        public UsuarioBackofficeModel CarregaDadosUsuarioBackoffice()
-        {
-            if (Session["user"] != null)
-            {
-                var usuarioBackoffice = new UsuarioBackofficeModel()
-                {
-                    Id = ((UsuarioBackOffice)Session["user"]).Id,
-                    Nome = ((UsuarioBackOffice)Session["user"]).Nome,
-                    Email = ((UsuarioBackOffice)Session["user"]).Email,
-                    IdPerfil = ((UsuarioBackOffice)Session["user"]).IdPerfil,
-                    Login = ((UsuarioBackOffice)Session["user"]).Login
-                };
-
-                return usuarioBackoffice;
-            }
-            else
-            {
-                return new UsuarioBackofficeModel();
-            }
-        }
     }
 }

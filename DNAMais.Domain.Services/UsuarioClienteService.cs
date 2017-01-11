@@ -58,6 +58,7 @@ namespace DNAMais.Domain.Services
                 returnValidation.AddMessage("E-mail", "Login já existente.");
             }
 
+            usuarioCliente.Senha = Security.Encryption(usuarioCliente.Senha);
             usuarioCliente.Cpf = usuarioCliente.Cpf.LimparCaracteresCPF();
 
             if (!returnValidation.Ok) return returnValidation;
@@ -77,7 +78,7 @@ namespace DNAMais.Domain.Services
             }
             catch (Exception err)
             {
-                returnValidation.AddMessage("", err.Message);
+                returnValidation.AddMessage("", err);
             }
 
             return returnValidation;
@@ -97,7 +98,7 @@ namespace DNAMais.Domain.Services
             }
             catch (Exception err)
             {
-                returnValidation.AddMessage("", err.Message);
+                returnValidation.AddMessage("", err);
             }
 
             return returnValidation;
