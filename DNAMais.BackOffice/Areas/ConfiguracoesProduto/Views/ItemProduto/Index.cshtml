@@ -3,6 +3,22 @@
 
 @model List<ItemProduto>
 
+@section scriptsHeadListagem {
+    <style>
+        #myTable a {
+            color: pink;
+            text-decoration: none;
+        }
+
+            #myTable a:hover {
+                color: green;
+                text-decoration: underline;
+            }
+    </style>
+
+}
+
+}
 @{
     ViewBag.Title = "DNA+ :: Itens de Produto";
     ViewBag.TituloPagina = "Itens de Produto";
@@ -12,7 +28,7 @@
 
     WebGrid grid = new WebGrid(Model, canSort: false);
 
-    WebGridColumn coluna1 = grid.Column(columnName: "Codigo", header: "Codigo", format: @<span>@(item.Id)</span>, style: "col-md-1");
+    WebGridColumn coluna1 = grid.Column(columnName: "Codigo", header: "Codigo", format: @<span>@(item.Id)</span>, style: "col-md-3");
     WebGridColumn coluna2 = grid.Column(columnName: "Nome", header: "Nome", format: @<span>@(item.Nome)</span>, style: "col-md-3");
     WebGridColumn coluna3 = grid.Column(columnName: "Descricao", header: "Descrição", format: @<span>@(item.Descricao)</span>, style: "col-md-3");
 }
@@ -21,7 +37,7 @@
 
     @if (TempData["msgSucesso"] != null)
     {
-        <p style="color:#449010; font-size: medium;">@TempData["msgSucesso"]</p>
+        <p style="color: #449010; font-size: medium;">@TempData["msgSucesso"]</p>
     }
 
     @if (grid.Rows.Count > 0)
@@ -39,12 +55,12 @@
                     format: @<span>
                         @Html.DnaMaisTableLinkEdit("Edit", (object)item.Id)
                     </span>
-                )
+        , style: "col-md-1 text-center")
             )
         )
     }
     else
     {
-        <p style="color:#449010; font-size:medium;">Não há itens de produto cadastrados.</p>
+        <p style="color: #449010; font-size: medium;">Não há itens de produto cadastrados.</p>
     }
 }

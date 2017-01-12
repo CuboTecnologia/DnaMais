@@ -28,7 +28,7 @@
 {
     @if (Request.HttpMethod == "GET" || !ViewData.ModelState.IsValid)
     {
-        <div style="width:100%;">
+        <div style="width: 100%;">
 
             @Html.HiddenFor(
                 expression: m => m.Id)
@@ -54,11 +54,13 @@
             @Html.DnaMaisTextBoxNumberFor(
                 expression: m => m.DiaCorte,
                 width: 50,
+                maxlength: 2,
                 disabled: locked)
 
             @Html.DnaMaisTextBoxNumberFor(
                 expression: m => m.DiaFaturamento,
                 width: 50,
+                maxlength: 2,
                 disabled: locked)
 
             <hr class="separator" />

@@ -33,6 +33,7 @@ namespace DNAMais.BackOffice.Helpers
             input.Attributes["maxlength"] = maxlength.ToString();
             input.Attributes["value"] = value == null ? string.Empty : value.ToString();
             input.Attributes["style"] = "width:" + width.ToString() + "px;";
+            input.Attributes["autocomplete"] = "off";
 
             if (disabled)
             {
