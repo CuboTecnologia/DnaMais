@@ -72,7 +72,9 @@ namespace DNAMais.Site.App_Start
                 "~/vendor/jquery.gmap/jquery.gmap.js",
                 "~/vendor/jquery.lazyload/jquery.lazyload.js",
                 "~/vendor/magnific-popup/jquery.magnific-popup.js",
-                "~/vendor/isotope/jquery.isotope.min.js"));
+                "~/vendor/isotope/jquery.isotope.min.js",
+                "~/Scripts/jquery.inputmask/jquery.inputmask.min.js"
+                ));
 
             bundles.Add(new ScriptBundle("~/Scripts/bootstrap").Include(
                 "~/vendor/bootstrap/js/bootstrap.js"));

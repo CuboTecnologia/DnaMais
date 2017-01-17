@@ -147,6 +147,7 @@
     </Compile>
     <Compile Include="Models\AreaRestritaModel.cs" />
     <Compile Include="Models\ControleArquivoModel.cs" />
+    <Compile Include="Models\UsuarioClienteModel.cs" />
     <Compile Include="Models\LayoutEntradaModel.cs" />
     <Compile Include="Models\LayoutSaidaModel.cs" />
     <Compile Include="Models\StatusModel.cs" />
@@ -632,6 +633,21 @@
     <Content Include="js\views\view.contact.js" />
     <Content Include="js\views\view.home.js" />
     <Content Include="js\views\view.hosting.js" />
+    <Content Include="Scripts\jquery.inputmask\inputmask.date.extensions.js" />
+    <Content Include="Scripts\jquery.inputmask\inputmask.date.extensions.min.js" />
+    <Content Include="Scripts\jquery.inputmask\inputmask.extensions.js" />
+    <Content Include="Scripts\jquery.inputmask\inputmask.extensions.min.js" />
+    <Content Include="Scripts\jquery.inputmask\inputmask.js" />
+    <Content Include="Scripts\jquery.inputmask\inputmask.min.js" />
+    <Content Include="Scripts\jquery.inputmask\inputmask.numeric.extensions.js" />
+    <Content Include="Scripts\jquery.inputmask\inputmask.numeric.extensions.min.js" />
+    <Content Include="Scripts\jquery.inputmask\inputmask.phone.extensions.js" />
+    <Content Include="Scripts\jquery.inputmask\inputmask.phone.extensions.min.js" />
+    <Content Include="Scripts\jquery.inputmask\inputmask.regex.extensions.js" />
+    <Content Include="Scripts\jquery.inputmask\inputmask.regex.extensions.min.js" />
+    <Content Include="Scripts\jquery.inputmask\jquery.inputmask.bundle.js" />
+    <Content Include="Scripts\jquery.inputmask\jquery.inputmask.js" />
+    <Content Include="Scripts\jquery.inputmask\jquery.inputmask.min.js" />
     <Content Include="TextInputEffects\TextInputEffects\css\demo.css" />
     <Content Include="TextInputEffects\TextInputEffects\css\normalize.css" />
     <Content Include="TextInputEffects\TextInputEffects\css\set1.css" />
@@ -1420,6 +1436,7 @@
     <Content Include="Views\AreaRestrita\_ResultadoPesquisaPessoaJuridica.cshtml" />
     <Content Include="Views\AreaRestrita\_ResultadoPesquisaPessoaJuridicaLista.cshtml" />
     <Content Include="Views\Shared\_PartialHeaderLogged.cshtml" />
+    <Content Include="Views\Newsletter\Confirmacao.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

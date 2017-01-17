@@ -13,6 +13,9 @@ namespace DNAMais.BackOffice.Areas.ControleAcessoCliente.Controllers
     {
         private AcessoClienteFacade facade;
 
+        //TODO: Usuario Cliente - Criar colunas para controle das permissoes na area restrita
+
+
         public UsuarioClienteController()
         {
             facade = new AcessoClienteFacade(ModelState);

@@ -7,6 +7,6 @@ namespace DNAMais.Site.Models
 {
     public class AreaRestritaModel
     {
-        public UsuarioBackofficeModel UsuarioBackoffice { get; set; }
+        public UsuarioClienteModel UsuarioCliente { get; set; }
     }
 }

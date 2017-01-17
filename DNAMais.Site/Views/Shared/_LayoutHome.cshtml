@@ -346,10 +346,17 @@
                     data: $('#formAreaRestrita').serialize(),
                     cache: false,
                     beforeSend: function () {
+                        $("#messageError").hide();
                         $('#btnLogin').prop("disabled", true);
                         $('#loadingImage').html("<img src='/img/loading.gif' />");
-                    }, success: function (msg) {
-                        location.href = "@Url.Action("ProdutosContratados", "AreaRestrita")";
+                    }, success: function (response) {
+                        if (response != null && response.success) {
+                            location.href = "@Url.Action("ProdutosContratados", "AreaRestrita")";
+                        } else {
+                            $("#messageError").show();
+                            $('#btnLogin').prop("disabled", false);
+                            $('#loadingImage').html("");
+                        }
                     },
                     error: function () {
                         $('#btnLogin').prop("disabled", false);

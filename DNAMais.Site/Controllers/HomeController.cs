@@ -29,21 +29,20 @@ namespace DNAMais.Site.Controllers
         [HttpPost]
         public ActionResult Index(LoginUser user, bool? rememberMe)
         {
-            UsuarioBackOffice usuarioAutenticado;
+            UsuarioCliente usuarioAutenticado;
 
             facadeAutenticacao.AutenticarUsuario(user, out usuarioAutenticado);
 
-            if (ModelState.IsValid)
+            if (usuarioAutenticado.Id != null)
             {
                 FormsAuthentication.SetAuthCookie(user.Login, false);
-
                 Session.Add("user", usuarioAutenticado);
 
-                return RedirectToAction("ProdutosContratados", "AreaRestrita");
+                return Json(new { success = true, responseText = "Login validado com sucesso" }, JsonRequestBehavior.AllowGet);
             }
             else
             {
-                return View("Index", user);
+                return Json(new { success = false, responseText = "Usuário/Senha inválidos." }, JsonRequestBehavior.AllowGet);
             }
         }
 

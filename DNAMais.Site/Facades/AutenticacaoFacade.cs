@@ -14,19 +14,19 @@ namespace DNAMais.Site.Facades
 {
     public class AutenticacaoFacade : BaseFacade
     {
-        private AutenticacaoService servicoAutenticacao;
+        private AutenticacaoSiteService servicoAutenticacao;
 
         public AutenticacaoFacade(ModelStateDictionary modelState)
             : base(modelState)
         {
-            servicoAutenticacao = new AutenticacaoService();
+            servicoAutenticacao = new AutenticacaoSiteService();
         }
         public void Dispose()
         {
             servicoAutenticacao.Dispose();
         }
 
-        public void AutenticarUsuario(LoginUser usuario, out UsuarioBackOffice usuarioAutenticado)
+        public void AutenticarUsuario(LoginUser usuario, out UsuarioCliente usuarioAutenticado)
         {
             ResultValidation retorno = servicoAutenticacao.AutenticarUsuario(usuario, out usuarioAutenticado);
 

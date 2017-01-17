@@ -13,9 +13,6 @@ namespace DNAMais.Site.Controllers
 {
     public class NewsletterController : Controller
     {
-        //
-        // GET: /Newsletter/
-
         NewsletterFacade facade;
 
         public NewsletterController()
@@ -104,6 +101,29 @@ namespace DNAMais.Site.Controllers
 
         public ActionResult SubscriptionEmailNewsletter()
         {
+            return View();
+        }
+
+        public ActionResult Confirmacao(string subscription)
+        {
+            try
+            {
+                var newsletter = facade.GetNewsletterByGUID(subscription);
+
+                if (newsletter.Id != null)
+                {
+                    newsletter.OptIn = true;
+                    newsletter.DataRegistroOptIn = DateTime.Now;
+
+                    facade.SaveNewsletter(newsletter);
+
+                    return View();
+                }
+            }
+            catch (Exception ex)
+            {
+                var x = ex.Message;
+            }
             return View();
         }
 

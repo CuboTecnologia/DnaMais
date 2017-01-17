@@ -58,7 +58,7 @@ namespace DNAMais.Site.Controllers
         {
             var model = new AreaRestritaModel()
             {
-                UsuarioBackoffice = CarregaDadosUsuarioBackoffice()
+                UsuarioCliente = CarregaDadosUsuarioCliente()
             };
 
             return View(model);
@@ -68,7 +68,7 @@ namespace DNAMais.Site.Controllers
         {
             var model = new AreaRestritaModel()
             {
-                UsuarioBackoffice = CarregaDadosUsuarioBackoffice()
+                UsuarioCliente = CarregaDadosUsuarioCliente()
             };
 
             return View(model);
@@ -80,24 +80,23 @@ namespace DNAMais.Site.Controllers
             return PartialView("_Municipios");
         }
 
-        public UsuarioBackofficeModel CarregaDadosUsuarioBackoffice()
+        public UsuarioClienteModel CarregaDadosUsuarioCliente()
         {
             if (Session["user"] != null)
             {
-                var usuarioBackoffice = new UsuarioBackofficeModel()
+                var usuarioCliente = new UsuarioClienteModel()
                 {
-                    Id = ((UsuarioBackOffice)Session["user"]).Id,
-                    Nome = ((UsuarioBackOffice)Session["user"]).Nome,
-                    Email = ((UsuarioBackOffice)Session["user"]).Email,
-                    IdPerfil = ((UsuarioBackOffice)Session["user"]).IdPerfil,
-                    Login = ((UsuarioBackOffice)Session["user"]).Login
+                    Id = ((UsuarioCliente)Session["user"]).Id,
+                    Nome = ((UsuarioCliente)Session["user"]).Nome,
+                    Email = ((UsuarioCliente)Session["user"]).Email,
+                    Login = ((UsuarioCliente)Session["user"]).Login
                 };
 
-                return usuarioBackoffice;
+                return usuarioCliente;
             }
             else
             {
-                return new UsuarioBackofficeModel();
+                return new UsuarioClienteModel();
             }
         }
 
@@ -107,7 +106,7 @@ namespace DNAMais.Site.Controllers
         {
             var model = new AreaRestritaModel()
             {
-                UsuarioBackoffice = CarregaDadosUsuarioBackoffice()
+                UsuarioCliente = CarregaDadosUsuarioCliente()
             };
 
             return View(model);
@@ -243,7 +242,7 @@ namespace DNAMais.Site.Controllers
         {
             var model = new AreaRestritaModel()
             {
-                UsuarioBackoffice = CarregaDadosUsuarioBackoffice()
+                UsuarioCliente = CarregaDadosUsuarioCliente()
             };
 
             return View(model);
@@ -381,7 +380,7 @@ namespace DNAMais.Site.Controllers
         {
             ControleArquivoModel model = new ControleArquivoModel
             {
-                UsuarioBackoffice = CarregaDadosUsuarioBackoffice()
+                UsuarioCliente = CarregaDadosUsuarioCliente()
             };
 
             var caminho = ConfigurationManager.AppSettings["FtpUrl"];
@@ -440,7 +439,7 @@ namespace DNAMais.Site.Controllers
         {
             ControleArquivoModel model = new ControleArquivoModel
             {
-                UsuarioBackoffice = CarregaDadosUsuarioBackoffice()
+                UsuarioCliente = CarregaDadosUsuarioCliente()
             };
 
             model.NomeArquivoEntrada = file.FileName;

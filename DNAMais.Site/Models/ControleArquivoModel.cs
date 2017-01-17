@@ -80,7 +80,7 @@ namespace DNAMais.Site.Models
         public int QtdeEnriquecidoCelular { get; set; }
         public int QtdeEnriquecidoEmail { get; set; }
 
-        public UsuarioBackofficeModel UsuarioBackoffice { get; set; }
+        public UsuarioClienteModel UsuarioCliente { get; set; }
 
     }
 }
