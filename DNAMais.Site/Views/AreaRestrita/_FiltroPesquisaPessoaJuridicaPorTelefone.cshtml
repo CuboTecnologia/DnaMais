@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div style="float: left">
                 <label>DDD</label>
-                <input type="text" class="form-control" id="txtDddPesquisaPorTelefone" name="txtDddPesquisaPorTelefone" style="width: 60px; margin-right: 10px;" maxlength="11" onkeypress="return onlyNumbers(event);" />
+                <input type="text" class="form-control" id="txtDddPesquisaPorTelefone" name="txtDddPesquisaPorTelefone" style="width: 60px; margin-right: 10px;" maxlength="2" onkeypress="return onlyNumbers(event);" />
             </div>
 
             <div style="float: left">
@@ -48,5 +48,10 @@
                 }
             });
         });
+
+        $("#txtNumeroPesquisaPorEndereco").mask("####0", { placeholder: " " });
+        $("#txtDddPesquisaPorTelefone").mask("00", { placeholder: " " });
+        $("#txtTelefonePesquisaPorTelefone").mask("#00000000", { placeholder: " " });
+
     });
 </script>

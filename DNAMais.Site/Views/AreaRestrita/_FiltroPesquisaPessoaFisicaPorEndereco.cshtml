@@ -126,9 +126,6 @@
 <script>
     $(document).ready(function () {
 
-        $(".jsCep").inputmask("99999-999");
-        $("#txtNumeroPesquisaPorCepNumero").inputmask("99999");
-
         $('#ddlUfPesquisaPorEndereco').change(function () {
             var uf = $(this).val();
             $.ajax({
@@ -170,5 +167,10 @@
                 }
             });
         });
+
+        $(".jsCep").mask("00000-000");
+        $("#txtNumeroPesquisaPorCepNumero").mask("####0", { placeholder: " " });
+        $("#txtNumeroPesquisaPorEndereco").mask("####0", { placeholder: " " });
+
     });
 </script>

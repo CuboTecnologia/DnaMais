@@ -156,6 +156,29 @@ namespace DNAMais.Site.Controllers
             }
         }
 
+        public ActionResult PesquisarPessoaFisicaPorCepNumero(string txtCepPesquisaPorCepNumero, string txtNumeroPesquisaPorCepNumero)
+        {
+            TransacaoConsulta transacao = new TransacaoConsulta();
+
+            List<InfoPessoaFisica> pessoasFisica = facadePF.ConsultarPessoaFisicaPorCepNumero(
+                txtCepPesquisaPorCepNumero,
+                txtNumeroPesquisaPorCepNumero,
+                _idClienteEmpresa,
+                _idContratoEmpresa,
+                _idUsuarioCliente,
+                out transacao);
+
+            if (pessoasFisica.Count > 0)
+            {
+                PreencherDadosTransacao(transacao);
+                return PartialView("_ResultadoPesquisaPessoaFisicaLista", pessoasFisica);
+            }
+            else
+            {
+                return PartialView("_ResultadoNaoEncontrado");
+            }
+        }
+
         public ActionResult PesquisarPessoaFisicaPorEndereco(
             string ddlUfPesquisaPorEndereco,
             string ddlMunicipioPesquisaPorEndereco,

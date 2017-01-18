@@ -12,12 +12,6 @@
     //bool permiteEdicao = new AutorizacaoDnaMais().Authorize(ViewContext.HttpContext);
     string mensagemExclusao = "Tem certeza que deseja remover este Ramo de Atividade?";
 
-    WebGrid grid = new WebGrid(Model, canSort: false);
-
-    WebGridColumn coluna1 = grid.Column(columnName: "Id", header: "No.", format: @<span>@(item.Id)</span>, style: "col-md-1");
-    WebGridColumn coluna2 = grid.Column(columnName: "Nome", header: "Nome", format: @<span>@(item.Nome)</span>, style: "col-md-3");
-    WebGridColumn coluna3 = grid.Column(columnName: "Usuario", header: "Usuário", format: @<span>@(item.UsuarioBackOffice.Nome)</span>, style: "col-md-2");
-    WebGridColumn coluna4 = grid.Column(columnName: "DataCadastro", header: "Data Cadastro", format: @<span>@(((DateTime)item.DataCadastro).FormatarDataHora())</span>, style: "col-md-2");
 }
 
 @section botaoNovo {
@@ -27,23 +21,80 @@
 }
 
 @section grid {
-    @grid.GetHtml(
-        htmlAttributes: new { id = "myTable" },
-        tableStyle: "table table-bordered table-condensed table-striped table-primary table-vertical-center",
-        columns:
-            grid.Columns(
-                coluna1,
-                coluna2,
-                coluna3,
-                coluna4,
-                grid.Column(
-                    header: "Ações",
-                    format: @<span>
-                        @Html.DnaMaisTableLinkDetails("Details", (object)item.Id)
-                        @Html.DnaMaisTableLinkEdit("Edit", (object)item.Id)
-                        @Html.DnaMaisTableLinkRemove("Remove", (object)item.Id, mensagemExclusao)
-                    </span>
-                            )
-                        )
-                    )
+    <table id="myTable" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
+        <thead>
+            <tr>
+                <th style="text-align:center;">No.</th>
+                <th>Nome</th>
+                <th style="text-align:center;">Usuário</th>
+                <th style="text-align:center;">Data Cadastro</th>
+                <th style="text-align:center;">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ramoAtividade in Model)
+            {
+                <tr>
+                    <td style="text-align:center;">@ramoAtividade.Id</td>
+                    <td>@ramoAtividade.Nome</td>
+                    <td style="text-align:center;">@ramoAtividade.UsuarioBackOffice.Nome</td>
+                    <td style="text-align:center;">@(((DateTime)ramoAtividade.DataCadastro).FormatarDataHora())</td>
+                    <td style="text-align:center;">
+                        <span>
+                            @Html.DnaMaisTableLinkDetails("Details", (object)ramoAtividade.Id)
+                            @Html.DnaMaisTableLinkEdit("Edit", (object)ramoAtividade.Id)
+                            @Html.DnaMaisTableLinkRemove("Remove", (object)ramoAtividade.Id, mensagemExclusao)
+                        </span>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+
+@section scriptsPage {
+    <script>
+        $(document).ready(function () {
+
+            var dtDados = $('#myTable').DataTable({
+                "oLanguage": {
+                    "sProcessing": "Processando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "N&#227;o foram encontrados resultados",
+                    "sInfo": "Mostrando de _START_ at&#233; _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando de 0 at&#233; 0 de 0 registros",
+                    "sInfoFiltered": "(filtrado de _MAX_ registros no total)",
+                    "sInfoPostFix": "",
+                    //"sSearch": "Buscar:",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "Primeiro",
+                        "sPrevious": "Anterior",
+                        "sNext": "Seguinte",
+                        "sLast": "&#218;ltimo"
+                    }
+                },
+                "columnDefs": [
+                    { "width": "80px", "targets": 0 },
+                    { "targets": 1 },
+                    { "width": "200px", "targets": 2 },
+                    { "width": "160px", "targets": 3 },
+                    { "width": "140px", "targets": 4 }
+                ],
+                "aaSorting": [[1, "asc"]],
+                "iDisplayLength": 5,
+                "aLengthMenu": [[5, 10, 50, 100, -1], [5, 10, 50, 100, "Todas"]],
+                "bRetrieve": true,
+                "bAutoWidth": false,
+                "bProcessing": true,
+                "bStateSave": false,
+                "paging": true,
+                "searching": true,
+                "info": true,
+                "bServerSide": false
+            });
+
+        });
+    </script>
+
 }

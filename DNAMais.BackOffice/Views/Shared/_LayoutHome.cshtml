@@ -8,7 +8,7 @@
 }
 
 <!doctype html>
-<html class="fixed">
+<html class="fixed  sidebar-left-collapsed">
 <head>
 
     <!-- Basic -->
@@ -72,44 +72,14 @@
         <header class="header">
             <div class="logo-container">
                 <a href="~/Home" class="logo">
-                    <img src="~/assets/images/LogoDNAMais.png" height="35" alt="DNA+" />
+                    <img src="~/assets/images/LogoDNAMais.png" height="25" alt="DNA+" />
                 </a>
-                <div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
+                <div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-collapsed">
                     <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
                 </div>
             </div>
 
             <!-- start: search & user box -->
-            <div class="header-right">
-                <div id="userbox" class="userbox">
-                    <a href="#" data-toggle="dropdown">
-                        <figure class="profile-picture">
-                            <img src="~/assets/images/!logged-user.jpg" alt="Joseph Doe" class="img-circle" data-lock-picture="assets/images/!logged-user.jpg" />
-                        </figure>
-                        <div class="profile-info" data-lock-name="Administrador" data-lock-email="email@email.com">
-                            @*                            <span class="name">@(((UsuarioBackOffice)HttpContext.Current.Session["user"]).Nome)</span>
-                            <span class="role">@(((UsuarioBackOffice)HttpContext.Current.Session["user"]).Login)</span>*@
-                        </div>
-
-                        <i class="fa custom-caret"></i>
-                    </a>
-
-                    <div class="dropdown-menu">
-                        <ul class="list-unstyled">
-                            <li class="divider"></li>
-                            <li>
-                                <a role="menuitem" tabindex="-1" href="#"><i class="fa fa-user"></i>Perfil</a>
-                            </li>
-                            <li>
-                                <a role="menuitem" tabindex="-1" href="#" data-lock-screen="true"><i class="fa fa-lock"></i>Bloquear Tela</a>
-                            </li>
-                            <li>
-                                <a role="menuitem" tabindex="-1" href="~/Autenticacao/LogOff"><i class="fa fa-power-off"></i>Logout</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
             <!-- end: search & user box -->
         </header>
         <!-- end: header -->
@@ -258,6 +228,12 @@
                                         </li>
                                     </ul>
                                 </li>
+                                <li class="nav-parent">
+                                    <a href="@Url.Action("Index", "Autenticacao")">
+                                        <i class="fa fa-power-off" aria-hidden="true"></i>
+                                        <span>Sair</span>
+                                    </a>
+                                </li>
                             </ul>
                         </nav>
                     </div>
@@ -281,7 +257,7 @@
             <section role="main" class="content-body">
                 <!-- start: page -->
                 <header class="page-header">
-                    <h2>@ViewBag.TituloPagina</h2>
+                    @*<h2>@ViewBag.TituloPagina</h2>*@
                 </header>
                 @RenderBody()
                 <!-- end: page -->

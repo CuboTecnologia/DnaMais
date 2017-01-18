@@ -4,33 +4,14 @@
 @model List<ItemProduto>
 
 @section scriptsHeadListagem {
-    <style>
-        #myTable a {
-            color: pink;
-            text-decoration: none;
-        }
-
-            #myTable a:hover {
-                color: green;
-                text-decoration: underline;
-            }
-    </style>
 
 }
 
-}
 @{
     ViewBag.Title = "DNA+ :: Itens de Produto";
     ViewBag.TituloPagina = "Itens de Produto";
     ViewBag.TituloGrid = "Itens de Produto";
     Layout = "~/Views/Shared/_Listagem.cshtml";
-
-
-    WebGrid grid = new WebGrid(Model, canSort: false);
-
-    WebGridColumn coluna1 = grid.Column(columnName: "Codigo", header: "Codigo", format: @<span>@(item.Id)</span>, style: "col-md-3");
-    WebGridColumn coluna2 = grid.Column(columnName: "Nome", header: "Nome", format: @<span>@(item.Nome)</span>, style: "col-md-3");
-    WebGridColumn coluna3 = grid.Column(columnName: "Descricao", header: "Descrição", format: @<span>@(item.Descricao)</span>, style: "col-md-3");
 }
 
 @section grid {
@@ -40,27 +21,81 @@
         <p style="color: #449010; font-size: medium;">@TempData["msgSucesso"]</p>
     }
 
-    @if (grid.Rows.Count > 0)
+    @if (Model.Count > 0)
     {
-        @grid.GetHtml(
-        htmlAttributes: new { id = "myTable" },
-        tableStyle: "table table-bordered table-condensed table-striped table-primary table-vertical-center",
-        columns:
-            grid.Columns(
-                coluna1,
-                coluna2,
-                coluna3,
-                  grid.Column(
-                    header: "Ações",
-                    format: @<span>
-                        @Html.DnaMaisTableLinkEdit("Edit", (object)item.Id)
-                    </span>
-        , style: "col-md-1 text-center")
-            )
-        )
+        <table id="myTable" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
+            <thead>
+                <tr>
+                    <th style="text-align: center;">No.</th>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th style="text-align: center;">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var produto in Model)
+                {
+                    <tr>
+                        <td style="text-align: center;">@produto.Id</td>
+                        <td>@produto.Nome</td>
+                        <td>@produto.Descricao</td>
+                        <td style="text-align: center;">
+                            <span>
+                                @Html.DnaMaisTableLinkEdit("Edit", (object)produto.Id)
+                            </span>
+                    </tr>
+                }
+            </tbody>
+        </table>
     }
     else
     {
-        <p style="color: #449010; font-size: medium;">Não há itens de produto cadastrados.</p>
+        <p style="color: #449010; font-size: medium;">Não há produtos cadastrados.</p>
     }
+}
+
+@section scriptsPage {
+    <script>
+        $(document).ready(function () {
+
+            var dtDados = $('#myTable').DataTable({
+                "oLanguage": {
+                    "sProcessing": "Processando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "N&#227;o foram encontrados resultados",
+                    "sInfo": "Mostrando de _START_ at&#233; _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando de 0 at&#233; 0 de 0 registros",
+                    "sInfoFiltered": "(filtrado de _MAX_ registros no total)",
+                    "sInfoPostFix": "",
+                    //"sSearch": "Buscar:",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "Primeiro",
+                        "sPrevious": "Anterior",
+                        "sNext": "Seguinte",
+                        "sLast": "&#218;ltimo"
+                    }
+                },
+                "columnDefs": [
+                    { "width": "150px", "targets": 0 },
+                    { "targets": 1 },
+                    { "targets": 2 },
+                    { "width": "100px", "targets": 3 }
+                ],
+                "aaSorting": [[1, "asc"]],
+                "iDisplayLength": 5,
+                "aLengthMenu": [[5, 10, 50, 100, -1], [5, 10, 50, 100, "Todas"]],
+                "bRetrieve": true,
+                "bAutoWidth": false,
+                "bProcessing": true,
+                "bStateSave": false,
+                "paging": true,
+                "searching": true,
+                "info": true,
+                "bServerSide": false
+            });
+
+        });
+    </script>
+
 }

@@ -56,22 +56,22 @@
 <table id="myTable" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
     <thead>
         <tr>
-            <th>Faixa</th>
+            <th style="text-align:center;">Faixa</th>
             <th>Descrição</th>
-            <th>Início</th>
-            <th>Término</th>
-            <th>Editar</th>
+            <th style="text-align:center;">Início</th>
+            <th style="text-align:center;">Término</th>
+            <th style="text-align:center;">Editar</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
-                <td><span>@item.CodigoFaixa</span></td>
+                <td style="text-align:center;"><span>@item.CodigoFaixa</span></td>
                 <td><span>@item.DescricaoFaixa</span></td>
-                <td><span>@item.InicioFaixa</span></td>
-                <td><span>@item.TerminoFaixa</span></td>
-                <td><span><a onclick="EditarFaixa('@item.CodigoFaixa','@item.CodigoCategoria','@item.DescricaoFaixa','@item.InicioFaixa','@item.TerminoFaixa');" class="btn btn-default" title="editar" data-toggle="modal" data-target="#myModal"><i class="fa fa-pencil"></i></a></span></td>
+                <td style="text-align:center;"><span>@item.InicioFaixa</span></td>
+                <td style="text-align:center;"><span>@item.TerminoFaixa</span></td>
+                <td style="text-align:center;"><span><a onclick="EditarFaixa('@item.CodigoFaixa','@item.CodigoCategoria','@item.DescricaoFaixa','@item.InicioFaixa','@item.TerminoFaixa');" class="btn btn-default" title="editar" data-toggle="modal" data-target="#myModal"><i class="fa fa-pencil"></i></a></span></td>
             </tr>
         }
     </tbody>
@@ -82,9 +82,44 @@
 
     $(document).ready(function () {
 
-        $(document).ready(function () {
-            $('#myTable').DataTable();
+        var dtDados = $('#myTable').DataTable({
+            "oLanguage": {
+                "sProcessing": "Processando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "N&#227;o foram encontrados resultados",
+                "sInfo": "Mostrando de _START_ at&#233; _END_ de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando de 0 at&#233; 0 de 0 registros",
+                "sInfoFiltered": "(filtrado de _MAX_ registros no total)",
+                "sInfoPostFix": "",
+                ////"sSearch": "Buscar:",
+                "sUrl": "",
+                "oPaginate": {
+                    "sFirst": "Primeiro",
+                    "sPrevious": "Anterior",
+                    "sNext": "Seguinte",
+                    "sLast": "&#218;ltimo"
+                }
+            },
+            "columnDefs": [
+                { "width": "80px", "targets": 0 },
+                { "targets": 1 },
+                { "width": "130px", "targets": 2 },
+                { "width": "130px", "targets": 3 },
+                { "width": "100px", "targets": 4 }
+            ],
+            "aaSorting": [[2, "asc"]],
+            "iDisplayLength": 5,
+            "aLengthMenu": [[5, 10, 50, 100, -1], [5, 10, 50, 100, "Todas"]],
+            "bRetrieve": true,
+            "bAutoWidth": false,
+            "bProcessing": true,
+            "bStateSave": false,
+            "paging": true,
+            "searching": true,
+            "info": true,
+            "bServerSide": false
         });
+
 
         $("#btnSalvar").click(function () {
 

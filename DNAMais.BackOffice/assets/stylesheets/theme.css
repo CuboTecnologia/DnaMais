@@ -43,7 +43,7 @@ a:active {
 
 /* Layout Base - Header */
 .header {
-	height: 60px;
+	height: 46px;
 	left: 0;
 	position: absolute;
 	right: 0;
@@ -54,7 +54,7 @@ a:active {
 .inner-wrapper {
 	display: table;
 	min-height: 100vh;
-	padding-top: 60px;
+	padding-top: 46px;
 	table-layout: fixed;
 	overflow: hidden;
 	width: 100%;
@@ -63,7 +63,8 @@ a:active {
 /* Layout Base - Content Body */
 .content-body {
 	display: table-cell;
-	padding: 40px;
+	padding-top: 5px;
+    padding-left: 20px;
 	position: relative;
 	vertical-align: top;
 }
@@ -78,7 +79,7 @@ a:active {
 	border-bottom: none;
 	border-left: 1px solid #3A3A3A;
 	box-shadow: 1px 3px 0 1px #CCCCCC;
-	height: 50px;
+	height: 10px;
 	margin: -40px -40px 40px -40px;
 	padding: 0;
 }
@@ -89,7 +90,7 @@ a:active {
 	display: table-cell;
 	position: relative;
 	vertical-align: top;
-	width: 300px;
+	width: 250px;
 	z-index: 1010;
 }
 
@@ -178,12 +179,12 @@ a:active {
 
 	/* Layout Fixed - Inner Wrapper */
 	html.fixed .inner-wrapper {
-		padding-top: 110px;
+		padding-top: 69px;
 	}
 
 	/* Layout Fixed - Content Body */
 	html.fixed .content-body {
-		margin-left: 300px;
+		margin-left: 230px;
 	}
 
 	html.fixed .content-body.has-toolbar {
@@ -192,11 +193,11 @@ a:active {
 
 	/* Layout Fixed - Page header */
 	html.fixed .page-header {
-		left: 300px;
+		left: 249px;
 		margin: 0;
 		position: fixed;
 		right: 0;
-		top: 60px;
+		top: 46px;
 	}
 
 	/* Layout Fixed - Sidebar Left */
@@ -205,7 +206,7 @@ a:active {
 		left: 0;
 		padding-bottom: 50px;
 		position: fixed;
-		top: 60px;
+		top: 46px;
 	}
 
 	html.fixed .sidebar-left .nano-content {
@@ -1972,7 +1973,7 @@ html.sidebar-light:not(.dark).sidebar-left-collapsed .sidebar-left .nano {
 	}
 
 	html.fixed.sidebar-left-collapsed .content-body {
-		margin-left: 73px;
+		margin-left: 56px;
 	}
 
 	/* Layout Fixed - Sidebar Left Collapsed & Sidebar Right Opened */
@@ -2550,10 +2551,10 @@ html.sidebar-light:not(.dark) ul.nav-main li .nav-children li a:hover, html.side
 	box-sizing: content-box;
 	display: inline-block;
 	float: left;
-	height: 50px;
-	font-size: 2rem;
+	height: 10px;
+	font-size: 20px;
 	letter-spacing: normal;
-	line-height: 50px;
+	line-height: 40px;
 	margin: 0 0 0 -1px;
 	padding: 0 22px 0 20px;
 }
@@ -6065,7 +6066,7 @@ html.ie11 .scroll-to-top {
 	background: #f6f6f6;
 	border-radius: 5px 5px 0 0;
 	border-bottom: 1px solid #DADADA;
-	padding: 18px;
+	/*padding: 18px;*/
 	position: relative;
 }
 
@@ -6175,8 +6176,8 @@ html.ie11 .scroll-to-top {
 
 .panel-title {
 	color: #33353F;
-	font-size: 20px;
-	font-weight: 400;
+	font-size: 18px;
+	/*font-weight: 400;*/
 	line-height: 20px;
 	padding: 0;
 	text-transform: none;

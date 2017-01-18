@@ -6,48 +6,89 @@
     ViewBag.TituloPagina = "Newsletters";
     ViewBag.TituloGrid = "Newsletters Não Confirmadas";
     Layout = "~/Views/Shared/_Listagem.cshtml";
-
-
-    WebGrid grid = new WebGrid(Model, canSort: false);
-
-    WebGridColumn coluna1 = grid.Column(columnName: "Id", header: "No.", format: @<span>@(item.Id)</span>, style: "col-md-1");
-    WebGridColumn coluna2 = grid.Column(columnName: "GUID", header: "GUID", format: @<span>@(item.GUID)</span>, style: "col-md-3");
-    WebGridColumn coluna3 = grid.Column(columnName: "Nome", header: "Nome", format: @<span>@(item.Nome)</span>, style: "col-md-2");
-    WebGridColumn coluna4 = grid.Column(columnName: "Email", header: "E-Mail", format: @<span>@(item.Email)</span>, style: "col-md-2");
-    WebGridColumn coluna5 = grid.Column(columnName: "DataRegistro", header: "Data do Registro", format: @<span>@(((DateTime)item.DataRegistro).FormatarDataHora())</span>, style: "col-md-2");
 }
 
 @section grid {
 
     @if (TempData["msgSucesso"] != null)
     {
-        <p style="color:#449010; font-size:medium;">@TempData["msgSucesso"]</p>
+        <p style="color: #449010; font-size: medium;">@TempData["msgSucesso"]</p>
     }
 
-    @if (grid.Rows.Count > 0)
-    {
+    <table id="myTable" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
+        <thead>
+            <tr>
+                <th style="text-align: center;">No.</th>
+                <th>GUID</th>
+                <th>Nome</th>
+                <th>E-Mail</th>
+                <th style="text-align: center;">Data do Registro</th>
+                <th style="text-align: center;">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var produto in Model)
+            {
+                <tr>
+                    <td style="text-align: center;">@produto.Id</td>
+                    <td>@produto.GUID</td>
+                    <td>@produto.Nome</td>
+                    <td>@produto.Email</td>
+                    <td style="text-align: center;">@(((DateTime)produto.DataRegistro).FormatarDataHora())</td>
+                    <td style="text-align: center;">
+                        <span>
+                            @Html.DnaMaisTableLinkEdit("Edit", (object)produto.Id)
+                        </span>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
-        @grid.GetHtml(
-        htmlAttributes: new { id = "myTable" },
-        tableStyle: "table table-bordered table-condensed table-striped table-primary table-vertical-center",
-        columns:
-            grid.Columns(
-                coluna1,
-                coluna2,
-                coluna3,
-                coluna4,
-                coluna5,
-                grid.Column(
-                    header: "Ação",
-                    format: @<span>
-                        @Html.DnaMaisTableLinkCheck("Confirm", (object)item.Id) Confirmar Inscrição
-                    </span>
-                    )
-                )
-            )
-    }
-    else
-    {
-        <p style="color:#449010; font-size:medium;">Não há newsletters não confirmadas.</p>
-    }
+@section scriptsPage {
+    <script>
+        $(document).ready(function () {
+
+            var dtDados = $('#myTable').DataTable({
+                "oLanguage": {
+                    "sProcessing": "Processando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "N&#227;o foram encontrados resultados",
+                    "sInfo": "Mostrando de _START_ at&#233; _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando de 0 at&#233; 0 de 0 registros",
+                    "sInfoFiltered": "(filtrado de _MAX_ registros no total)",
+                    "sInfoPostFix": "",
+                    //"sSearch": "Buscar:",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "Primeiro",
+                        "sPrevious": "Anterior",
+                        "sNext": "Seguinte",
+                        "sLast": "&#218;ltimo"
+                    }
+                },
+                "columnDefs": [
+                    { "width": "60px", "targets": 0 },
+                    { "targets": 1 },
+                    { "targets": 2 },
+                    { "targets": 3 },
+                    { "width": "160px", "targets": 4 },
+                    { "width": "80px", "targets": 5 }
+                ],
+                "aaSorting": [[1, "asc"]],
+                "iDisplayLength": 5,
+                "aLengthMenu": [[5, 10, 50, 100, -1], [5, 10, 50, 100, "Todas"]],
+                "bRetrieve": true,
+                "bAutoWidth": false,
+                "bProcessing": true,
+                "bStateSave": false,
+                "paging": true,
+                "searching": true,
+                "info": true,
+                "bServerSide": false
+            });
+
+        });
+    </script>
+
 }

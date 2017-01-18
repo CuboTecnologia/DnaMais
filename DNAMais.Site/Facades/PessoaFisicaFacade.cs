@@ -44,6 +44,17 @@ namespace DNAMais.Site.Facades
             return service.ConsultarPorCEP(cep, idClienteEmpresa, idContratoEmpresa, idUsuarioCliente, out transacao);
         }
 
+        public List<InfoPessoaFisica> ConsultarPessoaFisicaPorCepNumero(
+            string cep,
+            string numero,
+            int idClienteEmpresa,
+            int idContratoEmpresa,
+            int idUsuarioCliente,
+            out TransacaoConsulta transacao)
+        {
+            return service.ConsultarPorCepNumero(cep, numero, idClienteEmpresa, idContratoEmpresa, idUsuarioCliente, out transacao);
+        }
+
         public List<InfoPessoaFisica> ConsultarPessoaFisicaPorEndereco(
             string uf,
             string municipio,

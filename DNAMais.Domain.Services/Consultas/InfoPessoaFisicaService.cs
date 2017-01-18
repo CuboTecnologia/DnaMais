@@ -128,6 +128,48 @@ namespace DNAMais.Domain.Services.Consultas
             return pessoas;
         }
 
+        public List<InfoPessoaFisica> ConsultarPorCepNumero(
+            string cep,
+            string numero,
+            int idClienteEmpresa,
+            int idContratoEmpresa,
+            int idUsuarioCliente,
+            out TransacaoConsulta transacao)
+        {
+            cep = cep.LimparCaracteresCEP();
+
+            StringBuilder sql = new StringBuilder();
+
+            sql.Append("SELECT ");
+            sql.Append(" PF.ID_PESSOA_FISICA         AS Id, ");
+            sql.Append(" PF.NR_CPF                   AS Cpf, ");
+            sql.Append(" PF.NM_COMPLETO              AS NomeCompleto, ");
+            sql.Append(" PF.NM_MAE                   AS NomeMae, ");
+            sql.Append(" PF.DT_NASCIMENTO            AS DataNascimento, ");
+            sql.Append(" PF.NR_IDADE                 AS Idade, ");
+            sql.Append(" PF.SG_SEXO                  AS Sexo, ");
+            sql.Append(" PF.CD_SITUACAO_CADASTRAL_PF AS CodigoSituacaoCadastral, ");
+            sql.Append(" PF.ID_ORIGEM_DADOS          AS IdOrigemDados, ");
+            sql.Append(" PF.DT_INCLUSAO              AS DataInclusao, ");
+            sql.Append(" PF.DT_ULTIMA_ATUALIZACAO    AS DataUltimaAtualizacao ");
+            sql.Append(" FROM DNAINFO.PESSOA_FISICA PF ");
+            sql.Append(" INNER JOIN DNAINFO.PESSOA_FISICA_ENDERECO PF_END ");
+            sql.Append(" ON PF_END.ID_PESSOA_FISICA = PF.ID_PESSOA_FISICA ");
+            sql.Append(" WHERE PF_END.NR_CEP = '" + cep + "'");
+            sql.Append(" AND PF_END.NR_LOGRADOURO = '" + numero + "'");
+
+            List<InfoPessoaFisica> pessoas = context.PessoasFisicas.SqlQuery(sql.ToString()).ToList();
+
+            transacao = GerarTransacao(idClienteEmpresa, idContratoEmpresa, idUsuarioCliente, "CST-WEB-PF-END");
+            if (pessoas != null)
+            {
+                repoTransacao.Add(transacao);
+                context.SaveChanges();
+            }
+
+            return pessoas;
+        }
+
         public List<InfoPessoaFisica> ConsultarPorEndereco(
             string uf,
             string municipio,

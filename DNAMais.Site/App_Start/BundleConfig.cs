@@ -61,8 +61,8 @@ namespace DNAMais.Site.App_Start
                 "~/vendor/modernizr/modernizr.min.js"));
 
             bundles.Add(new ScriptBundle("~/Scripts/jquery").Include(
-                "~/vendor/jquery/jquery.js",
-                "~/vendor/jquery/jquery-ui.js",
+                "~/Scripts/jquery-1.9.1.js",
+                "~/Scripts/jquery-ui-1.12.1.min.js",
                 "~/vendor/jquery.appear/jquery.appear.js",
                 "~/vendor/jquery.easing/jquery.easing.js",
                 "~/vendor/jquery-cookie/jquery-cookie.js",
@@ -73,7 +73,7 @@ namespace DNAMais.Site.App_Start
                 "~/vendor/jquery.lazyload/jquery.lazyload.js",
                 "~/vendor/magnific-popup/jquery.magnific-popup.js",
                 "~/vendor/isotope/jquery.isotope.min.js",
-                "~/Scripts/jquery.inputmask/jquery.inputmask.min.js"
+                "~/js/jquery.mask.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/Scripts/bootstrap").Include(
