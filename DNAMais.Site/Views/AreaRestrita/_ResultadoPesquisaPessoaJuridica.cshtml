@@ -24,7 +24,7 @@
 
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-8">
         <h2 class="mb-none">Protocolo da Consulta Realizada: <strong>@ViewBag.NumeroTransacao</strong></h2>
         <h4 class="mb-none">Data/Hora da Consulta: <strong>@ViewBag.DataTransacao</strong></h4>
     </div>
@@ -329,12 +329,11 @@
                                             
                                             <tr>
                                                 <td>@indexQsa</td>
-                                                <td>@documentoSocio</td>
-@*                                                <td>
+                                                <td>
                                                     <a href="#" class="link-documento" data-documento="@qsa.DocumentoSocio" data-tipopessoa="@tipoPessoa">
                                                         @documentoSocio
                                                     </a>
-                                                </td>*@
+                                                </td>
                                                 <td>@qsa.NomeSocio</td>
                                                 <td>@qsa.Qualificacao</td>
                                                 <td>@qsa.DataEntradaSociedade.FormatarData()</td>
@@ -352,8 +351,15 @@
     </div>
 </div>
 
+@Html.Partial("~/Views/AreaRestrita/_DetalhesQsaPessoaJuridica.cshtml")
+
 <script>
     $(document).ready(function () {
+
+        $('#largeModalPJ').on('show.bs.modal', function () {
+            $('.modal .modal-body').css('overflow-y', 'auto');
+            $('.modal .modal-body').css('max-height', $(window).height() * 0.7);
+        });
 
         $('.link-documento').on('click', function () {
             event.preventDefault();
@@ -362,21 +368,16 @@
 
             if (tipoPessoa == "PJ") {
                 $.ajax({
-                    url: '@Url.Action("PesquisarPessoaJuridicaPorCNPJ", "AreaRestrita")',
+                    url: '@Url.Action("PesquisarPessoaJuridicaPorCNPJModal", "AreaRestrita")',
                     type: 'POST',
                     data: 'txtCnpjPesquisaPorCnpj=' + documento,
-                    context: $('#divDetalhePesquisaPJ'),
+                    //context: $('#largeModalPJ'),
                     success: function (result) {
-                        $('#divListaPesquisaPJ').hide();
-                        $('#divLoading').hide();
-                        $('#btnNovaPesquisa').hide();
-                        $('#divDetalhePesquisaPJ').html(result);
-                        $('#divDetalhePesquisaPJ').fadeIn(500);
-                        $('.jsVoltar').fadeIn(2500);
+                        $("#largeModal").modal("hide");
+                        $("#largeModalPJ").find(".modal-body").html(result);
+                        $("#largeModalPJ").modal("show");
                     },
                     beforeSend: function () {
-                        $('#divFiltros').hide();
-                        $('#divLoading').show();
                     },
                     error: function (a, b, c) {
                         alert(a.responseText.replace('"', '').replace('"', ''));
@@ -384,27 +385,22 @@
                 });
             } else {
                 $.ajax({
-                    url: '@Url.Action("PesquisarPessoaFisicaPorCPF", "AreaRestrita")',
-                    type: 'POST',
-                    data: 'txtCpfPesquisaPorCpf=' + documento,
-                    context: $('#divDetalhePesquisaPJ'),
-                    success: function (result) {
-                        $('#divListaPesquisaPJ').hide();
-                        $('#divLoading').hide();
-                        $('#btnNovaPesquisa').hide();
-                        $('#divDetalhePesquisaPJ').html(result);
-                        $('#divDetalhePesquisaPJ').fadeIn(500);
-                        $('.jsVoltar').fadeIn(2500);
-                    },
-                    beforeSend: function () {
-                        $('#divFiltros').hide();
-                        $('#divLoading').show();
-                    },
-                    error: function (a, b, c) {
-                        alert(a.responseText.replace('"', '').replace('"', ''));
-                    }
-                });
-            }
+                    url: '@Url.Action("PesquisarPessoaFisicaPorCPFModal", "AreaRestrita")',
+                        type: 'POST',
+                        data: 'txtCpfPesquisaPorCpf=' + documento,
+                        //context: $('#largeModalPJ'),
+                        success: function (result) {
+                            $("#largeModalPJ").removeData('bs.modal');;
+                            $("#largeModalPJ").find(".modal-body").html(result);
+                            $("#largeModalPJ").modal("show");
+                        },
+                        beforeSend: function () {
+                        },
+                        error: function (a, b, c) {
+                            alert(a.responseText.replace('"', '').replace('"', ''));
+                        }
+                    });
+                }
 
         });
 

@@ -171,6 +171,22 @@
             </div>
         </div>
 
+        <div class="modal" id="formModalQsa" tabindex="-1" role="dialog" aria-labelledby="formModalLabelQsa" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" id="btnUpCloseQsa" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="formModalLabelQsa">Detalhes</h4>
+                    </div>
+                    <div id="modalQsaBody" class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnCloseQsa" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         @RenderBody()
 
         <footer id="footer">
@@ -288,6 +304,23 @@
             $("#Login").focus();
         }, 500);
     });
+
+    $.jMaskGlobals = {
+        maskElements: 'input,td,span,div',
+        dataMaskAttr: '*[data-mask]',
+        dataMask: true,
+        watchInterval: 300,
+        watchInputs: true,
+        watchDataMask: false,
+        byPassKeys: [9, 16, 17, 18, 36, 37, 38, 39, 40, 91],
+        translation: {
+            '0': { pattern: /\d/ },
+            '9': { pattern: /\d/, optional: true },
+            '#': { pattern: /\d/, recursive: true },
+            'A': { pattern: /[a-zA-Z0-9]/ },
+            'S': { pattern: /[a-zA-Z]/ }
+        }
+    };
 
     $(document).ready(function () {
 

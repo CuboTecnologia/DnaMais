@@ -63,19 +63,28 @@
         border-radius: 4px;
         box-shadow: 5px 5px 8px #CCC;
     }
+
+    .modal-dialog {
+        position: relative;
+        display: table;
+        //This is important overflow-y: auto;
+        overflow-x: auto;
+        width: auto;
+        min-width: 300px;
+    }
 </style>
 
 
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-8">
         <h2 class="mb-none">Protocolo da Consulta Realizada: <strong>@ViewBag.NumeroTransacao</strong></h2>
         <h4 class="mb-none">Data/Hora da Consulta: <strong>@ViewBag.DataTransacao</strong></h4>
     </div>
 </div>
 
 <div class="featured-boxes featured-boxes-style-8">
-    <div class="row">
+    <div class="row" style="margin-top:10px;">
         <div class="col-md-6">
             <div class="featured-box featured-box-secondary featured-box-text-left">
                 <div class="box-content">
@@ -137,7 +146,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <table class="pessoa-dados">
+                            <table class="pessoa-dados" style="width: 100%;">
                                 <tr>
                                     <td>RG:</td>
                                     @if (Model.DadosComplementares != null)
@@ -175,7 +184,7 @@
                                     <td>Escolaridade:</td>
                                     @if (Model.DadosProfissionais != null)
                                     {
-                                        <td>@(Model.DadosProfissionais.GrauEscolaridade != null ? Model.DadosProfissionais.GrauEscolaridade.Descricao : "Indisponível")</td>
+                                        <td style="font-size: 14px;">@(Model.DadosProfissionais.GrauEscolaridade != null ? Model.DadosProfissionais.GrauEscolaridade.Descricao : "Indisponível")</td>
                                     }
                                     else
                                     {
@@ -401,12 +410,12 @@
                                             
                                             <tr>
                                                 <td>@indexQsa</td>
-                                                <td>@qsa.CNPJ.FormatarCNPJ()</td>
-@*                                                <td>
-                                                    <a href="#" class="link-pessoa-juridica" data-cnpj="@qsa.CNPJ.LimparCaracteresCPF()">
+                                                @*                                                <td>@qsa.CNPJ.FormatarCNPJ()</td>*@
+                                                <td>
+                                                    <a href="#" class="link-pessoa-juridica" data-cnpj="@qsa.CNPJ.LimparCaracteresCPF()" >
                                                         @qsa.CNPJ.FormatarCNPJ()
                                                     </a>
-                                                </td>*@
+                                                </td>
                                                 <td>@qsa.RazaoSocial</td>
                                                 <td>@qsa.NomeFantasia</td>
                                             </tr>
@@ -423,28 +432,30 @@
 
 </div>
 
+@Html.Partial("~/Views/AreaRestrita/_DetalhesQsaPessoaFisica.cshtml")
+
 <script>
+
     $(document).ready(function () {
+
+        $('#largeModal').on('show.bs.modal', function () {
+            $('.modal .modal-body').css('overflow-y', 'auto');
+            $('.modal .modal-body').css('max-height', $(window).height() * 0.7);
+        });
 
         $('.link-pessoa-juridica').on('click', function () {
             event.preventDefault();
             var cpf = $(this).attr('data-cnpj');
             $.ajax({
-                url: '@Url.Action("PesquisarPessoaJuridicaPorCNPJ", "AreaRestrita")',
-                type: 'POST',
+                url: '@Url.Action("PesquisarPessoaJuridicaPorCNPJModal", "AreaRestrita")',
+                type: 'GET',
                 data: 'txtCnpjPesquisaPorCnpj=' + cpf,
-                context: $('#divDetalhePesquisaPF'),
+                context: $('#largeModal'),
                 success: function (result) {
-                    $('#divListaPesquisaPF').hide();
-                    $('#divLoading').hide();
-                    $('#btnNovaPesquisa').hide();
-                    $('#divDetalhePesquisaPF').html(result);
-                    $('#divDetalhePesquisaPF').fadeIn(500);
-                    $('.jsVoltar').fadeIn(2500);
+                    $("#largeModal").find(".modal-body").html(result);
+                    $("#largeModal").modal("show");
                 },
                 beforeSend: function () {
-                    $('#divFiltros').hide();
-                    $('#divLoading').show();
                 },
                 error: function (a, b, c) {
                     alert(a.responseText.replace('"', '').replace('"', ''));

@@ -134,6 +134,28 @@ namespace DNAMais.Site.Controllers
             }
         }
 
+        public ActionResult PesquisarPessoaFisicaPorCPFModal(string txtCpfPesquisaPorCpf)
+        {
+            TransacaoConsulta transacao = new TransacaoConsulta();
+
+            InfoPessoaFisica pessoaFisica = facadePF.ConsultarPessoaFisicaPorCPF(
+                txtCpfPesquisaPorCpf,
+                _idClienteEmpresa,
+                _idContratoEmpresa,
+                _idUsuarioCliente,
+                out transacao);
+
+            if (pessoaFisica != null)
+            {
+                PreencherDadosTransacao(transacao);
+                return PartialView("_ResultadoPesquisaPessoaFisicaModal", pessoaFisica);
+            }
+            else
+            {
+                return PartialView("_ResultadoNaoEncontrado");
+            }
+        }
+
         public ActionResult PesquisarPessoaFisicaPorCEP(string txtCepPesquisaPorEndereco)
         {
             TransacaoConsulta transacao = new TransacaoConsulta();
@@ -286,6 +308,28 @@ namespace DNAMais.Site.Controllers
             {
                 PreencherDadosTransacao(transacao);
                 return PartialView("_ResultadoPesquisaPessoaJuridica", pessoaJuridica);
+            }
+            else
+            {
+                return PartialView("_ResultadoNaoEncontrado");
+            }
+        }
+
+        public ActionResult PesquisarPessoaJuridicaPorCNPJModal(string txtCnpjPesquisaPorCnpj)
+        {
+            TransacaoConsulta transacao = new TransacaoConsulta();
+
+            InfoPessoaJuridica pessoaJuridica = facadePJ.ConsultarPessoaJuridicaPorCNPJ(
+                txtCnpjPesquisaPorCnpj,
+                _idClienteEmpresa,
+                _idContratoEmpresa,
+                _idUsuarioCliente,
+                out transacao);
+
+            if (pessoaJuridica != null)
+            {
+                PreencherDadosTransacao(transacao);
+                return PartialView("_ResultadoPesquisaPessoaJuridicaModal", pessoaJuridica);
             }
             else
             {

@@ -903,6 +903,10 @@
     <Content Include="Views\Web.config" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
+    <Content Include="Views\AreaRestrita\_DetalhesQsaPessoaFisica.cshtml" />
+    <Content Include="Views\AreaRestrita\_DetalhesQsaPessoaJuridica.cshtml" />
+    <Content Include="Views\AreaRestrita\_ResultadoPesquisaPessoaJuridicaModal.cshtml" />
+    <Content Include="Views\AreaRestrita\_ResultadoPesquisaPessoaFisicaModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
