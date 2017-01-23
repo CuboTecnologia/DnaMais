@@ -17,11 +17,14 @@ namespace DNAMais.BackOffice.App_Start
                 "~/assets/vendor/magnific-popup/magnific-popup.css"));
 
             bundles.Add(new StyleBundle("~/css/datepicker").Include(
-                "~/assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css"));
+                "~/Content/datepicker.css"));
 
             bundles.Add(new StyleBundle("~/css/jquery").Include(
-                "~/assets/vendor/jquery-ui/jquery-ui.css",
-                "~/assets/vendor/jquery-ui/jquery-ui.theme.css"));
+                //"~/assets/vendor/jquery-ui/jquery-ui.css",
+                //"~/assets/vendor/jquery-ui/jquery-ui.theme.css",
+                "~/Content/jquery-ui.css",
+                "~/Content/jquery-ui.theme.css"
+                ));
 
             bundles.Add(new StyleBundle("~/css/multiselect").Include(
                 "~/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css"));
@@ -52,10 +55,15 @@ namespace DNAMais.BackOffice.App_Start
                 "~/assets/vendor/modernizr/modernizr.js"));
 
             bundles.Add(new ScriptBundle("~/Scripts/jquery").Include(
-                "~/assets/vendor/jquery/jquery.js",
+                //"~/assets/vendor/jquery/jquery.js",
+                //"~/assets/vendor/jquery-ui/jquery-ui.min.js",
+                "~/Scripts/jquery-1.12.4.js",
+                "~/Scripts/jquery-ui-1.12.1.js",
                 "~/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js",
                 "~/assets/vendor/magnific-popup/jquery.magnific-popup.js",
-                "~/assets/vendor/jquery-placeholder/jquery-placeholder.js"));
+                "~/assets/vendor/jquery-placeholder/jquery-placeholder.js",
+                "~/Scripts/datepicker-pt-BR.js"
+                ));
 
             bundles.Add(new ScriptBundle("~/Scripts/bootstrap").Include(
                 "~/assets/vendor/bootstrap/js/bootstrap.js"));

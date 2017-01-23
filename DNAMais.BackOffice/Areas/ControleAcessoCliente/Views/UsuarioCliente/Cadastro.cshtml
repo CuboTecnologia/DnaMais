@@ -29,7 +29,7 @@
 {
     @if (Request.HttpMethod == "GET" || !ViewData.ModelState.IsValid)
     {
-        <div style="width:100%;">
+        <div style="width: 100%;">
 
             @Html.HiddenFor(
                 expression: m => m.Id)
@@ -86,20 +86,19 @@
                 value: Model.Senha)
             }
 
-            @if (Model.Master == true)
-            {
-                <div class="form-group">
-                    @Html.CheckBox("Master", true, new { style = "margin-top: 13px;" })
-                    <label class="col-md-2 control-label">Usuário Master</label>
-                </div>
-            }
-            else
-            {
-                <div class="form-group">
-                    @Html.CheckBox("Master", false, new { style = "margin-top: 13px;" })
-                    <label class="col-md-2 control-label">Usuário Master</label>
-                </div>
-            }
+            @Html.DnaMaisDatePickerFor(m => m.DataInicioAcesso, locked)
+            @Html.DnaMaisDatePickerFor(m => m.DataTerminoAcesso, locked)
+            @Html.DnaMaisTextBoxNumberFor(m => m.SaldoConsulta, 100, false, 5)
+
+            <div class="form-group">
+                @Html.CheckBox("Master", (Model.Master == true ? true : false), new { style = "margin-top: 13px;" })
+                <label class="col-md-2 control-label">Usuário Master</label>
+            </div>
+
+            <div class="form-group">
+                @Html.CheckBox("ApenasAcessoWs", (Model.ApenasAcessoWs == true ? true : false), new { style = "margin-top: 13px;" })
+                <label class="col-md-2 control-label">Acesso restrito WebService</label>
+            </div>
 
             <hr class="separator" />
 
@@ -111,4 +110,16 @@
 @section validacoes
 {
     @Html.Validations((UsuarioCliente)Model)
+}
+
+@section scriptsPage {
+    <script>
+        $(document).ready(function () {
+
+            //$.datepicker.setDefaults($.datepicker.regional["pt-BR"]);
+            $(".jsDatepicker").datepicker();
+
+        });
+    </script>
+
 }

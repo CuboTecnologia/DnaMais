@@ -32,10 +32,11 @@ namespace DNAMais.BackOffice.Helpers
             input.Attributes["type"] = "text";
             input.Attributes["id"] = name;
             input.Attributes["name"] = name;
-            input.Attributes["class"] = "form-control";
+            input.Attributes["class"] = "form-control jsDatePicker";
             input.Attributes["maxlength"] = "10";
             input.Attributes["style"] = "width:100px;";
             input.Attributes["onkeyup"] = "maskDate(this)";
+            input.Attributes["data-plugin-datepicker"] = null;
             input.Attributes["value"] = (value == null ? "" : value.ToString().ToDateTime().FormatarData());
 
             if (disabled)

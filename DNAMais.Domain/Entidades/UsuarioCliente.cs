@@ -70,8 +70,30 @@ namespace DNAMais.Domain.Entidades
             protected set { Master = value.ParseFlag(); }
         }
 
+        [NotMapped]
+        public bool? ApenasAcessoWs { get; set; }
+        [Required]
+        [Column("IS_APENAS_ACESSO_WS")]
+        public string IsApenasAcessoWs
+        {
+            get { return ApenasAcessoWs.ParseFlag(); }
+            protected set { ApenasAcessoWs = value.ParseFlag(); }
+        }
+
         [Column("DT_CADASTRO")]
         public DateTime? DataCadastro { get; set; }
+
+        [Column("DT_INICIO_ACESSO")]
+        [Display(Name = "Data Início Acesso")]
+        public DateTime? DataInicioAcesso { get; set; }
+
+        [Column("DT_TERMINO_ACESSO")]
+        [Display(Name = "Data Término Acesso")]
+        public DateTime? DataTerminoAcesso { get; set; }
+
+        [Column("NR_SALDO_CONSULTA")]
+        [Display(Name = "Saldo de consultas")]
+        public int? SaldoConsulta { get; set; }
 
         [Column("ID_USUARIO_BACKOFFICE_CADASTRO")]
         public int? IdUsuarioBackOfficeCadastro { get; set; }
@@ -93,6 +115,7 @@ namespace DNAMais.Domain.Entidades
         public virtual ICollection<UsuarioClienteGrupo> UsuariosClientesGrupos { get; set; }
         public virtual ICollection<TransacaoConsulta> TransacoesConsultas { get; set; }
         public virtual ICollection<SolicitacaoContagem> SolicitacoesContagens { get; set; }
+        public virtual ICollection<UsuarioClienteProduto> ProdutosAutorizados { get; set; }
 
         #endregion
 
@@ -106,6 +129,7 @@ namespace DNAMais.Domain.Entidades
             UsuariosClientesGrupos = new HashSet<UsuarioClienteGrupo>();
             TransacoesConsultas = new HashSet<TransacaoConsulta>();
             SolicitacoesContagens = new HashSet<SolicitacaoContagem>();
+            ProdutosAutorizados = new HashSet<UsuarioClienteProduto>();
         }
 
         #endregion
