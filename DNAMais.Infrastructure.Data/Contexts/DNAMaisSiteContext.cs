@@ -209,6 +209,7 @@ namespace DNAMais.Infrastructure.Data.Contexts
         public DbSet<ContratoEmpresaProduto> ContratosEmpresasProdutos { get; set; }
 
         public DbSet<TransacaoConsulta> TransacoesConsultas { get; set; }
+        public DbSet<UsuarioClienteProduto> UsuarioClienteProdutosSelecionados { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

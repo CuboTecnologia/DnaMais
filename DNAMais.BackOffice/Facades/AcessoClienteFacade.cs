@@ -16,18 +16,21 @@ namespace DNAMais.BackOffice.Facades
     {
         private GrupoUsuarioClienteService serviceGrupoUsuarioCliente;
         private UsuarioClienteService serviceUsuario;
+        private UsuarioClienteProdutoService serviceUsuarioClienteProduto;
 
         public AcessoClienteFacade(ModelStateDictionary modelState)
             : base(modelState)
         {
             serviceGrupoUsuarioCliente = new GrupoUsuarioClienteService();
             serviceUsuario = new UsuarioClienteService();
+            serviceUsuarioClienteProduto = new UsuarioClienteProdutoService();
         }
 
         public void Dispose()
         {
             serviceGrupoUsuarioCliente.Dispose();
             serviceUsuario.Dispose();
+            serviceUsuarioClienteProduto.Dispose();
         }
 
         #region Grupo de Usuários Cliente
@@ -40,6 +43,11 @@ namespace DNAMais.BackOffice.Facades
         public GrupoUsuarioCliente ConsultarGrupoUsuarioClientePorId(int id)
         {
             return serviceGrupoUsuarioCliente.ConsultarPorId(id);
+        }
+
+        public List<UsuarioClienteProduto> ListarUsuarioClienteProduto(int id)
+        {
+            return serviceUsuarioClienteProduto.ListarPorId(id).ToList();
         }
 
         public void IncluirGrupoUsuarioCliente(GrupoUsuarioCliente grupoUsuarioCliente)
@@ -134,6 +142,13 @@ namespace DNAMais.BackOffice.Facades
 
         #endregion
 
+        #region Usuario Cliente x Produtos Selecionados
+        
+        public void SalvarUsuarioClienteProdutosSelecionados(int idUsuarioCliente, List<string> produtosSelecionados)
+        {
+            serviceUsuarioClienteProduto.SalvarProdutosSelecionados(idUsuarioCliente, produtosSelecionados);
+        }
 
+        #endregion
     }
 }

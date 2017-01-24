@@ -23,27 +23,30 @@
     <table id="myTable" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
         <thead>
             <tr>
-                <th style="text-align:center;">No.</th>
+                <th style="text-align: center;">No.</th>
                 <th>Cliente</th>
                 <th>Nome</th>
                 <th>E-mail</th>
-                <th style="text-align:center;">Login</th>
-                <th style="text-align:center;">Ações</th>
+                <th style="text-align: center;">Login</th>
+                <th style="text-align: center;">Ativo</th>
+                <th style="text-align: center;">Ações</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var usuarioCliente in Model)
             {
                 <tr>
-                    <td style="text-align:center;">@usuarioCliente.Id</td>
+                    <td style="text-align: center;">@usuarioCliente.Id</td>
                     <td>@usuarioCliente.ClienteEmpresa.NomeFantasia</td>
                     <td>@usuarioCliente.Nome</td>
                     <td>@usuarioCliente.Email</td>
-                    <td style="text-align:center;">@usuarioCliente.Login</td>
-                    <td style="text-align:center;">
+                    <td style="text-align: center;">@usuarioCliente.Login</td>
+                    <td style="text-align: center;">@(usuarioCliente.Ativo == true ? "Sim" : "Não")</td>
+                    <td style="text-align: center;">
                         <span>
                             @Html.DnaMaisTableLinkDetails("Details", (object)usuarioCliente.Id)
                             @Html.DnaMaisTableLinkEdit("Edit", (object)usuarioCliente.Id)
+                            @Html.DnaMaisTableLinkIcone("ProdutosLiberados","ProdutosLiberados", (object)usuarioCliente.Id, "fa fa-list", "produtos liberados")
                             @Html.DnaMaisTableLinkRemove("Remove", (object)usuarioCliente.Id, mensagemExclusao)
                         </span>
                 </tr>
@@ -81,7 +84,8 @@
                     { "targets": 2 },
                     { "targets": 3 },
                     { "width": "130px", "targets": 4 },
-                    { "width": "140px", "targets": 5 }
+                    { "width": "80px", "targets": 5 },
+                    { "width": "180px", "targets": 6 }
                 ],
                 "aaSorting": [[1, "asc"]],
                 "iDisplayLength": 5,

@@ -31,9 +31,9 @@ namespace DNAMais.Site.Controllers
         {
             UsuarioCliente usuarioAutenticado;
 
-            facadeAutenticacao.AutenticarUsuario(user, out usuarioAutenticado);
+            var result = facadeAutenticacao.AutenticarUsuario(user, out usuarioAutenticado);
 
-            if (usuarioAutenticado.Id != null)
+            if (result.Ok && usuarioAutenticado.Id != null)
             {
                 FormsAuthentication.SetAuthCookie(user.Login, false);
                 Session.Add("user", usuarioAutenticado);
@@ -42,7 +42,7 @@ namespace DNAMais.Site.Controllers
             }
             else
             {
-                return Json(new { success = false, responseText = "Usuário/Senha inválidos." }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, responseText = result.Message }, JsonRequestBehavior.AllowGet);
             }
         }
 

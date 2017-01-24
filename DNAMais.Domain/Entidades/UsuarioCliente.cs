@@ -80,6 +80,16 @@ namespace DNAMais.Domain.Entidades
             protected set { ApenasAcessoWs = value.ParseFlag(); }
         }
 
+        [NotMapped]
+        public bool? Ativo { get; set; }
+        [Required]
+        [Column("IS_ATIVO")]
+        public string IsAtivo
+        {
+            get { return Ativo.ParseFlag(); }
+            protected set { Ativo = value.ParseFlag(); }
+        }
+
         [Column("DT_CADASTRO")]
         public DateTime? DataCadastro { get; set; }
 
@@ -115,7 +125,7 @@ namespace DNAMais.Domain.Entidades
         public virtual ICollection<UsuarioClienteGrupo> UsuariosClientesGrupos { get; set; }
         public virtual ICollection<TransacaoConsulta> TransacoesConsultas { get; set; }
         public virtual ICollection<SolicitacaoContagem> SolicitacoesContagens { get; set; }
-        public virtual ICollection<UsuarioClienteProduto> ProdutosAutorizados { get; set; }
+        public virtual ICollection<UsuarioClienteProduto> UsuarioClienteProdutosSelecionados { get; set; }
 
         #endregion
 
@@ -129,7 +139,7 @@ namespace DNAMais.Domain.Entidades
             UsuariosClientesGrupos = new HashSet<UsuarioClienteGrupo>();
             TransacoesConsultas = new HashSet<TransacaoConsulta>();
             SolicitacoesContagens = new HashSet<SolicitacaoContagem>();
-            ProdutosAutorizados = new HashSet<UsuarioClienteProduto>();
+            UsuarioClienteProdutosSelecionados = new HashSet<UsuarioClienteProduto>();
         }
 
         #endregion

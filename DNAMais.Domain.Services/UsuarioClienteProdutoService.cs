@@ -29,14 +29,9 @@ namespace DNAMais.Domain.Services
             context.Dispose();
         }
 
-        public IQueryable<UsuarioClienteProduto> ListarTodos()
+        public IQueryable<UsuarioClienteProduto> ListarPorId(int id)
         {
-            return repoUsuarioClienteProduto.GetAll();
-        }
-
-        public UsuarioClienteProduto ConsultarPorId(int id)
-        {
-            return repoUsuarioClienteProduto.GetById(id);
+            return repoUsuarioClienteProduto.Filter(x => x.Id == id);
         }
 
         public ResultValidation Salvar(UsuarioClienteProduto usuarioClienteProduto)
@@ -66,7 +61,7 @@ namespace DNAMais.Domain.Services
             return returnValidation;
         }
 
-        public ResultValidation Excluir(int idUsuarioCliente, int idContratoEmpresa, int codigoProduto)
+        public ResultValidation Excluir(int idUsuarioCliente, int codigoProduto)
         {
             ResultValidation returnValidation = new ResultValidation();
 
@@ -74,7 +69,7 @@ namespace DNAMais.Domain.Services
 
             try
             {
-                repoUsuarioClienteProduto.Remove(idUsuarioCliente, idContratoEmpresa, codigoProduto);
+                repoUsuarioClienteProduto.Remove(idUsuarioCliente, codigoProduto);
 
                 context.SaveChanges();
             }
@@ -84,6 +79,26 @@ namespace DNAMais.Domain.Services
             }
 
             return returnValidation;
+        }
+
+        public void SalvarProdutosSelecionados(int idUsuarioCliente, List<string> produtosSelecionados)
+        {
+            UsuarioCliente usuarioCliente = repoUsuarioCliente.GetById(idUsuarioCliente);
+
+            usuarioCliente.UsuarioClienteProdutosSelecionados.Clear();
+
+            foreach (var item in produtosSelecionados)
+            {
+                UsuarioClienteProduto usuarioClienteProduto = new UsuarioClienteProduto();
+
+                usuarioClienteProduto.Id = idUsuarioCliente;
+                usuarioClienteProduto.CodigoProduto = item;
+
+                repoUsuarioClienteProduto.Add(usuarioClienteProduto);
+            }
+
+            context.SaveChanges();
+
         }
     }
 }

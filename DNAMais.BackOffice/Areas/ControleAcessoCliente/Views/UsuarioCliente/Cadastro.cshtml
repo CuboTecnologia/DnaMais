@@ -100,6 +100,11 @@
                 <label class="col-md-2 control-label">Acesso restrito WebService</label>
             </div>
 
+            <div class="form-group">
+                @Html.CheckBox("Ativo", (Model.Ativo == true ? true : false), new { style = "margin-top: 13px;" })
+                <label class="col-md-2 control-label">Ativo</label>
+            </div>
+
             <hr class="separator" />
 
         </div>

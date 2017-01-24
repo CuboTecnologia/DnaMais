@@ -49,13 +49,17 @@ namespace DNAMais.Domain.Services
             if (userByLogin == null)
             {
                 retorno.AddMessage("", "Usuário/Senha não conferem.");
-                usuarioAutenticado = new UsuarioCliente { Login = user.Login, Senha = user.Password };
+                usuarioAutenticado = new UsuarioCliente { Login = user.Login, Senha = string.Empty };
             }
-
-            if (userByLogin.Senha != Security.Encryption(user.Login + user.Password))
+            else if (userByLogin.Ativo == false)
+            {
+                retorno.AddMessage("", "Acesso negado.");
+                usuarioAutenticado = new UsuarioCliente { Login = user.Login, Senha = string.Empty };
+            }
+            else if (userByLogin.Senha != Security.Encryption(user.Login + user.Password))
             {
                 retorno.AddMessage("", "Usuário/Senha não conferem.");
-                usuarioAutenticado = new UsuarioCliente { Login = user.Login, Senha = user.Password };
+                usuarioAutenticado = new UsuarioCliente { Login = user.Login, Senha = string.Empty };
             }
 
             usuarioAutenticado = userByLogin;

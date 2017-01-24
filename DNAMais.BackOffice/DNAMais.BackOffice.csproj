@@ -1588,6 +1588,7 @@
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\datepicker-pt-BR.js" />
+    <Content Include="Areas\ControleAcessoCliente\Views\UsuarioCliente\ProdutosSelecionados.cshtml" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
     <Content Include="Scripts\jquery-1.12.4.min.js" />

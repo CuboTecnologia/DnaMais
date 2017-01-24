@@ -26,11 +26,13 @@ namespace DNAMais.Site.Facades
             servicoAutenticacao.Dispose();
         }
 
-        public void AutenticarUsuario(LoginUser usuario, out UsuarioCliente usuarioAutenticado)
+        public ResultValidation AutenticarUsuario(LoginUser usuario, out UsuarioCliente usuarioAutenticado)
         {
             ResultValidation retorno = servicoAutenticacao.AutenticarUsuario(usuario, out usuarioAutenticado);
 
             FillModelState(retorno);
+
+            return retorno;
         }
     }
 }

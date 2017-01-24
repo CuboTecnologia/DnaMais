@@ -19,32 +19,16 @@ namespace DNAMais.Domain.Entidades
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Column("ID_USUARIO_CLIENTE", Order=1)]
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         [Key]
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [Column("ID_CONTRATO_EMPRESA", Order=2)]
-        public int? IdContratoEmpresa { get; set; }
-        [ForeignKey("IdContratoEmpresa")]
-        public virtual ContratoEmpresa ContratoEmpresa { get; set; }
-
-        [Key]
-        [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [Column("CD_PRODUTO", Order=3)]
+        [Column("CD_PRODUTO", Order=2)]
         [StringLength(20)]
         public string CodigoProduto { get; set; }
         [ForeignKey("CodigoProduto")]
         public virtual Produto Produto { get; set; }
-
-        [Column("DT_CADASTRO")]
-        public DateTime? DataCadastro { get; set; }
-
-        [Column("ID_USUARIO_BACKOFFICE_CADASTRO")]
-        public int? IdUsuarioBackOfficeCadastro { get; set; }
-        [ForeignKey("IdUsuarioBackOfficeCadastro")]
-        public virtual UsuarioBackOffice UsuarioBackOffice { get; set; }
 
         #endregion
 
@@ -52,7 +36,6 @@ namespace DNAMais.Domain.Entidades
 
         public UsuarioClienteProduto()
         {
-
         }
 
         #endregion

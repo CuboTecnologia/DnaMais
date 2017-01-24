@@ -12,6 +12,7 @@ namespace DNAMais.BackOffice.Areas.ControleAcessoCliente.Controllers
     public class UsuarioClienteController : Controller
     {
         private AcessoClienteFacade facade;
+        private ProdutoFacade facadeProduto;
 
         //TODO: Usuario Cliente - Criar colunas para controle das permissoes na area restrita
 
@@ -19,6 +20,7 @@ namespace DNAMais.BackOffice.Areas.ControleAcessoCliente.Controllers
         public UsuarioClienteController()
         {
             facade = new AcessoClienteFacade(ModelState);
+            facadeProduto = new ProdutoFacade(ModelState);
         }
 
         protected override void Initialize(RequestContext context)
@@ -92,6 +94,28 @@ namespace DNAMais.BackOffice.Areas.ControleAcessoCliente.Controllers
 
             return View("_Remove");
         }
+
+        public ActionResult ProdutosLiberados(int id)
+        {
+            UsuarioCliente usuarioCliente = facade.ConsultarUsuarioClientePorId(id);
+
+            ViewBag.CodigousuarioCliente = id;
+            ViewBag.NomeEmpresa = usuarioCliente.ClienteEmpresa.RazaoSocial;
+            ViewBag.NomeUsuarioCliente = usuarioCliente.Nome;
+            ViewBag.Produtos = usuarioCliente.UsuarioClienteProdutosSelecionados;
+
+            return View("ProdutosSelecionados", facadeProduto.ListarProdutos());
+        }
+
+        [HttpPost]
+        public ActionResult ProdutosLiberados(int idUsuarioCliente, List<string> produtosSelecionados)
+        {
+            facade.SalvarUsuarioClienteProdutosSelecionados(idUsuarioCliente, produtosSelecionados);
+
+            return RedirectToAction("Index");
+        }
+
+
 
     }
 }
