@@ -90,6 +90,16 @@ namespace DNAMais.Domain.Entidades
             protected set { Ativo = value.ParseFlag(); }
         }
 
+        [NotMapped]
+        public bool? AlterarSenha { get; set; }
+        [Required]
+        [Column("IS_ALTERAR_SENHA")]
+        public string IsAlterarSenha
+        {
+            get { return AlterarSenha.ParseFlag(); }
+            protected set { AlterarSenha = value.ParseFlag(); }
+        }
+
         [Column("DT_CADASTRO")]
         public DateTime? DataCadastro { get; set; }
 

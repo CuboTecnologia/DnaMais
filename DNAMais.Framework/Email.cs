@@ -76,5 +76,34 @@ namespace DNAMais.Framework
             //Envia o email 
             client.Send(message);
         }
+
+        public static void SendEmailForgotPassword(string emailReceiver, string emailBody)
+        {
+            string senderEmail = smtpUser;
+            string senderName = "DNA+";
+            string title = "DNA+ - Sua nova senha";
+
+            SmtpClient client = new SmtpClient();
+            client.Host = smtpServer;
+            client.Port = smtpPort;
+            client.EnableSsl = false;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = false;
+            client.Credentials = new NetworkCredential(smtpUser, smtpPassword);
+
+            //Cria o endereço de email do remetente e do destinatário
+            MailAddress de = new MailAddress(senderEmail, senderName);
+            MailAddress emailDestiny = new MailAddress(emailReceiver);
+
+            //Monta Mensagem
+            MailMessage message = new MailMessage(de, emailDestiny);
+            message.IsBodyHtml = false;
+            message.Subject = title;
+            message.Body = emailBody;
+
+            //Envia o email 
+            client.Send(message);
+        }
+
     }
 }

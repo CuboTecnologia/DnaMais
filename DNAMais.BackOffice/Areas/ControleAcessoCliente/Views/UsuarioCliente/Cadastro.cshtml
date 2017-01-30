@@ -72,19 +72,20 @@
                 width: 150,
                 disabled: locked)
 
-            @if (Model.Id == null)
-            {
-                @Html.DnaMaisTextBoxFor(
+            @Html.DnaMaisPasswordFor(
                     expression: m => m.Senha,
                     width: 300,
                     disabled: locked)
+
+            @*            @if (Model.Id == null)
+            {
             }
             else
             {
                 @Html.Hidden(
                 name: "Senha",
                 value: Model.Senha)
-            }
+            }*@
 
             @Html.DnaMaisDatePickerFor(m => m.DataInicioAcesso, locked)
             @Html.DnaMaisDatePickerFor(m => m.DataTerminoAcesso, locked)
@@ -98,6 +99,11 @@
             <div class="form-group">
                 @Html.CheckBox("ApenasAcessoWs", (Model.ApenasAcessoWs == true ? true : false), new { style = "margin-top: 13px;" })
                 <label class="col-md-2 control-label">Acesso restrito WebService</label>
+            </div>
+
+            <div class="form-group">
+                @Html.CheckBox("AlterarSenha", (Model.AlterarSenha == true ? true : false), new { style = "margin-top: 13px;" })
+                <label class="col-md-2 control-label">Alterar senha próx. login</label>
             </div>
 
             <div class="form-group">

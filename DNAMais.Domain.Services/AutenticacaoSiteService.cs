@@ -56,7 +56,7 @@ namespace DNAMais.Domain.Services
                 retorno.AddMessage("", "Acesso negado.");
                 usuarioAutenticado = new UsuarioCliente { Login = user.Login, Senha = string.Empty };
             }
-            else if (userByLogin.Senha != Security.Encryption(user.Login + user.Password))
+            else if (userByLogin.Senha != Security.Encryption(user.Password))
             {
                 retorno.AddMessage("", "Usuário/Senha não conferem.");
                 usuarioAutenticado = new UsuarioCliente { Login = user.Login, Senha = string.Empty };
@@ -66,5 +66,34 @@ namespace DNAMais.Domain.Services
 
             return retorno;
         }
+
+        public ResultValidation SalvarNovaSenha(UsuarioCliente usuarioCliente)
+        {
+            ResultValidation returnValidation = new ResultValidation();
+
+            usuarioCliente.Senha = Security.Encryption(usuarioCliente.Senha);
+
+            if (!returnValidation.Ok) return returnValidation;
+
+            try
+            {
+                repoUsuario.Update(usuarioCliente);
+
+                context.SaveChanges();
+            }
+            catch (Exception err)
+            {
+                returnValidation.AddMessage("", err);
+            }
+
+            return returnValidation;
+        }
+
+        public UsuarioCliente ConsultarPorEmail(string email)
+        {
+            return repoUsuario.FindFirst(i => i.Email == email);
+        }
+
+
     }
 }

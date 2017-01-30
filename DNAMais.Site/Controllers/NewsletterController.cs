@@ -127,5 +127,28 @@ namespace DNAMais.Site.Controllers
             return View();
         }
 
+        public ActionResult Cancelamento(string subscription)
+        {
+            try
+            {
+                var newsletter = facade.GetNewsletterByGUID(subscription);
+
+                if (newsletter.Id != null)
+                {
+                    newsletter.OptOut = true;
+                    newsletter.DataRegistroOptOut = DateTime.Now;
+
+                    facade.SaveNewsletter(newsletter);
+
+                    return View();
+                }
+            }
+            catch (Exception ex)
+            {
+                var x = ex.Message;
+            }
+            return View();
+        }
+
     }
 }

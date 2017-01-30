@@ -907,6 +907,7 @@
     <Content Include="Views\AreaRestrita\_DetalhesQsaPessoaJuridica.cshtml" />
     <Content Include="Views\AreaRestrita\_ResultadoPesquisaPessoaJuridicaModal.cshtml" />
     <Content Include="Views\AreaRestrita\_ResultadoPesquisaPessoaFisicaModal.cshtml" />
+    <Content Include="Views\Newsletter\Cancelamento.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1510,7 +1511,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>29425</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:39730/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

@@ -15,15 +15,18 @@ namespace DNAMais.Site.Facades
     public class AutenticacaoFacade : BaseFacade
     {
         private AutenticacaoSiteService servicoAutenticacao;
+        private UsuarioClienteService servicoUsuarioCliente;
 
         public AutenticacaoFacade(ModelStateDictionary modelState)
             : base(modelState)
         {
             servicoAutenticacao = new AutenticacaoSiteService();
+            servicoUsuarioCliente = new UsuarioClienteService();
         }
         public void Dispose()
         {
             servicoAutenticacao.Dispose();
+            servicoUsuarioCliente.Dispose();
         }
 
         public ResultValidation AutenticarUsuario(LoginUser usuario, out UsuarioCliente usuarioAutenticado)
@@ -34,5 +37,30 @@ namespace DNAMais.Site.Facades
 
             return retorno;
         }
+
+        public ResultValidation AlterarUsuarioCliente(UsuarioCliente usuarioCliente)
+        {
+            ResultValidation retorno = servicoAutenticacao.SalvarNovaSenha(usuarioCliente);
+
+            FillModelState(retorno);
+
+            return retorno;
+        }
+
+        public UsuarioCliente ConsultarPorLogin(string login)
+        {
+            UsuarioCliente retorno = servicoUsuarioCliente.ConsultarPorLogin(login);
+
+            return retorno;
+        }
+
+        public UsuarioCliente ConsultarPorEmail(string email)
+        {
+            UsuarioCliente retorno = servicoAutenticacao.ConsultarPorEmail(email);
+
+            return retorno;
+        }
+
+
     }
 }

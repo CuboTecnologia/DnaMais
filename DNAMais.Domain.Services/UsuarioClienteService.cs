@@ -42,6 +42,11 @@ namespace DNAMais.Domain.Services
             return repoUsuarioCliente.FindFirst(i => i.Login == login);
         }
 
+        public UsuarioCliente ConsultarPorEmail(string email)
+        {
+            return repoUsuarioCliente.FindFirst(i => i.Email == email);
+        }
+
         public ResultValidation Salvar(UsuarioCliente usuarioCliente)
         {
             ResultValidation returnValidation = new ResultValidation();
