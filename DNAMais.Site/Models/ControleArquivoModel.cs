@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DNAMais.Domain.Entidades;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -80,7 +81,7 @@ namespace DNAMais.Site.Models
         public int QtdeEnriquecidoCelular { get; set; }
         public int QtdeEnriquecidoEmail { get; set; }
 
-        public UsuarioClienteModel UsuarioCliente { get; set; }
+        public UsuarioCliente UsuarioCliente { get; set; }
 
     }
 }

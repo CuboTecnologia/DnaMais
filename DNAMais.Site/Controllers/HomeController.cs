@@ -65,6 +65,7 @@ namespace DNAMais.Site.Controllers
                 if (usuarioAutenticado.Id != null)
                 {
                     usuarioAutenticado.Senha = user.NewPassword;
+                    usuarioAutenticado.AlterarSenha = false;
 
                     var resultAlt = facadeAutenticacao.AlterarUsuarioCliente(usuarioAutenticado);
 

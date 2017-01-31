@@ -38,6 +38,12 @@ namespace DNAMais.Domain.Entidades
         [Display(Name = "Nome Fantasia")]
         public string NomeFantasia { get; set; }
 
+        [Required(ErrorMessage = "Insira o nome da pasta de FTP")]
+        [Column("NM_PASTA_FTP")]
+        [StringLength(30)]
+        [Display(Name = "Nome pasta FTP")]
+        public string NomePastaFtp { get; set; }
+
         [Column("ID_RAMO_ATIVIDADE")]
         [Display(Name = "Ramo de Atividade")]
         public int? IdRamoAtividade { get; set; }

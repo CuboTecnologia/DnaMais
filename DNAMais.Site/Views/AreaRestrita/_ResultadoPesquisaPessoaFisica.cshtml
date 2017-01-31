@@ -458,7 +458,7 @@
                 beforeSend: function () {
                 },
                 error: function (a, b, c) {
-                    alert(a.responseText.replace('"', '').replace('"', ''));
+                    toastr['error'](a.responseText.replace('"', '').replace('"', ''));
                 }
             });
         });

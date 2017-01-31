@@ -27,8 +27,8 @@
     $("#btnSubmit").on("click", function () {
         $("#assunto").val() = $("#assuntoVisualizacao").val();
 
-        alert($("#assunto").val());
-        alert($("#assuntoVisualizacao").val());
+        toastr['error']($("#assunto").val());
+        toastr['error']($("#assuntoVisualizacao").val());
     });
 
     if (document.referrer.indexOf(window.location.hostname) != -1) {

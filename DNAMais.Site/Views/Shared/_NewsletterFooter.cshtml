@@ -45,7 +45,7 @@
                     $('#loadingGif').delay(5000).fadeOut(2000);
                 },
                 error: function () {
-                    alert('Ocorreu erro');
+                    toastr['error']('Ocorreu erro');
                     $('#loadingGif').delay(5000).fadeOut(2000);
                 }
             });

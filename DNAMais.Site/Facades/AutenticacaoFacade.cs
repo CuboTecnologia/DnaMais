@@ -12,7 +12,7 @@ using DNAMais.Site.Facades.Base;
 
 namespace DNAMais.Site.Facades
 {
-    public class AutenticacaoFacade : BaseFacade
+    public class AutenticacaoFacade : BaseFacade, IDisposable
     {
         private AutenticacaoSiteService servicoAutenticacao;
         private UsuarioClienteService servicoUsuarioCliente;
@@ -40,9 +40,16 @@ namespace DNAMais.Site.Facades
 
         public ResultValidation AlterarUsuarioCliente(UsuarioCliente usuarioCliente)
         {
-            ResultValidation retorno = servicoAutenticacao.SalvarNovaSenha(usuarioCliente);
+            ResultValidation retorno = servicoUsuarioCliente.SalvarNovaSenha(usuarioCliente);
 
             FillModelState(retorno);
+
+            return retorno;
+        }
+
+        public UsuarioCliente ConsultarPorId(int id)
+        {
+            UsuarioCliente retorno = servicoUsuarioCliente.ConsultarPorId(id);
 
             return retorno;
         }

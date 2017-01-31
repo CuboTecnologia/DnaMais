@@ -359,6 +359,11 @@ namespace DNAMais.Framework
             return campo.Replace("-", "").Replace(".", "").Replace("/", "");
         }
 
+        public static string LimparCaracteresPastaFtp(this string campo)
+        {
+            return campo.Replace("-", "").Replace(".", "").Replace(" ", "_").ToUpper();
+        }
+
         public static string NormalizeText(this string text)
         {
             text = text.Replace("ã", "a");

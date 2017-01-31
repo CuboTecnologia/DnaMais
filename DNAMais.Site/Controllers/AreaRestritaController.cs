@@ -16,6 +16,8 @@ namespace DNAMais.Site.Controllers
 {
     public class AreaRestritaController : Controller
     {
+        AutenticacaoFacade facadeAutenticacao;
+        
         PessoaFisicaFacade facadePF;
         PessoaJuridicaFacade facadePJ;
 
@@ -27,6 +29,7 @@ namespace DNAMais.Site.Controllers
         {
             facadePF = new PessoaFisicaFacade(ModelState);
             facadePJ = new PessoaJuridicaFacade(ModelState);
+            facadeAutenticacao = new AutenticacaoFacade(ModelState); 
 
             _idClienteEmpresa = 1;
             _idContratoEmpresa = 3;
@@ -56,9 +59,11 @@ namespace DNAMais.Site.Controllers
 
         public ActionResult ProdutosContratados()
         {
-            var model = new AreaRestritaModel()
+            var usuarioCliente = CarregaDadosUsuarioCliente();
+
+            ControleArquivoModel model = new ControleArquivoModel
             {
-                UsuarioCliente = CarregaDadosUsuarioCliente()
+                UsuarioCliente = usuarioCliente
             };
 
             return View(model);
@@ -66,9 +71,11 @@ namespace DNAMais.Site.Controllers
 
         public ActionResult PesquisaVeiculo()
         {
-            var model = new AreaRestritaModel()
+            var usuarioCliente = CarregaDadosUsuarioCliente();
+
+            ControleArquivoModel model = new ControleArquivoModel
             {
-                UsuarioCliente = CarregaDadosUsuarioCliente()
+                UsuarioCliente = usuarioCliente
             };
 
             return View(model);
@@ -80,23 +87,17 @@ namespace DNAMais.Site.Controllers
             return PartialView("_Municipios");
         }
 
-        public UsuarioClienteModel CarregaDadosUsuarioCliente()
+        public UsuarioCliente CarregaDadosUsuarioCliente()
         {
             if (Session["user"] != null)
             {
-                var usuarioCliente = new UsuarioClienteModel()
-                {
-                    Id = ((UsuarioCliente)Session["user"]).Id,
-                    Nome = ((UsuarioCliente)Session["user"]).Nome,
-                    Email = ((UsuarioCliente)Session["user"]).Email,
-                    Login = ((UsuarioCliente)Session["user"]).Login
-                };
+                var usuarioCliente = facadeAutenticacao.ConsultarPorId((int)((UsuarioCliente)Session["user"]).Id);
 
                 return usuarioCliente;
             }
             else
             {
-                return new UsuarioClienteModel();
+                return new UsuarioCliente();
             }
         }
 
@@ -104,9 +105,11 @@ namespace DNAMais.Site.Controllers
         
         public ActionResult PesquisaPessoaFisica()
         {
-            var model = new AreaRestritaModel()
+            var usuarioCliente = CarregaDadosUsuarioCliente();
+
+            ControleArquivoModel model = new ControleArquivoModel
             {
-                UsuarioCliente = CarregaDadosUsuarioCliente()
+                UsuarioCliente = usuarioCliente
             };
 
             return View(model);
@@ -285,9 +288,11 @@ namespace DNAMais.Site.Controllers
         
         public ActionResult PesquisaPessoaJuridica()
         {
-            var model = new AreaRestritaModel()
+            var usuarioCliente = CarregaDadosUsuarioCliente();
+
+            ControleArquivoModel model = new ControleArquivoModel
             {
-                UsuarioCliente = CarregaDadosUsuarioCliente()
+                UsuarioCliente = usuarioCliente
             };
 
             return View(model);
@@ -445,58 +450,91 @@ namespace DNAMais.Site.Controllers
 
         public ActionResult PesquisaFtp()
         {
+            var usuarioCliente = CarregaDadosUsuarioCliente();
+
             ControleArquivoModel model = new ControleArquivoModel
             {
-                UsuarioCliente = CarregaDadosUsuarioCliente()
+                UsuarioCliente = usuarioCliente
             };
 
-            var caminho = ConfigurationManager.AppSettings["FtpUrl"];
-            var uri = new Uri(caminho);
-            var ftp = (FtpWebRequest)WebRequest.Create(uri);
-            ftp.Method = System.Net.WebRequestMethods.Ftp.ListDirectory;
-
-            ftp.Credentials = CreateCredential();
-
-            FtpWebResponse response = (FtpWebResponse)ftp.GetResponse();
-
-            Stream responseStream = response.GetResponseStream();
-            StreamReader reader = new StreamReader(responseStream);
-
-            List<string> listaArquivoEntradaFtp = new List<string>();
-
-            string[] lines = reader.ReadToEnd().Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (string item in lines)
+            if (usuarioCliente.Id != null)
             {
-                listaArquivoEntradaFtp.Add(item);
+                var existePastaFtp = CreateFTPDirectory(ConfigurationManager.AppSettings["FtpUrl"] +
+                                                        usuarioCliente.ClienteEmpresa.NomePastaFtp);
+
+                if (existePastaFtp)
+                {
+                    #region FTP Entrada
+
+                    var caminhoEntrada = ConfigurationManager.AppSettings["FtpUrl"] +
+                                         usuarioCliente.ClienteEmpresa.NomePastaFtp + "/" +
+                                         ConfigurationManager.AppSettings["FtpEntrada"] + "/";
+
+                    var existePastaEntrada = CreateFTPDirectory(caminhoEntrada);
+
+                    if (existePastaEntrada)
+                    {
+                        var uri = new Uri(caminhoEntrada);
+                        var ftp = (FtpWebRequest)WebRequest.Create(uri);
+                        ftp.Method = System.Net.WebRequestMethods.Ftp.ListDirectory;
+
+                        ftp.Credentials = CreateCredential();
+
+                        FtpWebResponse response = (FtpWebResponse)ftp.GetResponse();
+
+                        Stream responseStream = response.GetResponseStream();
+                        StreamReader reader = new StreamReader(responseStream);
+
+                        List<string> listaArquivoEntradaFtp = new List<string>();
+
+                        string[] lines = reader.ReadToEnd().Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+
+                        foreach (string item in lines)
+                        {
+                            listaArquivoEntradaFtp.Add(item);
+                        }
+
+                        ViewBag.ListaArquivoEntradaFtp = listaArquivoEntradaFtp;
+                    }
+
+                    #endregion
+
+                    #region FTP Saida
+
+                    var caminhoSaida = ConfigurationManager.AppSettings["FtpUrl"] +
+                                       usuarioCliente.ClienteEmpresa.NomePastaFtp + "/" +
+                                       ConfigurationManager.AppSettings["FtpSaida"] + "/";
+
+                    var existePastaSaida = CreateFTPDirectory(caminhoSaida);
+
+                    if (existePastaSaida)
+                    {
+                        var uri = new Uri(caminhoSaida);
+                        var ftp = (FtpWebRequest)WebRequest.Create(uri);
+                        ftp.Method = System.Net.WebRequestMethods.Ftp.ListDirectory;
+
+                        ftp.Credentials = CreateCredential();
+
+                        var response = (FtpWebResponse)ftp.GetResponse();
+
+                        var responseStream = response.GetResponseStream();
+                        var reader = new StreamReader(responseStream);
+
+                        List<string> listaArquivoSaidaFtp = new List<string>();
+
+                        var lines = reader.ReadToEnd().Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+
+                        foreach (string item in lines)
+                        {
+                            listaArquivoSaidaFtp.Add(item);
+                        }
+
+                        ViewBag.ListaArquivoSaidaFtp = listaArquivoSaidaFtp;
+                    }
+
+                    #endregion
+                }
             }
-
-            ViewBag.ListaArquivoEntradaFtp = listaArquivoEntradaFtp;
-
-
-            caminho = ConfigurationManager.AppSettings["FtpSaida"];
-            uri = new Uri(caminho);
-            ftp = (FtpWebRequest)WebRequest.Create(uri);
-            ftp.Method = System.Net.WebRequestMethods.Ftp.ListDirectory;
-
-            ftp.Credentials = CreateCredential();
-
-            response = (FtpWebResponse)ftp.GetResponse();
-
-            responseStream = response.GetResponseStream();
-            reader = new StreamReader(responseStream);
-
-            List<string> listaArquivoSaidaFtp = new List<string>();
-
-            lines = reader.ReadToEnd().Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (string item in lines)
-            {
-                listaArquivoSaidaFtp.Add(item);
-            }
-
-            ViewBag.ListaArquivoSaidaFtp = listaArquivoSaidaFtp;
-
 
             return View(model);
         }
@@ -504,10 +542,16 @@ namespace DNAMais.Site.Controllers
         [HttpPost]
         public ActionResult PesquisaFtp(HttpPostedFileBase file)
         {
+            var usuarioCliente = CarregaDadosUsuarioCliente();
+
             ControleArquivoModel model = new ControleArquivoModel
             {
-                UsuarioCliente = CarregaDadosUsuarioCliente()
+                UsuarioCliente = usuarioCliente
             };
+
+            var caminhoEntrada = ConfigurationManager.AppSettings["FtpUrl"] +
+                                 usuarioCliente.ClienteEmpresa.NomePastaFtp + "/" +
+                                 ConfigurationManager.AppSettings["FtpEntrada"] + "/";
 
             model.NomeArquivoEntrada = file.FileName;
             model.Arquivo = file;
@@ -519,22 +563,18 @@ namespace DNAMais.Site.Controllers
 
             bool encontrou = false;
             string[] extensoes = file.FileName.Split('.');
-
             string[] extensoesPermitidas = new string[] { "TXT", "CSV", "XLS", "XLSX" };  //txt , csv, xls, xlsx
-
 
             for (int i = 0; i < extensoesPermitidas.Length; i++)
             {
                 if (extensoesPermitidas[i] == extensoes[(extensoes.Length - 1)].ToUpper())
                 {
-
                     encontrou = true;
                 }
             }
 
             try
             {
-
                 if (encontrou)
                 {
                     if (file != null && file.ContentLength > 0)
@@ -544,38 +584,39 @@ namespace DNAMais.Site.Controllers
                         // store the file inside ~/App_Data/uploads folder
                         var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
 
-                    }
+                        var request = CreateFtpRequest(caminhoEntrada + file.FileName);
 
-                    var request = CreateFtpRequest(file.FileName);
+                        using (var arquivo = request.GetRequestStream())
+                            file.InputStream.CopyTo(arquivo);
 
-                    using (var arquivo = request.GetRequestStream())
-                        file.InputStream.CopyTo(arquivo);
+                        var result = (FtpWebResponse)request.GetResponse();
 
-                    var result = (FtpWebResponse)request.GetResponse();
+                        if (result.StatusCode == FtpStatusCode.CommandOK || result.StatusCode == FtpStatusCode.ClosingData || result.StatusCode == FtpStatusCode.FileActionOK)
+                        {
+                            PesquisaFtp();
+                            TempData["msg"] = "<script>toastr['success']('Arquivo enviado com sucesso');</script>";
 
-                    if (result.StatusCode == FtpStatusCode.CommandOK || result.StatusCode == FtpStatusCode.ClosingData || result.StatusCode == FtpStatusCode.FileActionOK)
-                    {
-                        PesquisaFtp();
-
-
-                        TempData["msg"] = "<script>alert('Enviado com Sucesso!');</script>";
-
-                        //return View(ViewBag.ListaArquivoEntradaFtp);
-                        return View(model);
+                            return View(model);
+                        }
+                        else
+                        {
+                            return RedirectToAction("ListarFtpEntrada");
+                        }
                     }
                     else
                     {
+                        PesquisaFtp();
 
-                        return RedirectToAction("ListarFtpEntrada");
+                        TempData["msg"] = "<script>toastr['error']('Arquivo não localizado');</script>";
+
+                        return View();
                     }
-
                 }
                 else
                 {
-
                     PesquisaFtp();
 
-                    TempData["msg"] = "<script>alert('Arquivo não permitido');</script>";
+                    TempData["msg"] = "<script>toastr['error']('Arquivo não permitido');</script>";
 
                     return View();
                 }
@@ -587,12 +628,51 @@ namespace DNAMais.Site.Controllers
             }
         }
 
-        private static FtpWebRequest CreateFtpRequest(string fileName)
+        public ActionResult DownloadFtpSaida(string nomeArquivoDownload)
         {
-            var caminho = ConfigurationManager.AppSettings["FtpUrl"];
-            var uri = new Uri(string.Format(@"{0}{1}", caminho, fileName));
+            var usuarioCliente = CarregaDadosUsuarioCliente();
+
+            ControleArquivoModel model = new ControleArquivoModel
+            {
+                UsuarioCliente = usuarioCliente
+            };
+
+            var caminhoSaida = ConfigurationManager.AppSettings["FtpUrl"] +
+                                 usuarioCliente.ClienteEmpresa.NomePastaFtp + "/" +
+                                 ConfigurationManager.AppSettings["FtpSaida"] + "/" + nomeArquivoDownload;
+            try
+            {
+                FtpWebRequest request = (FtpWebRequest)FtpWebRequest.Create(new Uri(caminhoSaida));
+                request.Method = WebRequestMethods.Ftp.DownloadFile;
+
+                request.Credentials = CreateCredential();
+                request.UsePassive = true;
+                request.UseBinary = true;
+                request.EnableSsl = false;
+
+                FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    response.GetResponseStream().CopyTo(stream);
+                    Response.AddHeader("content-disposition", "attachment;filename=" + nomeArquivoDownload);
+                    Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                    Response.BinaryWrite(stream.ToArray());
+                    Response.End();
+                }
+            }
+            catch (WebException ex)
+            {
+                throw new Exception((ex.Response as FtpWebResponse).StatusDescription);
+            }
+
+            return RedirectToAction("PesquisaFtp");
+        }
+
+        private static FtpWebRequest CreateFtpRequest(string PathAndFileName)
+        {
+            var uri = new Uri(PathAndFileName);
             var ftp = (FtpWebRequest)WebRequest.Create(uri);
-            ftp.Method = System.Net.WebRequestMethods.Ftp.UploadFile;
+            ftp.Method = WebRequestMethods.Ftp.UploadFile;
 
             ftp.Credentials = CreateCredential();
             return ftp;
@@ -603,6 +683,48 @@ namespace DNAMais.Site.Controllers
             var username = ConfigurationManager.AppSettings["FtpUsername"];
             var password = ConfigurationManager.AppSettings["FtpPassword"];
             return new NetworkCredential(username, password);
+        }
+
+        private bool CreateFTPDirectory(string directory)
+        {
+
+            try
+            {
+                if (directory == null)
+                    return false;
+
+                if (directory.Trim() == string.Empty)
+                    return false;
+
+                //create the directory
+                FtpWebRequest requestDir = (FtpWebRequest)FtpWebRequest.Create(new Uri(directory));
+                requestDir.Method = WebRequestMethods.Ftp.MakeDirectory;
+                requestDir.Credentials = CreateCredential();
+                requestDir.UsePassive = true;
+                requestDir.UseBinary = true;
+                requestDir.KeepAlive = false;
+                FtpWebResponse response = (FtpWebResponse)requestDir.GetResponse();
+                Stream ftpStream = response.GetResponseStream();
+
+                ftpStream.Close();
+                response.Close();
+
+                return true;
+            }
+            catch (WebException ex)
+            {
+                FtpWebResponse response = (FtpWebResponse)ex.Response;
+                if (response.StatusCode == FtpStatusCode.ActionNotTakenFileUnavailable)
+                {
+                    response.Close();
+                    return true;
+                }
+                else
+                {
+                    response.Close();
+                    return false;
+                }
+            }
         }
 
         #endregion

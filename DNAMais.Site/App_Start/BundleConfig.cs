@@ -40,7 +40,9 @@ namespace DNAMais.Site.App_Start
                 "~/css/theme-shop.css",
                 "~/css/jquery.dataTables.css",
                 "~/css/bootstrap-fileinput-master/css/fileinput.css",
-                "~/css/theme-animate.css"));
+                "~/css/theme-animate.css",
+                "~/Content/toastr.css"
+                ));
 
             bundles.Add(new StyleBundle("~/css/rsplugin").Include(
                 "~/vendor/rs-plugin/css/settings.css",
@@ -73,7 +75,8 @@ namespace DNAMais.Site.App_Start
                 "~/vendor/jquery.lazyload/jquery.lazyload.js",
                 "~/vendor/magnific-popup/jquery.magnific-popup.js",
                 "~/vendor/isotope/jquery.isotope.min.js",
-                "~/js/jquery.mask.js"
+                "~/js/jquery.mask.js",
+                "~/Scripts/toastr.min.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/Scripts/bootstrap").Include(

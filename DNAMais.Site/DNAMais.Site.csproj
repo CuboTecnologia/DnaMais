@@ -147,7 +147,6 @@
     </Compile>
     <Compile Include="Models\AreaRestritaModel.cs" />
     <Compile Include="Models\ControleArquivoModel.cs" />
-    <Compile Include="Models\UsuarioClienteModel.cs" />
     <Compile Include="Models\LayoutEntradaModel.cs" />
     <Compile Include="Models\LayoutSaidaModel.cs" />
     <Compile Include="Models\StatusModel.cs" />
@@ -199,6 +198,8 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Content\toastr.css" />
+    <Content Include="Content\toastr.min.css" />
     <Content Include="css\bootstrap-fileinput-master\css\fileinput.css" />
     <Content Include="css\bootstrap-fileinput-master\css\fileinput.min.css" />
     <Content Include="css\bootstrap-fileinput-master\examples\index.html" />
@@ -675,6 +676,8 @@
     <Content Include="js\views\view.contact.js" />
     <Content Include="js\views\view.home.js" />
     <Content Include="js\views\view.hosting.js" />
+    <Content Include="Content\toastr.scss" />
+    <Content Include="Content\toastr.less" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
@@ -698,6 +701,8 @@
     <Content Include="Scripts\jquery.inputmask\jquery.inputmask.bundle.js" />
     <Content Include="Scripts\jquery.inputmask\jquery.inputmask.js" />
     <Content Include="Scripts\jquery.inputmask\jquery.inputmask.min.js" />
+    <Content Include="Scripts\toastr.js" />
+    <Content Include="Scripts\toastr.min.js" />
     <Content Include="TextInputEffects\TextInputEffects\css\demo.css" />
     <Content Include="TextInputEffects\TextInputEffects\css\normalize.css" />
     <Content Include="TextInputEffects\TextInputEffects\css\set1.css" />

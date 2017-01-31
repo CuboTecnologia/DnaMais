@@ -67,28 +67,6 @@ namespace DNAMais.Domain.Services
             return retorno;
         }
 
-        public ResultValidation SalvarNovaSenha(UsuarioCliente usuarioCliente)
-        {
-            ResultValidation returnValidation = new ResultValidation();
-
-            usuarioCliente.Senha = Security.Encryption(usuarioCliente.Senha);
-
-            if (!returnValidation.Ok) return returnValidation;
-
-            try
-            {
-                repoUsuario.Update(usuarioCliente);
-
-                context.SaveChanges();
-            }
-            catch (Exception err)
-            {
-                returnValidation.AddMessage("", err);
-            }
-
-            return returnValidation;
-        }
-
         public UsuarioCliente ConsultarPorEmail(string email)
         {
             return repoUsuario.FindFirst(i => i.Email == email);

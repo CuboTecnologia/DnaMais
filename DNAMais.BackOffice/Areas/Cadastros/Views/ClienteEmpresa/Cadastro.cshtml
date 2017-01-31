@@ -9,7 +9,7 @@
 
     ViewBag.Title = "DNA+ :: Clientes";
     ViewBag.TituloPagina = "Clientes";
-    
+
     ViewData["messageSuccess"] = "Cliente registrado com sucesso";
     ViewData["messageReturn"] = "Voltar para lista de Clientes";
 
@@ -28,7 +28,7 @@
 {
     @if (Request.HttpMethod == "GET" || !ViewData.ModelState.IsValid)
     {
-        <div style="width:100%;">
+        <div style="width: 100%;">
 
             @Html.HiddenFor(
              expression: m => m.Id)
@@ -51,14 +51,22 @@
                 width: 300,
                 disabled: locked)
 
-          
+            @if (Model.NomePastaFtp != null)
+            {
+                @Html.DnaMaisTextBoxFor(expression: m => m.NomePastaFtp, width: 200, disabled: false, textReadonly: true)
+            }
+            else
+            {
+                @Html.DnaMaisTextBoxFor(expression: m => m.NomePastaFtp, width: 200, disabled: locked)
+            }
+
             @Html.DnaMaisDropDownListFor(
                 expression: m => m.IdRamoAtividade,
                 disabled: locked,
                 itens: ramosAtividade,
                 width: 300)
-                
-            <hr class="separator"/>
+
+            <hr class="separator" />
         </div>
     }
 }

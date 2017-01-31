@@ -26,7 +26,7 @@
 
     <div class="col-md-12">
         <div class="col-md-12">
-            <div class="tabs tabs-quaternary">
+            <div class="tabs tabs-dark">
                 <ul class="nav nav-tabs">
                     <li class="active">
                         <a href="#downLoad" data-toggle="tab"> Arquivos Disponíveis para Download</a>
@@ -56,7 +56,7 @@
                                         </td>
 
                                         <td class="col-md-11">
-                                            @Html.ActionLink(item, "DownloadFtpSaida", "ControleArquivo", new { nomeArquivoDownload = item }, null)
+                                            @Html.ActionLink(item, "DownloadFtpSaida", "AreaRestrita", new { nomeArquivoDownload = item }, null)
                                         </td>
                                     </tr>
                                 }

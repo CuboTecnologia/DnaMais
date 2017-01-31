@@ -52,6 +52,7 @@ namespace DNAMais.Domain.Services
             }
 
             clienteEmpresa.Cnpj = cnpj;
+            clienteEmpresa.NomePastaFtp = clienteEmpresa.NomePastaFtp.Replace(" ", "_").ToUpper();
 
             try
             {

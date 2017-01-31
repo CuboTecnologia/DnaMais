@@ -13,7 +13,13 @@ namespace DNAMais.BackOffice.Helpers
         // ********************************************
         // TextBox
         // ********************************************
+
         public static HtmlString DnaMaisTextBox(this HtmlHelper htmlHelper, string display, string name, object value, int maxlength, int width, bool disabled)
+        {
+            return DnaMaisTextBox(htmlHelper, display, name, value, maxlength, width, disabled, false);
+        }
+
+        public static HtmlString DnaMaisTextBox(this HtmlHelper htmlHelper, string display, string name, object value, int maxlength, int width, bool disabled, bool textReadonly)
         {
             //var superDiv = new TagBuilder("div");
 
@@ -39,6 +45,10 @@ namespace DNAMais.BackOffice.Helpers
             {
                 input.Attributes["disabled"] = "disabled";
             }
+            if (textReadonly)
+            {
+                input.Attributes["readonly"] = "readonly";
+            }
 
             controle.InnerHtml = input.ToString();
 
@@ -53,6 +63,11 @@ namespace DNAMais.BackOffice.Helpers
 
         public static HtmlString DnaMaisTextBoxFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, int width, bool disabled)
         {
+            return DnaMaisTextBoxFor(htmlHelper, expression, width, disabled, false);
+        }
+
+        public static HtmlString DnaMaisTextBoxFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, int width, bool disabled, bool textReadonly)
+        {
             var name = ExpressionHelper.GetExpressionText(expression);
             var metadata = ModelMetadata.FromLambdaExpression(expression, htmlHelper.ViewData);
             var display = metadata.DisplayName;
@@ -61,7 +76,7 @@ namespace DNAMais.BackOffice.Helpers
             var attribute = prop.GetCustomAttributes(typeof(StringLengthAttribute), false).OfType<StringLengthAttribute>().FirstOrDefault();
             int maxlength = attribute != null ? attribute.MaximumLength : 1;
 
-            return DnaMaisTextBox(htmlHelper, display, name, metadata.Model as string, maxlength, width, disabled);
+            return DnaMaisTextBox(htmlHelper, display, name, metadata.Model as string, maxlength, width, disabled, textReadonly);
         }
     }
 }
