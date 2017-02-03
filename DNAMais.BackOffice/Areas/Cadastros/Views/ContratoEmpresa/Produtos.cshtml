@@ -31,7 +31,7 @@
                     <th>Categoria</th>
                     <th>Código</th>
                     <th>Produto</th>
-                    <th></th>
+                    <th style="text-align: center;width:120px;">Selecionado</th>
                 </tr>
             </thead>
             @foreach (var item in Model)
@@ -45,13 +45,13 @@
 
                         @if ((ViewBag.Produtos as ICollection<ContratoEmpresaProduto>).Where(w => w.CodigoProduto == item.Id).FirstOrDefault() != null)
                         {
-                            <td>
+                            <td style="text-align: center">
                                 <input type="checkbox" id="produtosSelecionados" name="produtosSelecionados" checked="checked" value="@item.Id" />
                             </td>
                         }
                         else
                         {
-                            <td>
+                            <td style="text-align: center">
                                 <input type="checkbox" id="produtosSelecionados" name="produtosSelecionados" value="@item.Id" />
                             </td>
                         }

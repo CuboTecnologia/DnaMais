@@ -1,4 +1,5 @@
-﻿using DNAMais.BackOffice.Facades;
+﻿using DNAMais.BackOffice.ActionFilters;
+using DNAMais.BackOffice.Facades;
 using DNAMais.Domain.Entidades;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Web.Routing;
 
 namespace DNAMais.BackOffice.Areas.Cadastros.Controllers
 {
+    [ValidateUrlActionFilter]
     public class ContratoEmpresaController : Controller
     {
         private ContratoEmpresaFacade facadeContratoEmpresa;
@@ -163,14 +165,21 @@ namespace DNAMais.BackOffice.Areas.Cadastros.Controllers
             facadeTransacaoConsulta.RemoverConsultaTransacao(id);
                 
             facadeContratoEmpresa.RemoverContratoEmpresa(id);
-            
 
-            ViewData["Title"] = "DNA+ :: Contratos";
-            ViewData["TituloPagina"] = "Contratos";
-            ViewData["messageSuccess"] = "Contrato removido com sucesso";
-            ViewData["messageReturn"] = "Voltar para lista de Contratos";
+            if (ModelState.IsValid)
+            {
+                ViewData["Title"] = "DNA+ :: Contratos";
+                ViewData["TituloPagina"] = "Contratos";
+                ViewData["messageSuccess"] = "Contrato removido com sucesso";
+                ViewData["messageReturn"] = "Voltar para lista de Contratos";
 
-            return View("_Remove");
+                return Json(new { success = true, responseText = string.Empty }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var errorText = Helpers.DnaMaisHelperModelState.GetErrorFriendly(ModelState);
+                return Json(new { success = false, responseText = errorText }, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

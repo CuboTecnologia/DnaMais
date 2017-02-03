@@ -131,6 +131,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\WebGridExtensions.cs" />
+    <Compile Include="ActionFilters\ValidateAntiForgeryTokenOnAllPosts.cs" />
+    <Compile Include="ActionFilters\ValidateUrlActionFilter.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="Areas\Cadastros\CadastrosAreaRegistration.cs" />
     <Compile Include="Areas\Cadastros\Controllers\ClienteEmpresaController.cs" />
@@ -223,6 +225,7 @@
     <Content Include="assets\images\invoice-logo.png" />
     <Content Include="assets\images\jstree-dark.png" />
     <Content Include="assets\images\jstree.png" />
+    <Content Include="assets\images\loading.gif" />
     <Content Include="assets\images\logo-default.png" />
     <Content Include="assets\images\logo-light.png" />
     <Content Include="assets\images\logo.png" />
@@ -1539,6 +1542,10 @@
     <Content Include="assets\vendor\summernote\summernote.css" />
     <Content Include="assets\vendor\summernote\summernote.js" />
     <Content Include="assets\vendor\summernote\summernote.min.js" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\datepicker.css" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery-ui.min.css" />
@@ -1587,9 +1594,23 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Content\toastr.css" />
+    <Content Include="Content\toastr.min.css" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\bootbox.js" />
+    <Content Include="Scripts\bootbox.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\datepicker-pt-BR.js" />
     <Content Include="Areas\ControleAcessoCliente\Views\UsuarioCliente\ProdutosSelecionados.cshtml" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\toastr.scss" />
+    <Content Include="Content\toastr.less" />
+    <Content Include="Areas\ConfiguracoesProduto\Views\CategoriaProdutoFaixa\Cadastro.cshtml" />
+    <None Include="Properties\PublishProfiles\Backoffice.pubxml" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
     <Content Include="Scripts\jquery-1.12.4.min.js" />
@@ -1627,6 +1648,8 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\toastr.js" />
+    <Content Include="Scripts\toastr.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

@@ -41,7 +41,7 @@ namespace DNAMais.Domain.Services
         {
             ResultValidation returnValidation = new ResultValidation();
 
-            if (repoGrupoUsuarioCliente.Contains(m => m.Nome == grupoUsuarioCliente.Nome && m.IdClienteEmpresa == grupoUsuarioCliente.IdClienteEmpresa))
+            if (repoGrupoUsuarioCliente.Contains(m => m.Nome == grupoUsuarioCliente.Nome && m.IdClienteEmpresa == grupoUsuarioCliente.IdClienteEmpresa && m.Id != grupoUsuarioCliente.Id))
             {
                 returnValidation.AddMessage("Nome", "Já existe um grupo cadastrado com esse nome para o cliente selecionado.");
             }

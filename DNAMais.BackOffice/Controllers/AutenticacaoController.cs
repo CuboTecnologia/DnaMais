@@ -1,4 +1,5 @@
-﻿using DNAMais.BackOffice.Facades;
+﻿using DNAMais.BackOffice.ActionFilters;
+using DNAMais.BackOffice.Facades;
 using DNAMais.Domain;
 using DNAMais.Domain.DTO;
 using DNAMais.Domain.Entidades;
@@ -22,6 +23,9 @@ namespace DNAMais.BackOffice.Controllers
 
         public ActionResult Index()
         {
+            Session.Abandon();
+            FormsAuthentication.SignOut();
+
             LoginUser login = new LoginUser();
 
 
@@ -44,18 +48,17 @@ namespace DNAMais.BackOffice.Controllers
 
                 Session.Add("user", usuarioAutenticado);
 
-                return RedirectToAction("Index", "Home");
+                return Json(new { success = true, responseText = string.Empty }, JsonRequestBehavior.AllowGet);
             }
             else
             {
-                return View("Index", user);
+                return Json(new { success = false, responseText = "Usuário ou senha inválidos" }, JsonRequestBehavior.AllowGet);
             }
         }
 
         public RedirectToRouteResult LogOff()
         {
-            Session.Clear();
-
+            Session.Abandon();
             FormsAuthentication.SignOut();
 
             return RedirectToAction("Index");
@@ -63,6 +66,9 @@ namespace DNAMais.BackOffice.Controllers
 
         public ActionResult AcessoNegado()
         {
+            Session.Abandon();
+            FormsAuthentication.SignOut();
+            
             return View();
         }
     }

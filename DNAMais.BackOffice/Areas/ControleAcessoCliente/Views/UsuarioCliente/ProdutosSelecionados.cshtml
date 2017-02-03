@@ -21,7 +21,7 @@
 
     <h3>Produtos</h3>
 
-    @using (Html.BeginForm("ProdutosLiberados", "UsuarioCliente", FormMethod.Post))
+    @using (Html.BeginForm("ProdutosLiberados", "UsuarioCliente", FormMethod.Post, new { @id = "formProdutosLiberados", @class = "form-signin", @autocomplete = "off" }))
     {
 
         <table class="table table-bordered table-hover mb-none">
@@ -67,10 +67,43 @@
 
         <hr />
 
-        <button class="btn btn-icon btn-danger" type="submit"><i class="fa fa-arrow-circle-right"></i>Salvar</button>
+        <button id="#btnSalvar" class="btn btn-icon btn-danger jsSalvar" type="button"><i class="fa fa-arrow-circle-right"></i>Salvar</button>
 
         @Html.DnaMaisButton("Index", "btnVoltar", ViewData["messageReturn"].ToString(), "default", "arrow-circle-left")
 
     }
 
+}
+
+@section scriptsPage
+{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('.jsSalvar').on('click', function (event) {
+                event.preventDefault();
+                $.ajax({
+                    url: '@Url.Action("ProdutosLiberados", "UsuarioCliente")',
+                    type: 'POST',
+                    data: $("#formProdutosLiberados").serialize(),
+                    dataType: 'json',
+                    cache: false,
+                    success: function (result) {
+                        if (result != null && result.success) {
+                            toastr['success']('Produtos gravados com sucesso');
+                            setTimeout(function () {
+                                location.href = "@Url.Action("Index", "UsuarioCliente")";
+                            }, 1000);
+                        } else {
+                            toastr['error'](result.responseText);
+                        }
+                    },
+                    error: function (a, b, c) {
+                        //toastr['error'](a.responseText.replace('"', '').replace('"', ''));
+                    }
+                });
+            });
+
+        });
+    </script>
 }

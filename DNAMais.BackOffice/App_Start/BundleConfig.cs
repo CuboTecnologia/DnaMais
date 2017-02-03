@@ -43,7 +43,9 @@ namespace DNAMais.BackOffice.App_Start
                 "~/assets/stylesheets/theme.css"));
 
             bundles.Add(new StyleBundle("~/css/default").Include(
-                "~/assets/stylesheets/skins/default.css"));
+                "~/assets/stylesheets/skins/default.css",
+                "~/Content/toastr.min.css"
+                ));
 
             bundles.Add(new StyleBundle("~/css/themecustom").Include(
                 "~/assets/stylesheets/theme-custom.css"));
@@ -62,8 +64,9 @@ namespace DNAMais.BackOffice.App_Start
                 "~/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js",
                 "~/assets/vendor/magnific-popup/jquery.magnific-popup.js",
                 "~/assets/vendor/jquery-placeholder/jquery-placeholder.js",
-                "~/Scripts/datepicker-pt-BR.js"
-                ));
+                "~/Scripts/datepicker-pt-BR.js",
+                "~/Scripts/bootbox.js",
+                "~/Scripts/toastr.min.js"));
 
             bundles.Add(new ScriptBundle("~/Scripts/bootstrap").Include(
                 "~/assets/vendor/bootstrap/js/bootstrap.js"));
@@ -80,7 +83,8 @@ namespace DNAMais.BackOffice.App_Start
                 "~/assets/vendor/jquery-datatables-bs3/assets/js/datatables.js",
                 "~/assets/javascripts/tables/examples.datatables.default.js",
                 "~/assets/javascripts/tables/examples.datatables.row.with.details.js",
-                "~/assets/javascripts/tables/examples.datatables.tabletools.js"));
+                "~/assets/javascripts/tables/examples.datatables.tabletools.js"
+                ));
 
             bundles.Add(new ScriptBundle("~/Scripts/theme").Include(
                 "~/assets/javascripts/theme.js",

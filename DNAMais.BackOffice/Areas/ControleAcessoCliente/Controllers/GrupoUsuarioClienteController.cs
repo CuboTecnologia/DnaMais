@@ -1,4 +1,5 @@
-﻿using DNAMais.BackOffice.Facades;
+﻿using DNAMais.BackOffice.ActionFilters;
+using DNAMais.BackOffice.Facades;
 using DNAMais.Domain.Entidades;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Web.Routing;
 
 namespace DNAMais.BackOffice.Areas.ControleAcessoCliente.Controllers
 {
+    [ValidateUrlActionFilter]
     public class GrupoUsuarioClienteController : Controller
     {
         private AcessoClienteFacade facade;
@@ -82,12 +84,20 @@ namespace DNAMais.BackOffice.Areas.ControleAcessoCliente.Controllers
         {
             facade.RemoverGrupoUsuarioCliente(id);
 
-            ViewData["Title"] = "DNA+ :: Grupos de Usuários Cliente";
-            ViewData["TituloPagina"] = "Grupos de Usuários Cliente";
-            ViewData["messageSuccess"] = "Grupo de usuário cliente removido com sucesso";
-            ViewData["messageReturn"] = "Voltar para lista de Grupos de Usuários Cliente";
+            if (ModelState.IsValid)
+            {
+                ViewData["Title"] = "DNA+ :: Grupos de Usuários Cliente";
+                ViewData["TituloPagina"] = "Grupos de Usuários Cliente";
+                ViewData["messageSuccess"] = "Grupo de usuário cliente removido com sucesso";
+                ViewData["messageReturn"] = "Voltar para lista de Grupos de Usuários Cliente";
 
-            return View("_Remove");
+                return Json(new { success = true, responseText = string.Empty }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var errorText = Helpers.DnaMaisHelperModelState.GetErrorFriendly(ModelState);
+                return Json(new { success = false, responseText = errorText }, JsonRequestBehavior.AllowGet);
+            }
         }
 
     }

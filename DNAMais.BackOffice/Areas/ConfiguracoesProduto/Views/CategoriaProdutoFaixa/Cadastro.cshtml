@@ -1,0 +1,72 @@
+﻿@using DNAMais.Domain.Entidades
+@using DNAMais.Framework
+@using DNAMais.BackOffice.Facades;
+
+@model CategoriaProdutoFaixa
+
+@{
+    Layout = "~/Views/Shared/_Cadastro.cshtml";
+
+    ViewBag.Title = "DNA+ :: Produto Faixa";
+    ViewBag.TituloPagina = "Produto Faixa";
+
+    ViewBag.Title = "DNA+ :: Produtos";
+    ViewBag.TituloPagina = "Produtos";
+
+    //VARIAVEIS PARA UTILIZAÇÃO EM VISOES SHARED
+    ViewData["messageSuccess"] = "Faixa alterada com sucesso";
+    ViewData["messageReturn"] = "Voltar para lista de Faixas";
+
+    bool locked = ViewData["LOCKED"] == null ? false : (bool)ViewData["LOCKED"];
+    
+    //Quando não houver botão de novo item carregar essa variavel
+    ViewData["desabilitarBotaoNovoItem"] = true;
+    
+}
+
+@section cadastro
+{
+    @if (Request.HttpMethod == "GET" || !ViewData.ModelState.IsValid)
+    {
+        <div style="width:100%;">
+
+            @Html.HiddenFor(
+                expression: m => m.CodigoFaixa)
+
+            @Html.HiddenFor(
+                expression: m => m.CodigoCategoria)
+
+            @Html.DnaMaisTextBoxFor(
+                expression: m => m.CategoriaProduto.Nome,
+                width: 300,
+                disabled: locked)
+
+            @Html.DnaMaisTextBoxFor(
+                expression: m => m.DescricaoFaixa,
+                width: 300,
+                disabled: locked)
+
+            @Html.DnaMaisTextBoxNumberFor(
+                expression: m => m.InicioFaixa,
+                width: 300,
+                disabled: locked)
+
+            @Html.DnaMaisTextBoxNumberFor(
+                expression: m => m.TerminoFaixa,
+                width: 300,
+                disabled: locked)
+
+            <hr class="separator" />
+
+        </div>
+        <div class="row">
+
+        </div>
+
+    }
+}
+
+@section validacoes
+{
+    @Html.Validations((CategoriaProdutoFaixa)Model)
+}

@@ -22,5 +22,34 @@ namespace DNAMais.BackOffice.Helpers
                                                     .Select(x => x.ErrorMessage));
             return messages;
         }
+
+        public static string GetErrorFriendly(this ModelStateDictionary modelState)
+        {
+            var list = modelState.Values.SelectMany(v => v.Errors)
+                                    .Select(v => v.ErrorMessage + " " + v.Exception).ToList();
+
+            var retorno = string.Empty;
+
+            foreach (string item in list)
+            {
+                if (item.Contains("ORA-02291"))
+                {
+                    retorno = "Existem informações que dependem desse registro. Não será possível a sua exclusão.";
+                    break;
+                }
+                else if (item.Contains("ORA-02292"))
+                {
+                    retorno = "Existem informações que dependem desse registro. Não será possível a sua exclusão.";
+                    break;
+                }
+                else if (item.Contains("ORA-"))
+                {
+                    retorno = "Ocorreu o seguinte erro: " + item;
+                    break;
+                }
+            }
+
+            return retorno;
+        }
     }
 }

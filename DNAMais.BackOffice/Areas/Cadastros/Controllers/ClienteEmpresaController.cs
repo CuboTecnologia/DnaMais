@@ -1,4 +1,5 @@
-﻿using DNAMais.BackOffice.Facades;
+﻿using DNAMais.BackOffice.ActionFilters;
+using DNAMais.BackOffice.Facades;
 using DNAMais.Domain.Entidades;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using System.Web.Routing;
 
 namespace DNAMais.BackOffice.Areas.Cadastros.Controllers
 {
+    [ValidateUrlActionFilter]
     public class ClienteEmpresaController : Controller
     {
         private ClienteEmpresaFacade facade;
@@ -106,12 +108,20 @@ namespace DNAMais.BackOffice.Areas.Cadastros.Controllers
         {
             facade.RemoverClienteEmpresa(id);
 
-            ViewData["Title"] = "DNA+ :: Clientes Empresa";
-            ViewData["TituloPagina"] = "Clientes Empresa";
-            ViewData["messageSuccess"] = "Cliente Empresa removido com sucesso";
-            ViewData["messageReturn"] = "Voltar para lista de Clientes Empresa";
+            if (ModelState.IsValid)
+            {
+                ViewData["Title"] = "DNA+ :: Clientes Empresa";
+                ViewData["TituloPagina"] = "Clientes Empresa";
+                ViewData["messageSuccess"] = "Cliente Empresa removido com sucesso";
+                ViewData["messageReturn"] = "Voltar para lista de Clientes Empresa";
 
-            return View("_Remove");
+                return Json(new { success = true, responseText = string.Empty }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var errorText = Helpers.DnaMaisHelperModelState.GetErrorFriendly(ModelState);
+                return Json(new { success = false, responseText = errorText }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         #region FTP

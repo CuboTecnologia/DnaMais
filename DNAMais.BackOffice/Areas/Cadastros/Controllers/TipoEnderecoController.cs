@@ -1,4 +1,5 @@
-﻿using DNAMais.BackOffice.Facades;
+﻿using DNAMais.BackOffice.ActionFilters;
+using DNAMais.BackOffice.Facades;
 using DNAMais.Domain.Entidades;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Web.Routing;
 
 namespace DNAMais.BackOffice.Areas.Cadastros.Controllers
 {
+    [ValidateUrlActionFilter]
     public class TipoEnderecoController : Controller
     {
         private ClienteEmpresaFacade facade;
@@ -82,12 +84,20 @@ namespace DNAMais.BackOffice.Areas.Cadastros.Controllers
         {
             facade.RemoverTipoEndereco(id);
 
-            ViewData["Title"] = "DNA+ :: Tipos de Endereço";
-            ViewData["TituloPagina"] = "Tipos de Endereço";
-            ViewData["messageSuccess"] = "Tipo de endereço removido com sucesso";
-            ViewData["messageReturn"] = "Voltar para lista de Tipos de Endereço";
+            if (ModelState.IsValid)
+            {
+                ViewData["Title"] = "DNA+ :: Tipos de Endereço";
+                ViewData["TituloPagina"] = "Tipos de Endereço";
+                ViewData["messageSuccess"] = "Tipo de endereço removido com sucesso";
+                ViewData["messageReturn"] = "Voltar para lista de Tipos de Endereço";
 
-            return View("_Remove");
+                return Json(new { success = true, responseText = string.Empty }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var errorText = Helpers.DnaMaisHelperModelState.GetErrorFriendly(ModelState);
+                return Json(new { success = false, responseText = errorText }, JsonRequestBehavior.AllowGet);
+            }
         }
 
     }

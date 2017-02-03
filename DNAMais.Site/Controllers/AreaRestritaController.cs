@@ -61,7 +61,7 @@ namespace DNAMais.Site.Controllers
         {
             var usuarioCliente = CarregaDadosUsuarioCliente();
 
-            ControleArquivoModel model = new ControleArquivoModel
+            AreaRestritaModel model = new AreaRestritaModel
             {
                 UsuarioCliente = usuarioCliente
             };
@@ -73,7 +73,7 @@ namespace DNAMais.Site.Controllers
         {
             var usuarioCliente = CarregaDadosUsuarioCliente();
 
-            ControleArquivoModel model = new ControleArquivoModel
+            AreaRestritaModel model = new AreaRestritaModel
             {
                 UsuarioCliente = usuarioCliente
             };
@@ -107,7 +107,7 @@ namespace DNAMais.Site.Controllers
         {
             var usuarioCliente = CarregaDadosUsuarioCliente();
 
-            ControleArquivoModel model = new ControleArquivoModel
+            AreaRestritaModel model = new AreaRestritaModel()
             {
                 UsuarioCliente = usuarioCliente
             };
@@ -290,7 +290,7 @@ namespace DNAMais.Site.Controllers
         {
             var usuarioCliente = CarregaDadosUsuarioCliente();
 
-            ControleArquivoModel model = new ControleArquivoModel
+            AreaRestritaModel model = new AreaRestritaModel
             {
                 UsuarioCliente = usuarioCliente
             };

@@ -6,9 +6,11 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using DNAMais.BackOffice.Facades;
 using DNAMais.Domain.Entidades;
+using DNAMais.BackOffice.ActionFilters;
 
 namespace DNAMais.BackOffice.Areas.ConfiguracoesProduto.Controllers
 {
+    [ValidateUrlActionFilter]
     public class ProdutoController : Controller
     {
         private ProdutoFacade facade;

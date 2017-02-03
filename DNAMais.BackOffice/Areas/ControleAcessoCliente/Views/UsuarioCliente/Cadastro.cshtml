@@ -89,25 +89,53 @@
 
             @Html.DnaMaisDatePickerFor(m => m.DataInicioAcesso, locked)
             @Html.DnaMaisDatePickerFor(m => m.DataTerminoAcesso, locked)
-            @Html.DnaMaisTextBoxNumberFor(m => m.SaldoConsulta, 100, false, 5)
+            @Html.DnaMaisTextBoxNumberFor(m => m.SaldoConsulta, 100, locked, 5)
 
             <div class="form-group">
-                @Html.CheckBox("Master", (Model.Master == true ? true : false), new { style = "margin-top: 13px;" })
+                @if (locked == true)
+                {
+                    @Html.CheckBox("Master", (Model.Master == true ? true : false), new { style = "margin-top: 13px;", disabled = locked });
+                }
+                else
+                {
+                    @Html.CheckBox("Master", (Model.Master == true ? true : false), new { style = "margin-top: 13px;" });
+                }
                 <label class="col-md-2 control-label">Usuário Master</label>
             </div>
 
             <div class="form-group">
-                @Html.CheckBox("ApenasAcessoWs", (Model.ApenasAcessoWs == true ? true : false), new { style = "margin-top: 13px;" })
+                @if (locked == true)
+                {
+                    @Html.CheckBox("ApenasAcessoWs", (Model.ApenasAcessoWs == true ? true : false), new { style = "margin-top: 13px;", disabled = locked })
+                }
+                else
+                {
+                    @Html.CheckBox("ApenasAcessoWs", (Model.ApenasAcessoWs == true ? true : false), new { style = "margin-top: 13px;" })
+                }
                 <label class="col-md-2 control-label">Acesso restrito WebService</label>
             </div>
 
             <div class="form-group">
-                @Html.CheckBox("AlterarSenha", (Model.AlterarSenha == true ? true : false), new { style = "margin-top: 13px;" })
+                @if (locked == true)
+                {
+                    @Html.CheckBox("AlterarSenha", (Model.AlterarSenha == true ? true : false), new { style = "margin-top: 13px;", disabled = locked })
+                }
+                else
+                {
+                    @Html.CheckBox("AlterarSenha", (Model.AlterarSenha == true ? true : false), new { style = "margin-top: 13px;" })
+                }
                 <label class="col-md-2 control-label">Alterar senha próx. login</label>
             </div>
 
             <div class="form-group">
-                @Html.CheckBox("Ativo", (Model.Ativo == true ? true : false), new { style = "margin-top: 13px;" })
+                @if (locked == true)
+                {
+                    @Html.CheckBox("Ativo", (Model.Ativo == true ? true : false), new { style = "margin-top: 13px;", disabled = locked })
+                }
+                else
+                {
+                    @Html.CheckBox("Ativo", (Model.Ativo == true ? true : false), new { style = "margin-top: 13px;" })
+                }
                 <label class="col-md-2 control-label">Ativo</label>
             </div>
 

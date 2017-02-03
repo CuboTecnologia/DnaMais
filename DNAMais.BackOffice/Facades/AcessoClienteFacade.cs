@@ -146,7 +146,9 @@ namespace DNAMais.BackOffice.Facades
         
         public void SalvarUsuarioClienteProdutosSelecionados(int idUsuarioCliente, List<string> produtosSelecionados)
         {
-            serviceUsuarioClienteProduto.SalvarProdutosSelecionados(idUsuarioCliente, produtosSelecionados);
+            ResultValidation retorno = serviceUsuarioClienteProduto.SalvarProdutosSelecionados(idUsuarioCliente, produtosSelecionados);
+
+            PreencherModelState(retorno);
         }
 
         #endregion

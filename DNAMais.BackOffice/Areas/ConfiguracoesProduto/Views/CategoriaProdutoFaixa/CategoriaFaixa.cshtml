@@ -41,8 +41,8 @@
                         <label for="exampleInputEmail1">Término</label>
                         <input type="text" class="form-control" id="txtTermino" placeholder="Término">
                     </div>
-                    <input type="text" id="txtIdCategoria"  style="display:none">
-                    <input type="text" id="txtCodigoFaixa" style="display:none">
+                    <input type="text" id="txtIdCategoria" style="display: none">
+                    <input type="text" id="txtCodigoFaixa" style="display: none">
                 </form>
             </div>
             <div class="modal-footer">
@@ -56,111 +56,92 @@
 <table id="myTable" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
     <thead>
         <tr>
-            <th style="text-align:center;">Faixa</th>
+            <th style="text-align: center;">Faixa</th>
             <th>Descrição</th>
-            <th style="text-align:center;">Início</th>
-            <th style="text-align:center;">Término</th>
-            <th style="text-align:center;">Editar</th>
+            <th style="text-align: center;">Início</th>
+            <th style="text-align: center;">Término</th>
+            <th style="text-align: center;">Editar</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
-                <td style="text-align:center;"><span>@item.CodigoFaixa</span></td>
+                <td style="text-align: center;"><span>@item.CodigoFaixa</span></td>
                 <td><span>@item.DescricaoFaixa</span></td>
-                <td style="text-align:center;"><span>@item.InicioFaixa</span></td>
-                <td style="text-align:center;"><span>@item.TerminoFaixa</span></td>
-                <td style="text-align:center;"><span><a onclick="EditarFaixa('@item.CodigoFaixa','@item.CodigoCategoria','@item.DescricaoFaixa','@item.InicioFaixa','@item.TerminoFaixa');" class="btn btn-default" title="editar" data-toggle="modal" data-target="#myModal"><i class="fa fa-pencil"></i></a></span></td>
+                <td style="text-align: center;"><span>@item.InicioFaixa</span></td>
+                <td style="text-align: center;"><span>@item.TerminoFaixa</span></td>
+                <td style="text-align: center;">
+                    <span>
+                        @Html.DnaMaisTableLinkEdit("EditarFaixa", (object)item.CodigoFaixa)
+                    </span>
+                </td>
             </tr>
         }
     </tbody>
 
 </table>
 
-<script type="text/javascript">
+@section scriptsPage {
+    <script type="text/javascript">
 
-    $(document).ready(function () {
+        $(document).ready(function () {
 
-        var dtDados = $('#myTable').DataTable({
-            "oLanguage": {
-                "sProcessing": "Processando...",
-                "sLengthMenu": "Mostrar _MENU_ registros",
-                "sZeroRecords": "N&#227;o foram encontrados resultados",
-                "sInfo": "Mostrando de _START_ at&#233; _END_ de _TOTAL_ registros",
-                "sInfoEmpty": "Mostrando de 0 at&#233; 0 de 0 registros",
-                "sInfoFiltered": "(filtrado de _MAX_ registros no total)",
-                "sInfoPostFix": "",
-                ////"sSearch": "Buscar:",
-                "sUrl": "",
-                "oPaginate": {
-                    "sFirst": "Primeiro",
-                    "sPrevious": "Anterior",
-                    "sNext": "Seguinte",
-                    "sLast": "&#218;ltimo"
-                }
-            },
-            "columnDefs": [
-                { "width": "80px", "targets": 0 },
-                { "targets": 1 },
-                { "width": "130px", "targets": 2 },
-                { "width": "130px", "targets": 3 },
-                { "width": "100px", "targets": 4 }
-            ],
-            "aaSorting": [[2, "asc"]],
-            "iDisplayLength": 5,
-            "aLengthMenu": [[5, 10, 50, 100, -1], [5, 10, 50, 100, "Todas"]],
-            "bRetrieve": true,
-            "bAutoWidth": false,
-            "bProcessing": true,
-            "bStateSave": false,
-            "paging": true,
-            "searching": true,
-            "info": true,
-            "bServerSide": false
-        });
+            var dtDados = $('#myTable').DataTable({
+                "oLanguage": {
+                    "sProcessing": "Processando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "N&#227;o foram encontrados resultados",
+                    "sInfo": "Mostrando de _START_ at&#233; _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando de 0 at&#233; 0 de 0 registros",
+                    "sInfoFiltered": "(filtrado de _MAX_ registros no total)",
+                    "sInfoPostFix": "",
+                    ////"sSearch": "Buscar:",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "Primeiro",
+                        "sPrevious": "Anterior",
+                        "sNext": "Seguinte",
+                        "sLast": "&#218;ltimo"
+                    }
+                },
+                "columnDefs": [
+                    { "width": "80px", "targets": 0 },
+                    { "targets": 1 },
+                    { "width": "130px", "targets": 2 },
+                    { "width": "130px", "targets": 3 },
+                    { "width": "100px", "targets": 4 }
+                ],
+                "aaSorting": [[2, "asc"]],
+                "iDisplayLength": 10,
+                "aLengthMenu": [[5, 10, 50, 100, -1], [5, 10, 50, 100, "Todas"]],
+                "bRetrieve": true,
+                "bAutoWidth": false,
+                "bProcessing": true,
+                "bStateSave": false,
+                "paging": true,
+                "searching": true,
+                "info": true,
+                "bServerSide": false
+            });
 
 
-        $("#btnSalvar").click(function () {
+            $("#btnSalvar").click(function () {
 
-            $.ajax(
-           {
-               type: 'POST',
-               dataType: 'json',
-               url: '/ConfiguracoesProduto/CategoriaProdutoFaixa/EditarFaixa',
-               data: { data: objEditar() },
-               success: function (data) {
-                   console.log(data);
-                   location.href = "/ConfiguracoesProduto/CategoriaProdutoFaixa?idCategoria=" + data.idCategoria;
-               }
-           });
-        });
-    })
+                $.ajax(
+               {
+                   type: 'POST',
+                   dataType: 'json',
+                   url: '/ConfiguracoesProduto/CategoriaProdutoFaixa/EditarFaixa',
+                   data: { data: objEditar() },
+                   success: function (data) {
+                       console.log(data);
+                       location.href = "/ConfiguracoesProduto/CategoriaProdutoFaixa?idCategoria=" + data.idCategoria;
+                   }
+               });
+            });
+        })
 
- 
-    function objEditar()
-    {
-        var objData = new Object();
 
-        objData.CodigoFaixa = $("#txtCodigoFaixa").val();
-        objData.IdCategoria = $("#txtIdCategoria").val();
-        objData.Descricao = $("#txtDescricao").val();
-        objData.InicioFaixa = $("#txtInicio").val();
-        objData.TerminoFaixa = $("#txtTermino").val();
-
-        return objData;
-    }
-    function EditarFaixa(codigoFaixa,idCategoria,DescricaoFaixa, InicioFaixa, TerminoFaixa) {
-
-        $("#txtCodigoFaixa").val(codigoFaixa);
-
-        $("#txtIdCategoria").val(idCategoria);
-
-        $("#txtDescricao").val(DescricaoFaixa);
-
-        $("#txtInicio").val(InicioFaixa);
-        
-        $("#txtTermino").val(TerminoFaixa);
-
-    }
-</script>
+    </script>
+}

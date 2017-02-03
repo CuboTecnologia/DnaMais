@@ -18,7 +18,6 @@ namespace DNAMais.Domain.Entidades
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Column("ID_TIPO_CONTATO")]
-        [Display(Name="Código")]
         public int? Id { get; set; }
 
         [Required(ErrorMessage="Informe o nome.")]

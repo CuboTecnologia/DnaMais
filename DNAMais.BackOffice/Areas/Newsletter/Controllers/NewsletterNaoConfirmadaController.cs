@@ -1,4 +1,5 @@
-﻿using DNAMais.BackOffice.Facades;
+﻿using DNAMais.BackOffice.ActionFilters;
+using DNAMais.BackOffice.Facades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Web.Routing;
 
 namespace DNAMais.BackOffice.Areas.Newsletter.Controllers
 {
+    [ValidateUrlActionFilter]
     public class NewsletterNaoConfirmadaController : Controller
     {
         private NewsletterFacade facade;

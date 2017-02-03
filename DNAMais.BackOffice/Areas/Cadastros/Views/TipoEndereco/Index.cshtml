@@ -40,7 +40,7 @@
                     <td style="text-align:center;">@(((DateTime)tipoEndereco.DataCadastro).FormatarDataHora())</td>
                     <td style="text-align:center;">
                         <span>
-                            @Html.DnaMaisTableLinkDetails("Details", (object)tipoEndereco.Id)
+@*                            @Html.DnaMaisTableLinkDetails("Details", (object)tipoEndereco.Id)*@
                             @Html.DnaMaisTableLinkEdit("Edit", (object)tipoEndereco.Id)
                             @Html.DnaMaisTableLinkRemove("Remove", (object)tipoEndereco.Id, mensagemExclusao)
                         </span>
@@ -54,6 +54,54 @@
 @section scriptsPage {
     <script>
         $(document).ready(function () {
+
+            $('.jsExcluir').on('click', function (event) {
+                event.preventDefault();
+
+                var id = $(this).data('valor');
+
+                bootbox.dialog({
+                    message: "Confirma a exclusão do registro ?",
+                    title: "Atenção - Exclusão",
+                    buttons: {
+                        main: {
+                            label: "Cancelar",
+                            className: "btn-primary",
+                            callback: function () {
+                                toastr['info']('Operação cancelada pelo usuário');
+                            }
+                        },
+                        danger: {
+                            label: "Excluir",
+                            className: "btn-danger",
+                            callback: function () {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '@Url.Content("~/TipoEndereco/Remove/")',
+                                    cache: false,
+                                    contentType: 'application/json; charset=utf-8',
+                                    data: JSON.stringify({
+                                        id: id
+                                    }),
+                                    success: function (result) {
+                                        if (result.success) {
+                                            toastr['success']('Registro excluído com sucesso');
+                                            setTimeout(function () {
+                                                location.href = '@Url.Content("~/Cadastros/TipoEndereco")';
+                                            }, 1000);
+                                        } else {
+                                            toastr['error'](result.responseText);
+                                        }
+                                    },
+                                    error: function (result) {
+                                        toastr['error']('Ocorreu um erro na exclusão do registro');
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
+            });
 
             var dtDados = $('#myTable').DataTable({
                 "oLanguage": {
@@ -78,10 +126,10 @@
                     { "targets": 1 },
                     { "width": "200px", "targets": 2 },
                     { "width": "160px", "targets": 3 },
-                    { "width": "140px", "targets": 4 }
+                    { "width": "100px", "targets": 4 }
                 ],
                 "aaSorting": [[1, "asc"]],
-                "iDisplayLength": 5,
+                "iDisplayLength": 10,
                 "aLengthMenu": [[5, 10, 50, 100, -1], [5, 10, 50, 100, "Todas"]],
                 "bRetrieve": true,
                 "bAutoWidth": false,

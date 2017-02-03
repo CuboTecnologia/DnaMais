@@ -1,4 +1,5 @@
-﻿using DNAMais.BackOffice.Facades;
+﻿using DNAMais.BackOffice.ActionFilters;
+using DNAMais.BackOffice.Facades;
 using DNAMais.Domain.Entidades;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Web.Routing;
 
 namespace DNAMais.BackOffice.Areas.Cadastros.Controllers
 {
+    [ValidateUrlActionFilter]
     public class RamoAtividadeController : Controller
     {
         private ClienteEmpresaFacade facade;
@@ -82,12 +84,21 @@ namespace DNAMais.BackOffice.Areas.Cadastros.Controllers
         {
             facade.RemoverRamoAtividade(id);
 
-            ViewData["Title"] = "DNA+ :: Ramos de Atividade";
-            ViewData["TituloPagina"] = "Ramos de Atividade";
-            ViewData["messageSuccess"] = "Ramo de Atividade removido com sucesso";
-            ViewData["messageReturn"] = "Voltar para lista de Ramos de Atividade";
+            if (ModelState.IsValid)
+            {
+                ViewData["Title"] = "DNA+ :: Ramos de Atividade";
+                ViewData["TituloPagina"] = "Ramos de Atividade";
+                ViewData["messageSuccess"] = "Ramo de Atividade removido com sucesso";
+                ViewData["messageReturn"] = "Voltar para lista de Ramos de Atividade";
 
-            return View("_Remove");
+                return Json(new { success = true, responseText = string.Empty }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var errorText = Helpers.DnaMaisHelperModelState.GetErrorFriendly(ModelState);
+                return Json(new { success = false, responseText = errorText }, JsonRequestBehavior.AllowGet);
+            }
+
         }
 
     }

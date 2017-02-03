@@ -32,18 +32,18 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var tipoContrato in Model)
+            @foreach (var TipoContato in Model)
             {
                 <tr>
-                    <td style="text-align:center;">@tipoContrato.Id</td>
-                    <td>@tipoContrato.Nome</td>
-                    <td style="text-align:center;">@tipoContrato.UsuarioBackOffice.Nome</td>
-                    <td style="text-align:center;">@(((DateTime)tipoContrato.DataCadastro).FormatarDataHora())</td>
+                    <td style="text-align:center;">@TipoContato.Id</td>
+                    <td>@TipoContato.Nome</td>
+                    <td style="text-align:center;">@TipoContato.UsuarioBackOffice.Nome</td>
+                    <td style="text-align:center;">@(((DateTime)TipoContato.DataCadastro).FormatarDataHora())</td>
                     <td style="text-align:center;">
                         <span>
-                            @Html.DnaMaisTableLinkDetails("Details", (object)tipoContrato.Id)
-                            @Html.DnaMaisTableLinkEdit("Edit", (object)tipoContrato.Id)
-                            @Html.DnaMaisTableLinkRemove("Remove", (object)tipoContrato.Id, mensagemExclusao)
+@*                            @Html.DnaMaisTableLinkDetails("Details", (object)TipoContato.Id)*@
+                            @Html.DnaMaisTableLinkEdit("Edit", (object)TipoContato.Id)
+                            @Html.DnaMaisTableLinkRemove("Remove", (object)TipoContato.Id, mensagemExclusao)
                         </span>
                 </tr>
             }
@@ -55,6 +55,54 @@
 @section scriptsPage {
     <script>
         $(document).ready(function () {
+
+            $('.jsExcluir').on('click', function (event) {
+                event.preventDefault();
+
+                var id = $(this).data('valor');
+
+                bootbox.dialog({
+                    message: "Confirma a exclusão do registro ?",
+                    title: "Atenção - Exclusão",
+                    buttons: {
+                        main: {
+                            label: "Cancelar",
+                            className: "btn-primary",
+                            callback: function () {
+                                toastr['info']('Operação cancelada pelo usuário');
+                            }
+                        },
+                        danger: {
+                            label: "Excluir",
+                            className: "btn-danger",
+                            callback: function () {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '@Url.Content("~/Cadastros/TipoContato/Remove/")',
+                                    cache: false,
+                                    contentType: 'application/json; charset=utf-8',
+                                    data: JSON.stringify({
+                                        id: id
+                                    }),
+                                    success: function (result) {
+                                        if (result.success) {
+                                            toastr['success']('Registro excluído com sucesso');
+                                            setTimeout(function () {
+                                                location.href = '@Url.Content("~/Cadastros/TipoContato")';
+                                            }, 1000);
+                                        } else {
+                                            toastr['error'](result.responseText);
+                                        }
+                                    },
+                                    error: function (result) {
+                                        toastr['error'](result.message);
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
+            });
 
             var dtDados = $('#myTable').DataTable({
                 "oLanguage": {
@@ -79,10 +127,10 @@
                     { "targets": 1 },
                     { "width": "200px", "targets": 2 },
                     { "width": "160px", "targets": 3 },
-                    { "width": "140px", "targets": 4 }
+                    { "width": "100px", "targets": 4 }
                 ],
                 "aaSorting": [[1, "asc"]],
-                "iDisplayLength": 5,
+                "iDisplayLength": 10,
                 "aLengthMenu": [[5, 10, 50, 100, -1], [5, 10, 50, 100, "Todas"]],
                 "bRetrieve": true,
                 "bAutoWidth": false,

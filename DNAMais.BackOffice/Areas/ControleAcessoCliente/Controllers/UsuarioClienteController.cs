@@ -1,4 +1,5 @@
-﻿using DNAMais.BackOffice.Facades;
+﻿using DNAMais.BackOffice.ActionFilters;
+using DNAMais.BackOffice.Facades;
 using DNAMais.Domain.Entidades;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Web.Routing;
 
 namespace DNAMais.BackOffice.Areas.ControleAcessoCliente.Controllers
 {
+    [ValidateUrlActionFilter]
     public class UsuarioClienteController : Controller
     {
         private AcessoClienteFacade facade;
@@ -87,12 +89,20 @@ namespace DNAMais.BackOffice.Areas.ControleAcessoCliente.Controllers
         {
             facade.RemoverUsuarioCliente(id);
 
-            ViewData["Title"] = "DNA+ :: Usuários Cliente";
-            ViewData["TituloPagina"] = "Usuários Cliente";
-            ViewData["messageSuccess"] = "Usuário Cliente removido com sucesso";
-            ViewData["messageReturn"] = "Voltar para lista de Usuários Cliente";
+            if (ModelState.IsValid)
+            {
+                ViewData["Title"] = "DNA+ :: Usuários Cliente";
+                ViewData["TituloPagina"] = "Usuários Cliente";
+                ViewData["messageSuccess"] = "Usuário Cliente removido com sucesso";
+                ViewData["messageReturn"] = "Voltar para lista de Usuários Cliente";
 
-            return View("_Remove");
+                return Json(new { success = true, responseText = string.Empty }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var errorText = Helpers.DnaMaisHelperModelState.GetErrorFriendly(ModelState);
+                return Json(new { success = false, responseText = errorText }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         public ActionResult ProdutosLiberados(int id)
@@ -112,7 +122,15 @@ namespace DNAMais.BackOffice.Areas.ControleAcessoCliente.Controllers
         {
             facade.SalvarUsuarioClienteProdutosSelecionados(idUsuarioCliente, produtosSelecionados);
 
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                return Json(new { success = true, responseText = string.Empty }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var errorText = Helpers.DnaMaisHelperModelState.GetErrorFriendly(ModelState);
+                return Json(new { success = false, responseText = errorText }, JsonRequestBehavior.AllowGet);
+            }
         }
 
 

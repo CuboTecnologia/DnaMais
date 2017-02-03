@@ -32,6 +32,11 @@ namespace DNAMais.BackOffice.Helpers
 
                 foreach (ModelError error in ms.Errors)
                 {
+                    if (error.Exception == null && error.ErrorMessage == string.Empty)
+                    {
+                        continue;
+                    }
+
                     ExceptionLevel level;
 
                     if (error.Exception is DNAMais.Domain.Validacao.ValidationException)

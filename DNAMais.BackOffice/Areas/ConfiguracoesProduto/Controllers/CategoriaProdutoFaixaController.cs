@@ -6,9 +6,11 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using DNAMais.BackOffice.Facades;
 using DNAMais.Domain.Entidades;
+using DNAMais.BackOffice.ActionFilters;
 
 namespace DNAMais.BackOffice.Areas.ConfiguracoesProduto.Controllers
 {
+    [ValidateUrlActionFilter]
     public class CategoriaProdutoFaixaController : Controller
     {
 
@@ -52,6 +54,11 @@ namespace DNAMais.BackOffice.Areas.ConfiguracoesProduto.Controllers
            CategoriaProduto categoriaProduto =  facade.ConsultarCategoria(id);
 
            return PartialView(categoriaProduto.CategoriasFaixas.ToList());
+        }
+
+        public ActionResult EditarFaixa(string id)
+        {
+            return View("Cadastro", facadeCategoriaFaixa.ConsultarCategoriaFaixa(id));
         }
 
         [HttpPost]

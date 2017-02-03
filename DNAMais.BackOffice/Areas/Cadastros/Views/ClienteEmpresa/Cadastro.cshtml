@@ -53,7 +53,7 @@
 
             @if (Model.NomePastaFtp != null)
             {
-                @Html.DnaMaisTextBoxFor(expression: m => m.NomePastaFtp, width: 200, disabled: false, textReadonly: true)
+                @Html.DnaMaisTextBoxFor(expression: m => m.NomePastaFtp, width: 200, disabled: locked, textReadonly: true)
             }
             else
             {

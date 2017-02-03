@@ -1,4 +1,5 @@
-﻿using DNAMais.BackOffice.Facades;
+﻿using DNAMais.BackOffice.ActionFilters;
+using DNAMais.BackOffice.Facades;
 using DNAMais.Domain.Entidades;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Web.Routing;
 
 namespace DNAMais.BackOffice.Areas.ControleAcesso.Controllers
 {
+    [ValidateUrlActionFilter]
     public class PerfilAcessoBackOfficeController : Controller
     {
         private AcessoFacade facade;
@@ -59,12 +61,15 @@ namespace DNAMais.BackOffice.Areas.ControleAcesso.Controllers
         //[AutorizacaoDnaMais]
         public ActionResult Create(PerfilAcessoBackOffice perfilAcessoBackOffice, string[] Funcionalidades)
         {
-            foreach (string codigoFuncionalidade in Funcionalidades)
+            if (Funcionalidades != null)
             {
-                perfilAcessoBackOffice.PerfisFuncionalidades.Add(new PerfilAcessoFuncionalidade
+                foreach (string codigoFuncionalidade in Funcionalidades)
                 {
-                    CodigoFuncionalidadeBackOffice = codigoFuncionalidade
-                });
+                    perfilAcessoBackOffice.PerfisFuncionalidades.Add(new PerfilAcessoFuncionalidade
+                    {
+                        CodigoFuncionalidadeBackOffice = codigoFuncionalidade
+                    });
+                }
             }
             facade.IncluirPerfilAcessoBackOffice(perfilAcessoBackOffice);
             return View("Cadastro", perfilAcessoBackOffice);
@@ -82,14 +87,17 @@ namespace DNAMais.BackOffice.Areas.ControleAcesso.Controllers
         public ActionResult Edit(PerfilAcessoBackOffice perfilAcessoBackOffice, string[] Funcionalidades)
         {
             //perfilAcessoBackOffice.PerfisFuncionalidades.Clear();
-            
-            foreach (string codigoFuncionalidade in Funcionalidades)
+
+            if (Funcionalidades != null)
             {
-                perfilAcessoBackOffice.PerfisFuncionalidades.Add(new PerfilAcessoFuncionalidade
+                foreach (string codigoFuncionalidade in Funcionalidades)
                 {
-                    IdPerfilBackOffice = perfilAcessoBackOffice.Id,
-                    CodigoFuncionalidadeBackOffice = codigoFuncionalidade
-                });
+                    perfilAcessoBackOffice.PerfisFuncionalidades.Add(new PerfilAcessoFuncionalidade
+                    {
+                        IdPerfilBackOffice = perfilAcessoBackOffice.Id,
+                        CodigoFuncionalidadeBackOffice = codigoFuncionalidade
+                    });
+                }
             }
             facade.AlterarPerfilAcessoBackOffice(perfilAcessoBackOffice);
             return View("Cadastro", perfilAcessoBackOffice);
@@ -101,12 +109,20 @@ namespace DNAMais.BackOffice.Areas.ControleAcesso.Controllers
             facade.RemoverPerfilAcessoFuncionalidade(id);
             facade.RemoverPerfilAcessoBackOffice(id);
 
-            ViewData["Title"] = "DNA+ :: Perfis de Acesso BackOffice";
-            ViewData["TituloPagina"] = "Perfis de Acesso BackOffice";
-            ViewData["messageSuccess"] = "Perfil de Acesso BackOffice removido com sucesso";
-            ViewData["messageReturn"] = "Voltar para lista de Perfis de Acesso BackOffice";
+            if (ModelState.IsValid)
+            {
+                ViewData["Title"] = "DNA+ :: Perfis de Acesso BackOffice";
+                ViewData["TituloPagina"] = "Perfis de Acesso BackOffice";
+                ViewData["messageSuccess"] = "Perfil de Acesso BackOffice removido com sucesso";
+                ViewData["messageReturn"] = "Voltar para lista de Perfis de Acesso BackOffice";
 
-            return View("_Remove");
+                return Json(new { success = true, responseText = string.Empty }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var errorText = Helpers.DnaMaisHelperModelState.GetErrorFriendly(ModelState);
+                return Json(new { success = false, responseText = errorText }, JsonRequestBehavior.AllowGet);
+            }
         }
 
     }

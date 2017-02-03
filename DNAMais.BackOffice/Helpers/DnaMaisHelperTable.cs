@@ -67,7 +67,8 @@ namespace DNAMais.BackOffice.Helpers
             string tag = string.Empty;
             string href = new UrlHelper(helper.ViewContext.HttpContext.Request.RequestContext).Action(action, controller, new { area = area, id = id });
 
-            tag = String.Format("<a href=\"{0}\" class=\"btn btn-default\" title=\"remover\" onclick=\"return confirm('{1}');\">&nbsp;<i class=\"fa fa-remove\"></i>&nbsp;</a>&nbsp;", href, message);
+//            tag = String.Format("<a href=\"{0}\" class=\"modal-basic btn btn-default\" title=\"remover\"  href=\"#modalDelete\" onclick=\"return confirm('{1}');\">&nbsp;<i class=\"fa fa-remove\"></i>&nbsp;</a>&nbsp;", href, message);
+            tag = String.Format("<a class=\"btn btn-default jsExcluir\" data-valor=\"{0}\" title=\"remover\" >&nbsp;<i class=\"fa fa-remove\"></i>&nbsp;</a>&nbsp;", id, message);
 
             return new HtmlString(tag);
         }

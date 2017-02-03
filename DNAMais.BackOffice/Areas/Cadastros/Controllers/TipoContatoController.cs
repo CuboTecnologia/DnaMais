@@ -1,4 +1,5 @@
-﻿using DNAMais.BackOffice.Facades;
+﻿using DNAMais.BackOffice.ActionFilters;
+using DNAMais.BackOffice.Facades;
 using DNAMais.Domain.Entidades;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Web.Routing;
 
 namespace DNAMais.BackOffice.Areas.Cadastros.Controllers
 {
+    [ValidateUrlActionFilter]
     public class TipoContatoController : Controller
     {
         private ClienteEmpresaFacade facade;
@@ -87,17 +89,26 @@ namespace DNAMais.BackOffice.Areas.Cadastros.Controllers
             return View("Cadastro", tipoContato);
         }
 
+        [HttpPost]
         //[AutorizacaoDnaMais]
         public ActionResult Remove(short id)
         {
             facade.RemoverTipoContato(id);
 
-            ViewData["Title"] = "DNA+ :: Tipos de Contato";
-            ViewData["TituloPagina"] = "Tipos de Contato";
-            ViewData["messageSuccess"] = "Tipo de contato removido com sucesso";
-            ViewData["messageReturn"] = "Voltar para lista de Tipos de Contato";
+            if (ModelState.IsValid)
+            {
+                ViewData["Title"] = "DNA+ :: Tipos de Contato";
+                ViewData["TituloPagina"] = "Tipos de Contato";
+                ViewData["messageSuccess"] = "Tipo de contato removido com sucesso";
+                ViewData["messageReturn"] = "Voltar para lista de Tipos de Contato";
 
-            return View("_Remove");
+                return Json(new { success = true, responseText = string.Empty }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var errorText = Helpers.DnaMaisHelperModelState.GetErrorFriendly(ModelState);
+                return Json(new { success = false, responseText = errorText }, JsonRequestBehavior.AllowGet);
+            }
         }
 
     }

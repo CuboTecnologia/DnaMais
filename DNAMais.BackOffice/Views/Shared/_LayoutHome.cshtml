@@ -64,6 +64,20 @@
 
     @RenderSection("scriptsHeadHome", false)
 
+    <style>
+        .btn {
+            padding: 4px 6px;
+        }
+
+        .toast {
+            opacity: 1 !important;
+        }
+
+        #toast-container > div {
+            opacity: 1 !important;
+        }
+    </style>
+
 </head>
 <body>
     <section class="body">
@@ -229,7 +243,7 @@
                                     </ul>
                                 </li>
                                 <li class="nav-parent">
-                                    <a href="@Url.Action("Index", "Autenticacao")">
+                                    <a href='@Url.Action("Index", "Autenticacao", new { Area = string.Empty })'>
                                         <i class="fa fa-power-off" aria-hidden="true"></i>
                                         <span>Sair</span>
                                     </a>
@@ -292,6 +306,33 @@
     <!-- Theme Custom -->
     <!-- Theme Initialization Files -->
     @Scripts.Render("~/Scripts/theme")
+
+    <script type="text/javascript">
+        $(function () {
+
+
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "5",
+                "hideDuration": "10",
+                "timeOut": "2000",
+                "extendedTimeOut": "2000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+
+
+        });
+
+    </script>
 
     @RenderSection("scripts", false)
 

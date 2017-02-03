@@ -8,7 +8,7 @@
     ViewBag.TituloGrid = "Produto Faixa";
     Layout = "~/Views/Shared/_Listagem.cshtml";
 
-    string mensagemExclusao = "Tem certeza que deseja remover este Usuário Cliente?";
+    string mensagemExclusao = "";
 
     bool locked = ViewData["LOCKED"] == null ? false : (bool)ViewData["LOCKED"];
 
@@ -69,10 +69,12 @@
         });
 
         function CarregarCategoriaFaixas(idCategoria) {
+
+            var url = '@Url.Content("~/ConfiguracoesProduto/CategoriaProdutoFaixa/CategoriaFaixa/")' + idCategoria;
             $.ajax(
             {
                 type: 'GET',
-                url: '/ConfiguracoesProduto/CategoriaProdutoFaixa/CategoriaFaixa/' + idCategoria,
+                url: url,
                 success: function (data) {
                     $('#categoriaFaxa').html(data);
                 }

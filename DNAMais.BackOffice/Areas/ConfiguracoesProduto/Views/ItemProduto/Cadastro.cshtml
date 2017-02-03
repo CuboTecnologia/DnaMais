@@ -16,6 +16,8 @@
 
     bool locked = ViewData["LOCKED"] == null ? false : (bool)ViewData["LOCKED"];
 
+    //Quando não houver botão de novo item carregar essa variavel
+    ViewData["desabilitarBotaoNovoItem"] = true;
 }
 
 @section cadastro

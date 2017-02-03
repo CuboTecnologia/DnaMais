@@ -13,8 +13,15 @@
                         
         @Html.DnaMaisButton("Index", "btnVoltar", ViewData["messageReturn"].ToString(), "success", "arrow-circle-left")
 
-        <hr class="mt-md mb-md" />
-                        
-        @Html.DnaMaisButton("Create", "btnNovo", "Criar outro item", "default", "plus")
+        if (ViewData["desabilitarBotaoNovoItem"] != null)
+        {
+            if ((bool)ViewData["desabilitarBotaoNovoItem"] == false)
+            {
+                <hr class="mt-md mb-md" />
+                       
+                @Html.DnaMaisButton("Create", "btnNovo", "Criar outro item", "default", "plus")
+            }
+        }
+        ViewData["desabilitarBotaoNovoItem"] = null;
     }
 </div>

@@ -81,23 +81,35 @@ namespace DNAMais.Domain.Services
             return returnValidation;
         }
 
-        public void SalvarProdutosSelecionados(int idUsuarioCliente, List<string> produtosSelecionados)
+        public ResultValidation SalvarProdutosSelecionados(int idUsuarioCliente, List<string> produtosSelecionados)
         {
+            ResultValidation returnValidation = new ResultValidation();
             UsuarioCliente usuarioCliente = repoUsuarioCliente.GetById(idUsuarioCliente);
+
+            if (!returnValidation.Ok) return returnValidation;
 
             usuarioCliente.UsuarioClienteProdutosSelecionados.Clear();
 
-            foreach (var item in produtosSelecionados)
+            try
             {
-                UsuarioClienteProduto usuarioClienteProduto = new UsuarioClienteProduto();
+                foreach (var item in produtosSelecionados)
+                {
+                    UsuarioClienteProduto usuarioClienteProduto = new UsuarioClienteProduto();
 
-                usuarioClienteProduto.Id = idUsuarioCliente;
-                usuarioClienteProduto.CodigoProduto = item;
+                    usuarioClienteProduto.Id = idUsuarioCliente;
+                    usuarioClienteProduto.CodigoProduto = item;
 
-                repoUsuarioClienteProduto.Add(usuarioClienteProduto);
+                    repoUsuarioClienteProduto.Add(usuarioClienteProduto);
+                }
+
+                context.SaveChanges();
+            }
+            catch (Exception err)
+            {
+                returnValidation.AddMessage("", err);
             }
 
-            context.SaveChanges();
+            return returnValidation;
 
         }
     }

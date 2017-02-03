@@ -10,11 +10,11 @@
 
 <div class="panel panel-sign">
     <div class="panel-title-sign mt-xl text-right">
-        <h2 class="title text-uppercase text-weight-bold m-none"><i class="fa fa-user mr-xs"></i> Acesso BackOffice</h2>
+        <h2 class="title text-uppercase text-weight-bold m-none"><i class="fa fa-user mr-xs"></i>Acesso BackOffice</h2>
     </div>
     <div class="panel-body">
-        <form class="form-signin" method="post" action="~/Autenticacao/Authenticate" autocomplete="off">
-
+        @using (Html.BeginForm("Authenticate", "Autenticacao", FormMethod.Post, new { @id = "formAuthenticate", @class = "form-signin", @autocomplete = "off" }))
+        {
             <div class="form-group mb-lg">
                 <label>Usuário</label>
                 <div class="input-group input-group-icon">
@@ -36,7 +36,7 @@
                     -->
                 <label>Senha</label>
                 <div class="input-group input-group-icon">
-                    <input name="password" type="password" class="form-control input-lg" value="@Model.Password" required="required" />
+                    <input id="password" name="password" type="password" class="form-control input-lg" value="@Model.Password" required="required" />
                     <span class="input-group-addon">
                         <span class="icon icon-lg">
                             <i class="fa fa-lock"></i>
@@ -51,13 +51,17 @@
                         <input id="RememberMe" name="rememberme" type="checkbox" />
                         <label for="RememberMe">Remember Me</label>
                     </div>*@
+                    <div id="messageError" class="alert alert-danger collapse" role="alert" style="margin-left: 2px; margin-right: 2px;">
+                        <strong>Alerta!&nbsp;</strong><span id="textoMensagem">Usuário ou senha inválidos.</span>
+                    </div>
                 </div>
                 <div class="col-sm-4 text-right">
-                    <button type="submit" class="btn btn-danger hidden-xs">Acesse</button>
-                    <button type="submit" class="btn btn-danger btn-block btn-lg visible-xs mt-lg">Acesse</button>
+                    <span id="loadingImage"></span>
+                    <button type="button" class=" jsEnviar btn btn-danger hidden-xs">Acesse</button>
+                    <button type="button" class=" jsEnviar btn btn-danger btn-block btn-lg visible-xs mt-lg">Acesse</button>
                 </div>
             </div>
-        </form>
+        }
     </div>
 </div>
 
@@ -88,6 +92,51 @@
             else {
                 $('#password').focus();
             }
+
+            $('#login').keypress(function (event) {
+                $("#messageError").hide();
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                if (keycode == '13' && $('#login').val() != "") {
+                    $('#password').focus();
+                }
+            });
+
+            $('#password').keypress(function (event) {
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                if (keycode == '13' && $('#password').val() != "") {
+                    $('.jsEnviar').click();
+                }
+            });
+
+            $('.jsEnviar').on('click', function (event) {
+                event.preventDefault();
+                $.ajax({
+                    url: '@Url.Action("Authenticate", "Autenticacao")',
+                    type: 'POST',
+                    data: $("#formAuthenticate").serialize(),
+                    dataType: 'json',
+                    cache: false,
+                    beforeSend: function () {
+                        $("#messageError").hide();
+                        $('.jsEnviar').prop("disabled", true);
+                        $('#loadingImage').html("<img src='@Url.Content("~/assets/images/loading.gif")' />");
+                    },
+                    success: function (result) {
+                        if (result != null && result.success) {
+                            location.href = "@Url.Action("Index", "Home")";
+                    } else {
+                        $('.jsEnviar').prop("disabled", false);
+                        $('#loadingImage').html("");
+                        $("#messageError").show();
+                        $('#login').focus();
+                    }
+                    },
+                    error: function (a, b, c) {
+                        //toastr['error'](a.responseText.replace('"', '').replace('"', ''));
+                    }
+                });
+            });
+
         });
     </script>
 }
