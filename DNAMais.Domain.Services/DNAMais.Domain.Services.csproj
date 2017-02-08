@@ -59,6 +59,8 @@
     <Compile Include="Consultas\InfoPessoaFisicaService.cs" />
     <Compile Include="AutenticacaoSiteService.cs" />
     <Compile Include="ContratoEmpresaProdutoService.cs" />
+    <Compile Include="ContratoEmpresaPrecificacaoProdutoService.cs" />
+    <Compile Include="ContratoEmpresaPrecificacaoItemProdutoService.cs" />
     <Compile Include="UsuarioClienteProdutoService.cs" />
     <Compile Include="PerfilAcessoFuncionalidadeService.cs" />
     <Compile Include="PoliticaComercialService.cs" />

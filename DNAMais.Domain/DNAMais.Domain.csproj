@@ -86,6 +86,8 @@
     <Compile Include="Entidades\ContratoEmpresa.cs" />
     <Compile Include="Entidades\ContratoEmpresaPrecificacao.cs" />
     <Compile Include="Entidades\ContratoEmpresaProduto.cs" />
+    <Compile Include="Entidades\ContratoEmpresaPrecificacaoProduto.cs" />
+    <Compile Include="Entidades\ContratoEmpresaPrecificacaoItemProduto.cs" />
     <Compile Include="Entidades\UsuarioClienteProduto.cs" />
     <Compile Include="Entidades\Faturamento.cs" />
     <Compile Include="Entidades\FuncionalidadeBackOffice.cs" />

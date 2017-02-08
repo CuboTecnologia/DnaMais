@@ -20,6 +20,7 @@ namespace DNAMais.BackOffice.ActionFilters
                 {
                     FormsAuthentication.SignOut();
                     filterContext.RequestContext.HttpContext.Session.Abandon();
+
                     filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary { 
                         { "Controller", "Autenticacao" }, 
                         { "Action", "Index" },                          
