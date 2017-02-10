@@ -205,7 +205,7 @@ namespace DNAMais.Infrastructure.Data.Contexts
         public DbSet<InfoPessoaJuridicaEmail> EmailsPessoasJuridicas { get; set; }
         public DbSet<InfoPessoaJuridicaQsa> QsaPessoasJuridicas { get; set; }
 
-        public DbSet<ContratoEmpresaPrecificacao> ContratosEmpresasPrecificacoes { get; set; }
+        //CCB public DbSet<ContratoEmpresaPrecificacao> ContratosEmpresasPrecificacoes { get; set; }
         public DbSet<ContratoEmpresaPrecificacaoProduto> ContratosEmpresasPrecificacoesProdutos { get; set; }
         public DbSet<ContratoEmpresaPrecificacaoItemProduto> ContratosEmpresasPrecificacoesItensProduto { get; set; }
         public DbSet<ContratoEmpresaProduto> ContratosEmpresasProdutos { get; set; }

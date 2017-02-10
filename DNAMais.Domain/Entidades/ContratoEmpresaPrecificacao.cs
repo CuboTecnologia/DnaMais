@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace DNAMais.Domain.Entidades
 {
     [Table("CONTRATO_EMPRESA_PRECIFICACAO", Schema = "DNASITE")]
-    public class ContratoEmpresaPrecificacao
+    public class ContratoEmpresaPrecificacaoX
     {
         #region Propriedades Públicas
 
@@ -54,7 +54,7 @@ namespace DNAMais.Domain.Entidades
 
         #region Construtor
 
-        public ContratoEmpresaPrecificacao()
+        public ContratoEmpresaPrecificacaoX()
         {
 
         }

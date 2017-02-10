@@ -15,7 +15,9 @@ namespace DNAMais.BackOffice.Facades
         private ContratoEmpresaService serviceContratoEmpresa;
         private ClienteEmpresaService serviceClienteEmpresa;
         private ContratoEmpresaProdutoService serviceContratoEmpresaProduto;
-        private ContratoEmpresaPrecificacaoService serviceContratoEmpresaPrecificacao;
+        //CCB private ContratoEmpresaPrecificacaoService serviceContratoEmpresaPrecificacao;
+        private ContratoEmpresaPrecificacaoProdutoService serviceContratoEmpresaPrecificacaoProduto;
+        private ContratoEmpresaPrecificacaoItemProdutoService serviceContratoEmpresaPrecificacaoItemProduto;
 
         public ContratoEmpresaFacade(ModelStateDictionary modelState)
             : base(modelState)
@@ -23,7 +25,9 @@ namespace DNAMais.BackOffice.Facades
             serviceContratoEmpresa = new ContratoEmpresaService();
             serviceClienteEmpresa = new ClienteEmpresaService();
             serviceContratoEmpresaProduto = new ContratoEmpresaProdutoService();
-            serviceContratoEmpresaPrecificacao = new ContratoEmpresaPrecificacaoService();
+            //CCB serviceContratoEmpresaPrecificacao = new ContratoEmpresaPrecificacaoService();
+            serviceContratoEmpresaPrecificacaoProduto = new ContratoEmpresaPrecificacaoProdutoService();
+            serviceContratoEmpresaPrecificacaoItemProduto = new ContratoEmpresaPrecificacaoItemProdutoService();
         }
 
         public void Dispose()
@@ -31,7 +35,9 @@ namespace DNAMais.BackOffice.Facades
             serviceContratoEmpresa.Dispose();
             serviceClienteEmpresa.Dispose();
             serviceContratoEmpresaProduto.Dispose();
-            serviceContratoEmpresaPrecificacao.Dispose();
+            //CCB serviceContratoEmpresaPrecificacao.Dispose();
+            serviceContratoEmpresaPrecificacaoProduto.Dispose();
+            serviceContratoEmpresaPrecificacaoItemProduto.Dispose();
         }
 
         #region Contrato Empresa
@@ -44,6 +50,11 @@ namespace DNAMais.BackOffice.Facades
         public ContratoEmpresa ListarContratoPorId(int id)
         {
             return serviceContratoEmpresa.ConsultarPorId(id);
+        }
+
+        public IQueryable<ContratoEmpresaProduto> ListarProdutosContrato()
+        {
+            return serviceContratoEmpresaProduto.ListarTodos();
         }
 
         public void SalvarContratoEmpresa(ContratoEmpresa contratoEmpresa)

@@ -2,87 +2,93 @@
 @using DNAMais.Framework
 @using DNAMais.BackOffice.Facades
 
-@model List<ContratoEmpresaPrecificacao>
+@model ContratoEmpresa
 
 @{
     Layout = "~/Views/Shared/_Listagem.cshtml";
 
     ViewBag.Title = "DNA+ :: Precificação";
     ViewBag.TituloPagina = "Precificação";
-    ViewBag.TituloGrid = "Contrato Número: " + ViewBag.NumeroContrato + " - " + "Empresa: " + ViewBag.NomeEmpresa;
+    ViewBag.TituloGrid = "Precificação - Contrato: " + ((ContratoEmpresa)Model).Id.ToString() + "  -  " + "Empresa: " + ((ContratoEmpresa)Model).ClienteEmpresa.RazaoSocial;
 
     ViewData["messageAnswer"] = "Salvar";
     ViewData["messageReturn"] = "Voltar para lista de contratos";
-    
-    List<ContratoEmpresaPrecificacao> precificacoes = ((List<ContratoEmpresaPrecificacao>)Model);
 
-    List<CategoriaProduto> categorias = new List<CategoriaProduto>();
-    
-    foreach (var item in precificacoes)
+    bool locked = ViewData["LOCKED"] == null ? false : (bool)ViewData["LOCKED"];
+
+    var precificacoes = ((ContratoEmpresa)Model).ContratosEmpresasPrecificacoesProdutos.ToList();
+
+    List<SelectListItem> produtosContrato = new ContratoEmpresaFacade(null).ListarProdutosContrato().ToList().Select(i => new SelectListItem
     {
-        if (!categorias.Exists(i => i.Codigo == item.CodigoCategoriaConsulta))
-        {
-            categorias.Add(new CategoriaProduto
-            {
-                Codigo = item.CodigoCategoriaConsulta,
-                Nome = item.CategoriaProduto.Nome
-            });
-        }
-    }
-    
+        Value = i.CodigoProduto.ToString(),
+        Text = i.CodigoProduto + " - " + i.Produto.Nome
+    }).ToList();
+
+    produtosContrato.Insert(0, new SelectListItem { Value = "", Text = "Selecione um Produto" });
 
 }
 
 @section grid
 {
 
-    <h3>Precificação</h3>
+    <div class="col-lg-12" style="width: 100%;">
 
-    @foreach (CategoriaProduto categoria in categorias)
-    {
-        <h4>Categoria: @categoria.Codigo - @categoria.Nome</h4>
+        @Html.DnaMaisDropDownList(
+         "Produtos autorizados",
+         "CodigoProduto",
+         null,
+         itens: produtosContrato,
+         width: 300,
+        disabled: locked
 
-        List<ContratoEmpresaPrecificacao> precificacaoFaixa = precificacoes.Where(i => i.CodigoCategoriaConsulta == categoria.Codigo).ToList();
+        )
+    </div>
 
-        <form action="@Url.Action("Precificacao")" method="post">
+    <div style="margin-top: 60px;" id="produtoFaixa">
+    </div>
 
-            @Html.Hidden("idContrato", (object)ViewBag.IdContrato)
-            @Html.Hidden("codigoCategoria", categoria.Codigo)
+    <script>
+        $(document).ready(function () {
 
-            <table class="table table-bordered table-hover mb-none">
+            var CodigoProduto = getUrlParameter('CodigoProduto');
 
-                <thead>
-                    <tr>
-                        <th>Faixa</th>
-                        <th>Descrição</th>
-                        <th>Início</th>
-                        <th>Término</th>
-                        <th>Valor</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (ContratoEmpresaPrecificacao item in precificacaoFaixa)
-                    {
-                        <tr>
-                            <td>@item.CodigoFaixa</td>
-                            <td>@item.DescricaoFaixa</td>
-                            <td>@item.InicioFaixa</td>
-                            <td>@item.TerminoFaixa</td>
-                            <td><input type="text" onkeypress="return onlyFloatNumbers(event, this);" id="valor_@item.CodigoFaixa" value="@item.ValorConsulta" name="valor_@item.CodigoFaixa" /></td>
-                        </tr>
+            if (CodigoProduto != "") {
+
+                $("#CodigoProduto").val(CodigoProduto);
+
+                CarregarCategoriaFaixas(CodigoProduto);
+            }
+
+            $("#CodigoProduto").change(function () {
+
+                var CodigoProduto = $("#CodigoProduto").val();
+
+                console.log(CodigoProduto);
+
+                CarregarFaixasProduto(CodigoProduto);
+
+            });
+        });
+
+        function CarregarFaixasProduto(CodigoProduto) {
+
+            var url = '@Url.Content("~/ContratoEmpresa/PrecificacaoProduto")';
+                $.ajax(
+                {
+                    type: 'GET',
+                    url: url,
+                    data: { idContrato: '@(((ContratoEmpresa)Model).Id.ToString())', codigoProduto: CodigoProduto },
+                    success: function (data) {
+                        $('#produtoFaixa').html(data);
                     }
-                </tbody>
-            </table>
-
-            <div class="row pull-right" style="padding-right: 20px; padding-top: 5px;">
-                @Html.ActionLink("Voltar para lista de Contratos", "Index", null, new { @class = "btn btn-default" })
-            </div>
-            <div class="row pull-right"  style="padding-right: 40px; padding-top: 5px;">
-                <input type="submit" value="Salvar" class="btn btn-danger" />
-            </div>
-        </form>
-
-        <hr class="tall" />
-    }
+                });
+            }
+            function getUrlParameter(name) {
+                name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+                var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+                var results = regex.exec(location.search);
+                return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+            };
+    </script>
 
 }

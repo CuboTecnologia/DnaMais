@@ -16,7 +16,9 @@ namespace DNAMais.Domain.Services
 
         private Repository<ContratoEmpresa> repoContratoEmpresa;
         private Repository<ContratoEmpresaProduto> repoContratoEmpresaProduto;
-        private Repository<ContratoEmpresaPrecificacao> repoContratoEmpresaPrecificacao;
+        //CCB private Repository<ContratoEmpresaPrecificacao> repoContratoEmpresaPrecificacao;
+        private Repository<ContratoEmpresaPrecificacaoProduto> repoContratoEmpresaPrecificacaoProduto;
+        private Repository<ContratoEmpresaPrecificacaoItemProduto> repoContratoEmpresaPrecificacaoItemProduto;
         private Repository<Produto> repoProduto;
 
         public ContratoEmpresaService()
@@ -24,7 +26,9 @@ namespace DNAMais.Domain.Services
             context = new DNAMaisSiteContext();
             repoContratoEmpresa = new Repository<ContratoEmpresa>(context);
             repoContratoEmpresaProduto = new Repository<ContratoEmpresaProduto>(context);
-            repoContratoEmpresaPrecificacao = new Repository<ContratoEmpresaPrecificacao>(context);
+            //CCB repoContratoEmpresaPrecificacao = new Repository<ContratoEmpresaPrecificacao>(context);
+            repoContratoEmpresaPrecificacaoProduto = new Repository<ContratoEmpresaPrecificacaoProduto>(context);
+            repoContratoEmpresaPrecificacaoItemProduto = new Repository<ContratoEmpresaPrecificacaoItemProduto>(context);
             repoProduto = new Repository<Produto>(context);
         }
 

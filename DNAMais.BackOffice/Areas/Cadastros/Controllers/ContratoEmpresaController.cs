@@ -16,7 +16,8 @@ namespace DNAMais.BackOffice.Areas.Cadastros.Controllers
         private ContratoEmpresaFacade facadeContratoEmpresa;
         private ProdutoFacade facadeProduto;
         private ContratoEmpresaProdutoFacade facadeContratoEmpresaProduto;
-        private ContratoEmpresaPrecificacaoFacade facadeContratoEmpresaPrecificacao;
+        //CCB private ContratoEmpresaPrecificacaoFacade facadeContratoEmpresaPrecificacao;
+        private ContratoEmpresaPrecificacaoProdutoFacade facadeContratoEmpresaPrecificacaoProduto;
         private TransacaoConsultaFacade facadeTransacaoConsulta;
 
         public ContratoEmpresaController()
@@ -25,7 +26,8 @@ namespace DNAMais.BackOffice.Areas.Cadastros.Controllers
             facadeContratoEmpresa = new ContratoEmpresaFacade(ModelState);
             facadeProduto = new ProdutoFacade(ModelState);
             facadeContratoEmpresaProduto = new ContratoEmpresaProdutoFacade(ModelState);
-            facadeContratoEmpresaPrecificacao = new ContratoEmpresaPrecificacaoFacade(ModelState);
+            //CCB facadeContratoEmpresaPrecificacao = new ContratoEmpresaPrecificacaoFacade(ModelState);
+            facadeContratoEmpresaPrecificacaoProduto = new ContratoEmpresaPrecificacaoProdutoFacade(ModelState);
             facadeTransacaoConsulta = new TransacaoConsultaFacade(ModelState);
         }
 
@@ -98,10 +100,7 @@ namespace DNAMais.BackOffice.Areas.Cadastros.Controllers
         {
             ContratoEmpresa contratoEmpresa = facadeContratoEmpresa.ListarContratoPorId(id);
 
-            ViewBag.NomeEmpresa = contratoEmpresa.ClienteEmpresa.NomeFantasia;
-            ViewBag.IdContrato = contratoEmpresa.Id;
-
-            return View("Precificacao", contratoEmpresa.ContratosEmpresasPrecificacoes.ToList());
+            return View("Precificacao", contratoEmpresa);
         }
 
         [HttpPost]
@@ -109,47 +108,47 @@ namespace DNAMais.BackOffice.Areas.Cadastros.Controllers
         {
             ContratoEmpresa contratoEmpresa = facadeContratoEmpresa.ListarContratoPorId(idContrato);
 
-            List<ContratoEmpresaPrecificacao> precificacoes = new List<ContratoEmpresaPrecificacao>();
+            //List<ContratoEmpresaPrecificacao> precificacoes = new List<ContratoEmpresaPrecificacao>();
 
-            string valorFaixaA = valores["valor_A"];
-            string valorFaixaB = valores["valor_B"];
-            string valorFaixaC = valores["valor_C"];
-            string valorFaixaD = valores["valor_D"];
+            //string valorFaixaA = valores["valor_A"];
+            //string valorFaixaB = valores["valor_B"];
+            //string valorFaixaC = valores["valor_C"];
+            //string valorFaixaD = valores["valor_D"];
 
-            double valorConsulta = 0;
+            //double valorConsulta = 0;
 
-            foreach (ContratoEmpresaPrecificacao precificacao in contratoEmpresa.ContratosEmpresasPrecificacoes.Where(i => i.CodigoCategoriaConsulta == codigoCategoria))
-            {
-                if (precificacao.CodigoFaixa == "A")
-                {
-                    valorConsulta = double.Parse(valorFaixaA);
-                }
-                if (precificacao.CodigoFaixa == "B")
-                {
-                    valorConsulta = double.Parse(valorFaixaB);
-                }
-                if (precificacao.CodigoFaixa == "C")
-                {
-                    valorConsulta = double.Parse(valorFaixaC);
-                }
-                if (precificacao.CodigoFaixa == "D")
-                {
-                    valorConsulta = double.Parse(valorFaixaD);
-                }
+            //foreach (ContratoEmpresaPrecificacao precificacao in contratoEmpresa.ContratosEmpresasPrecificacoes.Where(i => i.CodigoCategoriaConsulta == codigoCategoria))
+            //{
+            //    if (precificacao.CodigoFaixa == "A")
+            //    {
+            //        valorConsulta = double.Parse(valorFaixaA);
+            //    }
+            //    if (precificacao.CodigoFaixa == "B")
+            //    {
+            //        valorConsulta = double.Parse(valorFaixaB);
+            //    }
+            //    if (precificacao.CodigoFaixa == "C")
+            //    {
+            //        valorConsulta = double.Parse(valorFaixaC);
+            //    }
+            //    if (precificacao.CodigoFaixa == "D")
+            //    {
+            //        valorConsulta = double.Parse(valorFaixaD);
+            //    }
 
-                precificacoes.Add(new ContratoEmpresaPrecificacao
-                {
-                    IdContratoEmpresa = idContrato,
-                    CodigoCategoriaConsulta = codigoCategoria,
-                    CodigoFaixa = precificacao.CodigoFaixa,
-                    DescricaoFaixa = precificacao.DescricaoFaixa,
-                    InicioFaixa = precificacao.InicioFaixa,
-                    TerminoFaixa = precificacao.TerminoFaixa,
-                    ValorConsulta = valorConsulta
-                });
-            }
+            //    precificacoes.Add(new ContratoEmpresaPrecificacao
+            //    {
+            //        IdContratoEmpresa = idContrato,
+            //        CodigoCategoriaConsulta = codigoCategoria,
+            //        CodigoFaixa = precificacao.CodigoFaixa,
+            //        DescricaoFaixa = precificacao.DescricaoFaixa,
+            //        InicioFaixa = precificacao.InicioFaixa,
+            //        TerminoFaixa = precificacao.TerminoFaixa,
+            //        ValorConsulta = valorConsulta
+            //    });
+            //}
 
-            facadeContratoEmpresaPrecificacao.SalvarContratoEmpresaPrecificacao(precificacoes);
+            //facadeContratoEmpresaPrecificacao.SalvarContratoEmpresaPrecificacao(precificacoes);
 
 
             return View("Cadastro", contratoEmpresa);
@@ -158,7 +157,7 @@ namespace DNAMais.BackOffice.Areas.Cadastros.Controllers
         //[AutorizacaoDnaMais]
         public ActionResult Remove(int id)
         {
-            facadeContratoEmpresaPrecificacao.RemoverContratoEmpresaPrecificacao(id);
+            facadeContratoEmpresaPrecificacaoProduto.RemoverContratoEmpresaPrecificacao(id);
 
             facadeContratoEmpresaProduto.RemoverContratoEmpresaProduto(id);
 
@@ -181,5 +180,14 @@ namespace DNAMais.BackOffice.Areas.Cadastros.Controllers
                 return Json(new { success = false, responseText = errorText }, JsonRequestBehavior.AllowGet);
             }
         }
+
+        public ActionResult PrecificacaoProduto(string idContrato, string codigoProduto)
+        {
+            List<ContratoEmpresaPrecificacaoProduto> faixas = facadeContratoEmpresaPrecificacaoProduto.ListarFaixas(Convert.ToInt32(idContrato), codigoProduto).ToList();
+
+            return PartialView(faixas);
+        }
+
+
     }
 }

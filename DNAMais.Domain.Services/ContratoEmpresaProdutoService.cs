@@ -15,7 +15,7 @@ namespace DNAMais.Domain.Services
         private DNAMaisSiteContext context;
 
         private Repository<ContratoEmpresaProduto> repoContratoEmpresaProduto;
-        private Repository<ContratoEmpresaPrecificacao> repoContratoEmpresaPrecificacao;
+        //CCB private Repository<ContratoEmpresaPrecificacao> repoContratoEmpresaPrecificacao;
         private Repository<ContratoEmpresaPrecificacaoProduto> repoContratoEmpresaPrecificacaoProduto;
         private Repository<ContratoEmpresa> repoContratoEmpresa;
         private Repository<Produto> repoProduto;
@@ -24,7 +24,7 @@ namespace DNAMais.Domain.Services
         {
             context = new DNAMaisSiteContext();
             repoContratoEmpresaProduto = new Repository<ContratoEmpresaProduto>(context);
-            repoContratoEmpresaPrecificacao = new Repository<ContratoEmpresaPrecificacao>(context);
+            //CCB repoContratoEmpresaPrecificacao = new Repository<ContratoEmpresaPrecificacao>(context);
             repoContratoEmpresaPrecificacaoProduto = new Repository<ContratoEmpresaPrecificacaoProduto>(context);
             repoContratoEmpresa = new Repository<ContratoEmpresa>(context);
             repoProduto = new Repository<Produto>(context);
@@ -52,45 +52,46 @@ namespace DNAMais.Domain.Services
 
         public void SalvarContratoEmpresaProduto(int idContrato, List<string> produtosSelecionados)
         {
-            List<ContratoEmpresaPrecificacao> precificacoes = new List<ContratoEmpresaPrecificacao>();
+            //CCB List<ContratoEmpresaPrecificacao> precificacoes = new List<ContratoEmpresaPrecificacao>();
             List<ContratoEmpresaPrecificacaoProduto> precificacoesProduto = new List<ContratoEmpresaPrecificacaoProduto>();
 
             foreach (var item in produtosSelecionados)
             {
                 Produto produto = repoProduto.GetById(item);
 
-                if (!precificacoes.Exists(i => i.CodigoCategoriaConsulta == produto.CodigoCategoria))
-                {
-                    foreach (CategoriaProdutoFaixa faixa in produto.CategoriaProduto.CategoriasFaixas)
-                    {
-                        precificacoes.Add(new ContratoEmpresaPrecificacao
-                        {
-                            IdContratoEmpresa = idContrato,
-                            CodigoCategoriaConsulta = produto.CodigoCategoria,
-                            CodigoFaixa = faixa.CodigoFaixa,
-                            DescricaoFaixa = faixa.DescricaoFaixa,
-                            InicioFaixa = faixa.InicioFaixa,
-                            TerminoFaixa = faixa.TerminoFaixa,
-                            ValorConsulta = 0
-                        });
-                    }
-                }
+                //if (!precificacoes.Exists(i => i.CodigoCategoriaConsulta == produto.CodigoCategoria))
+                //{
+                //    foreach (CategoriaProdutoFaixa faixa in produto.CategoriaProduto.CategoriasFaixas)
+                //    {
+                //        precificacoes.Add(new ContratoEmpresaPrecificacao
+                //        {
+                //            IdContratoEmpresa = idContrato,
+                //            CodigoCategoriaConsulta = produto.CodigoCategoria,
+                //            CodigoFaixa = faixa.CodigoFaixa,
+                //            DescricaoFaixa = faixa.DescricaoFaixa,
+                //            InicioFaixa = faixa.InicioFaixa,
+                //            TerminoFaixa = faixa.TerminoFaixa,
+                //            ValorConsulta = 0
+                //        });
+                //    }
+                //}
 
                 if (!precificacoesProduto.Exists(i => i.CodigoProduto == produto.Id))
                 {
-                    foreach (CategoriaProdutoFaixa faixa in produto.CategoriaProduto.CategoriasFaixas)
-                    {
-                        precificacoes.Add(new ContratoEmpresaPrecificacao
-                        {
-                            IdContratoEmpresa = idContrato,
-                            CodigoCategoriaConsulta = produto.CodigoCategoria,
-                            CodigoFaixa = faixa.CodigoFaixa,
-                            DescricaoFaixa = faixa.DescricaoFaixa,
-                            InicioFaixa = faixa.InicioFaixa,
-                            TerminoFaixa = faixa.TerminoFaixa,
-                            ValorConsulta = 0
-                        });
-                    }
+                    //foreach (CategoriaProdutoFaixa faixa in produto.CategoriaProduto.CategoriasFaixas)
+                    //{
+                    //    precificacoesProduto.Add(new ContratoEmpresaPrecificacaoProduto
+                    //    {
+                    //        //TODO: Ajustar para precificacao
+                    //        IdContratoEmpresa = idContrato,
+                    //        //CodigoProduto = produto.Codigopro,
+                    //        //CodigoFaixa = faixa.CodigoFaixa,
+                    //        //DescricaoFaixa = faixa.DescricaoFaixa,
+                    //        InicioFaixa = faixa.InicioFaixa,
+                    //        TerminoFaixa = faixa.TerminoFaixa,
+                    //        ValorConsulta = 0
+                    //    });
+                    //}
                 }
             }
 
@@ -109,11 +110,11 @@ namespace DNAMais.Domain.Services
                 repoContratoEmpresaProduto.Add(contratoEmpresaProduto);
             }
 
-            contratoEmpresa.ContratosEmpresasPrecificacoes.Clear();
+            contratoEmpresa.ContratosEmpresasPrecificacoesProdutos.Clear();
 
-            foreach (var item in precificacoes)
+            foreach (var item in precificacoesProduto)
             {
-                repoContratoEmpresaPrecificacao.Add(item);
+                repoContratoEmpresaPrecificacaoProduto.Add(item);
             }
 
             context.SaveChanges();

@@ -27,9 +27,11 @@ namespace DNAMais.Domain.Services
             context.Dispose();
         }
 
-        public IQueryable<ContratoEmpresaPrecificacaoProduto> ListarTodos()
+        public List<ContratoEmpresaPrecificacaoProduto> ListarTodos(int idContrato, string codigoProduto)
         {
-            return repoContratoEmpresaPrecificacaoProduto.GetAll();
+            var lista = context.ContratosEmpresasPrecificacoesProdutos.Where(u => u.IdContratoEmpresa == idContrato && u.CodigoProduto == codigoProduto).ToList();
+
+            return lista;
         }
 
         public ContratoEmpresaPrecificacaoProduto ConsultarPorId(int id)

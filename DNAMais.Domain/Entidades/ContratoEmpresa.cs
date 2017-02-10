@@ -67,7 +67,8 @@ namespace DNAMais.Domain.Entidades
 
         [Required(ErrorMessage="Duvido que vá funcionar")]
         public virtual ICollection<ContratoEmpresaProduto> ContratosEmpresasProdutos { get; set; }
-        public virtual ICollection<ContratoEmpresaPrecificacao> ContratosEmpresasPrecificacoes { get; set; }
+        //CCB public virtual ICollection<ContratoEmpresaPrecificacao> ContratosEmpresasPrecificacoes { get; set; }
+        public virtual ICollection<ContratoEmpresaPrecificacaoProduto> ContratosEmpresasPrecificacoesProdutos { get; set; }
         public virtual ICollection<Faturamento> Faturamentos { get; set; }
         public virtual ICollection<TransacaoConsulta> TransacoesConsultas { get; set; }
         public virtual ICollection<SolicitacaoContagem> SolicitacoesContagens { get; set; }
@@ -79,7 +80,8 @@ namespace DNAMais.Domain.Entidades
         public ContratoEmpresa()
         {
             ContratosEmpresasProdutos = new HashSet<ContratoEmpresaProduto>();
-            ContratosEmpresasPrecificacoes = new HashSet<ContratoEmpresaPrecificacao>();
+            //CCB ContratosEmpresasPrecificacoes = new HashSet<ContratoEmpresaPrecificacao>();
+            ContratosEmpresasPrecificacoesProdutos = new HashSet<ContratoEmpresaPrecificacaoProduto>();
             Faturamentos = new HashSet<Faturamento>();
             TransacoesConsultas = new HashSet<TransacaoConsulta>();
             SolicitacoesContagens = new HashSet<SolicitacaoContagem>();

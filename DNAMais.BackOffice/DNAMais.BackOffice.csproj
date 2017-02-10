@@ -167,8 +167,9 @@
     <Compile Include="Facades\ClienteEmpresaFacade.cs" />
     <Compile Include="Facades\AcessoFacade.cs" />
     <Compile Include="Facades\ContratoEmpresaFacade.cs" />
-    <Compile Include="Facades\ContratoEmpresaPrecificacaoFacade.cs" />
     <Compile Include="Facades\ContratoEmpresaProdutoFacade.cs" />
+    <Compile Include="Facades\ContratoEmpresaPrecificacaoProdutoFacade.cs" />
+    <Compile Include="Facades\ContratoEmpresaPrecificacaoItemProdutoFacade.cs" />
     <Compile Include="Facades\MensagemContatoFacade.cs" />
     <Compile Include="Facades\NewsletterFacade.cs" />
     <Compile Include="Facades\ProdutoFacade.cs" />

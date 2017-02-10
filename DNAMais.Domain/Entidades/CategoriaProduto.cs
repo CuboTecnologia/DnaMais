@@ -34,7 +34,7 @@ namespace DNAMais.Domain.Entidades
         public virtual ICollection<CategoriaProdutoFaixa> CategoriasFaixas { get; set; }
         public virtual ICollection<CategoriaProdutoFaixaLog> LogCategoriasFaixas { get; set; }
         public virtual ICollection<Produto> Produtos { get; set; }
-        public virtual ICollection<ContratoEmpresaPrecificacao> ContratosEmpresasPrecificacoes { get; set; }
+        //CCB public virtual ICollection<ContratoEmpresaPrecificacao> ContratosEmpresasPrecificacoes { get; set; }
         public virtual ICollection<ItemFaturamento> ItensFaturamentos { get; set; }
 
         #endregion
@@ -46,7 +46,7 @@ namespace DNAMais.Domain.Entidades
             CategoriasFaixas = new HashSet<CategoriaProdutoFaixa>();
             LogCategoriasFaixas = new HashSet<CategoriaProdutoFaixaLog>();
             Produtos = new HashSet<Produto>();
-            ContratosEmpresasPrecificacoes = new HashSet<ContratoEmpresaPrecificacao>();
+            //CCB ContratosEmpresasPrecificacoes = new HashSet<ContratoEmpresaPrecificacao>();
             ItensFaturamentos = new HashSet<ItemFaturamento>();
         }
 

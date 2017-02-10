@@ -54,7 +54,6 @@
     <Compile Include="Consultas\InfoPessoaJuridicaService.cs" />
     <Compile Include="Consultas\InfoMunicipioService.cs" />
     <Compile Include="Consultas\InfoUfService.cs" />
-    <Compile Include="ContratoEmpresaPrecificacaoService.cs" />
     <Compile Include="ClienteEmpresaService.cs" />
     <Compile Include="Consultas\InfoPessoaFisicaService.cs" />
     <Compile Include="AutenticacaoSiteService.cs" />
