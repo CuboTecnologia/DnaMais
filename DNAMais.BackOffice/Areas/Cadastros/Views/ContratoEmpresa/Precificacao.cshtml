@@ -2,21 +2,19 @@
 @using DNAMais.Framework
 @using DNAMais.BackOffice.Facades
 
-@model ContratoEmpresa
+@model ContratoEmpresaPrecificacaoProduto
 
 @{
     Layout = "~/Views/Shared/_Listagem.cshtml";
 
     ViewBag.Title = "DNA+ :: Precificação";
     ViewBag.TituloPagina = "Precificação";
-    ViewBag.TituloGrid = "Precificação - Contrato: " + ((ContratoEmpresa)Model).Id.ToString() + "  -  " + "Empresa: " + ((ContratoEmpresa)Model).ClienteEmpresa.RazaoSocial;
+    ViewBag.TituloGrid = "Precificação - Contrato: " + ((ContratoEmpresaPrecificacaoProduto)Model).Id.ToString() + "  -  " + "Empresa: " + ((ContratoEmpresaPrecificacaoProduto)Model).ContratoEmpresa.ClienteEmpresa.RazaoSocial;
 
     ViewData["messageAnswer"] = "Salvar";
     ViewData["messageReturn"] = "Voltar para lista de contratos";
 
     bool locked = ViewData["LOCKED"] == null ? false : (bool)ViewData["LOCKED"];
-
-    var precificacoes = ((ContratoEmpresa)Model).ContratosEmpresasPrecificacoesProdutos.ToList();
 
     List<SelectListItem> produtosContrato = new ContratoEmpresaFacade(null).ListarProdutosContrato().ToList().Select(i => new SelectListItem
     {
@@ -28,27 +26,270 @@
 
 }
 
+@section botaoNovo{
+}
+
 @section grid
 {
 
-    <div class="col-lg-12" style="width: 100%;">
+    @using (Html.BeginForm("PrecificacaoCadastro", "ContratoEmpresa", FormMethod.Post, new { @id = "frmDados", @name = "frmDados" }))
+    {
 
-        @Html.DnaMaisDropDownList(
-         "Produtos autorizados",
-         "CodigoProduto",
-         null,
-         itens: produtosContrato,
-         width: 300,
-        disabled: locked
+        <style>
+            .modal-header-danger {
+                color: #fff;
+                padding: 9px 15px;
+                border-bottom: 1px solid #eee;
+                background-color: #d2322d;
+                -webkit-border-top-left-radius: 5px;
+                -webkit-border-top-right-radius: 5px;
+                -moz-border-radius-topleft: 5px;
+                -moz-border-radius-topright: 5px;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+            }
+        </style>    
+    
+        <div id="modalForm" class="modal-block modal-block-primary mfp-hide" style="width: 500px;">
+            @Html.Hidden("TipoOperacao")
+            @Html.Hidden("id")
+            <section class="panel">
+                <header class="panel-heading">
+                    <h2 class="panel-title">Manutenção de faixas</h2>
+                </header>
+                <div class="panel-body">
+                    <form id="demo-form" class="form-horizontal mb-lg" novalidate="novalidate">
+                        <div class="form-group mt-lg">
+                            <label class="col-sm-4 control-label">Categoria-Produto</label>
+                            <div class="col-sm-8">
+                                <p id="lblNomeProduto"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Ínicio Faixa</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="txtInicioFaixa" name="txtInicioFaixa" class="form-control" style="width: 110px;" required aria-required="true" />
+                                <span id="lblErrortxtInicioFaixa" class="error hide">Obrigatório</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Término Faixa</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="txtTerminoFaixa" name="txtTerminoFaixa" class="form-control" style="width: 110px;" required />
+                                <span id="lblErrortxtTerminoFaixa" class="error hide">Obrigatório</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Valor Consulta</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="txtValorConsulta" name="txtValorConsulta" class="form-control jsDecimal" style="width: 110px;" required />
+                                <span id="lblErrortxtValorConsulta" class="error hide">Obrigatório</span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <footer class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button id="btnGravar" class="btn btn-primary modal-confirm">Gravar</button>
+                            <button id="btnCancelar" class="btn btn-default modal-dismiss">Cancelar</button>
+                        </div>
+                    </div>
+                </footer>
+            </section>
+        </div>
+        @Html.HiddenFor(x => x.ContratoEmpresa.Id);
+        <div class="col-lg-12" style="width: 100%;">
+            @Html.DnaMaisDropDownList(
+             "Categoria/Produto",
+             "CodigoProduto",
+             null,
+             itens: produtosContrato,
+             width: 300,
+            disabled: locked
+            )
+            <a class="btn btn-default" id="openModal"><i class="fa fa-plus"></i>&nbsp;Nova Faixa</a>
+        </div>
 
-        )
-    </div>
+        <div style="margin-top: 90px;" id="produtoFaixa">
+        </div>
 
-    <div style="margin-top: 60px;" id="produtoFaixa">
-    </div>
+    }
 
     <script>
+
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        };
+
+        function BindEdit() {
+            $('.jsEditar').on('click', function (event) {
+                event.preventDefault();
+                $("#id").val($(this).data('id'));
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Content("~/Cadastros/ContratoEmpresa/Edit/")',
+                    cache: false,
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify({
+                        id: $(this).data('id')
+                    }),
+                    success: function (result) {
+                        if (result.Success) {
+                            $("#TipoOperacao").val("A");
+                            $("#lblNomeProduto").html(result.nomeProduto);
+                            $("#txtInicioFaixa").val(result.inicio);
+                            $("#txtTerminoFaixa").val(result.termino);
+                            $("#txtValorConsulta").val(result.valor);
+
+                            $.magnificPopup.open({
+                                items: {
+                                    src: $('#modalForm')
+                                },
+                                // overflowY: 'hidden', // 
+                                callbacks: {
+                                    beforeOpen: function (e) {
+                                        this.st.mainClass = "mfp-with-fade";
+                                    }
+                                },
+                                focus: '#txtInicioFaixa',
+                                midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
+                            });
+
+                        } else {
+                            toastr['error'](result.ErrorMessage);
+                        }
+                    },
+                    error: function (result) {
+                        toastr['error'](result.ErrorMessage);
+                    }
+                });
+
+            });
+        }
+
+        function BindDelete() {
+            $('.jsExcluir').on('click', function (event) {
+                event.preventDefault();
+
+                var id = $(this).data('id');
+
+                bootbox.dialog({
+                    message: "Confirma a exclusão do registro ?",
+                    title: "Atenção - Exclusão",
+                    buttons: {
+                        main: {
+                            label: "Cancelar",
+                            className: "btn-primary",
+                            callback: function () {
+                                toastr['info']('Operação cancelada pelo usuário');
+                            }
+                        },
+                        danger: {
+                            label: "Excluir",
+                            className: "btn-danger",
+                            callback: function () {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '@Url.Content("~/Cadastros/ContratoEmpresa/RemoveFaixa/")',
+                                    cache: false,
+                                    contentType: 'application/json; charset=utf-8',
+                                    data: JSON.stringify({
+                                        id: id
+                                    }),
+                                    success: function (result) {
+                                        if (result.success) {
+                                            toastr['success']('Registro excluído com sucesso');
+                                            setTimeout(function () {
+                                                CarregarFaixasProduto($("#CodigoProduto").val())
+                                            }, 1000);
+                                        } else {
+                                            toastr['error'](result.responseText);
+                                        }
+                                    },
+                                    error: function (result) {
+                                        toastr['error']('Ocorreu um erro na exclusão do registro');
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
+            });
+        }
+
+        function CarregarFaixasProduto(CodigoProduto) {
+
+            $('#produtoFaixa').empty();
+            var url = '@Url.Content("~/ContratoEmpresa/PrecificacaoProduto")';
+            $.ajax(
+            {
+                type: 'GET',
+                url: url,
+                data: { idContrato: '@Model.ContratoEmpresa.Id.ToString()', codigoProduto: CodigoProduto },
+                success: function (data) {
+                    $('#produtoFaixa').html(data);
+                    BindEdit();
+                    BindDelete();
+                }
+            });
+        }
+
         $(document).ready(function () {
+
+            BindEdit();
+            BindDelete();
+
+            var form = $("frmDados");
+            $("#txtInicioFaixa").mask("######0", { placeholder: " " });
+            $("#txtTerminoFaixa").mask("######0", { placeholder: " " });
+
+            $(".jsDecimal").maskMoney({ prefix: '', allowNegative: false, thousands: '.', decimal: ',', affixesStay: false });
+            $(".jsDecimal").attr('maxlength', '9');
+
+            $("#openModal").attr("disabled", true);
+
+            var dtDados = $('#myTable').DataTable({
+                "oLanguage": {
+                    "sProcessing": "Processando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "N&#227;o foram encontrados resultados",
+                    "sInfo": "Mostrando de _START_ at&#233; _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando de 0 at&#233; 0 de 0 registros",
+                    "sInfoFiltered": "(filtrado de _MAX_ registros no total)",
+                    "sInfoPostFix": "",
+                    ////"sSearch": "Buscar:",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "Primeiro",
+                        "sPrevious": "Anterior",
+                        "sNext": "Seguinte",
+                        "sLast": "&#218;ltimo"
+                    }
+                },
+                "columnDefs": [
+                    { "width": "80px", "targets": 0 },
+                    { "width": "130px", "targets": 1 },
+                    { "width": "130px", "targets": 2 },
+                    { "width": "130px", "targets": 3 },
+                    { "width": "100px", "targets": 4 }
+                ],
+                "aaSorting": [[2, "asc"]],
+                "iDisplayLength": 10,
+                "aLengthMenu": [[5, 10, 50, 100, -1], [5, 10, 50, 100, "Todas"]],
+                "bRetrieve": true,
+                "bAutoWidth": false,
+                "bProcessing": true,
+                "bStateSave": false,
+                "paging": true,
+                "searching": true,
+                "info": true,
+                "bServerSide": false
+            });
+
 
             var CodigoProduto = getUrlParameter('CodigoProduto');
 
@@ -66,29 +307,147 @@
                 console.log(CodigoProduto);
 
                 CarregarFaixasProduto(CodigoProduto);
-
+                $("#openModal").attr("disabled", false);
             });
+
+            $("#openModal").click(function (event) {
+                $.magnificPopup.open({
+                    items: {
+                        src: $('#modalForm')
+                    },
+                    // overflowY: 'hidden', // 
+                    callbacks: {
+                        beforeOpen: function (e) {
+                            this.st.mainClass = "mfp-with-fade";
+                            $("#lblNomeProduto").html($("#CodigoProduto :selected").text());
+                            $("#TipoOperacao").val("I");
+                            $("#id").val("");
+                            $("#txtInicioFaixa").val("");
+                            $("#txtTerminoFaixa").val("");
+                            $("#txtValorConsulta").val("");
+                        },
+                        afterClose: function () {
+                        }
+                    },
+                    focus: '#txtInicioFaixa',
+                    midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
+                });
+            });
+
+            $("#openModalEdit").click(function (event) {
+                $.magnificPopup.open({
+                    items: {
+                        src: $('#modalForm')
+                    },
+                    // overflowY: 'hidden', // 
+                    callbacks: {
+                        beforeOpen: function (e) {
+                            this.st.mainClass = "mfp-with-fade";
+                            $("#lblNomeProduto").html($("#CodigoProduto :selected").text());
+                            $("#TipoOperacao").val("A");
+                        },
+                        afterClose: function () {
+                        }
+                    },
+                    focus: '#txtInicioFaixa',
+                    midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
+                });
+            });
+
+            $('#btnCancelar').on('click', function (event) {
+                event.preventDefault();
+                $.magnificPopup.close();
+            });
+
+            $('#btnGravar').on('click', function (event) {
+                event.preventDefault();
+                var ocorreuErro = false;
+
+                $("#lblErrortxtInicioFaixa").addClass("hide");
+                $("#lblErrortxtTerminoFaixa").addClass("hide");
+                $("#lblErrortxtValorConsulta").addClass("hide");
+
+                if (jQuery.trim($("#txtInicioFaixa").val()).length == 0) {
+                    ocorreuErro = true;
+                    $("#lblErrortxtInicioFaixa").removeClass("hide");
+                    $("#txtInicioFaixa").focus();
+                }
+                else if (jQuery.trim($("#txtTerminoFaixa").val()).length == 0) {
+                    ocorreuErro = true;
+                    $("#lblErrortxtTerminoFaixa").removeClass("hide");
+                    $("#txtTerminoFaixa").focus();
+                }
+                else if (jQuery.trim($("#txtValorConsulta").val()).length == 0) {
+                    ocorreuErro = true;
+                    $("#lblErrortxtValorConsulta").removeClass("hide");
+                    $("#txtValorConsulta").focus();
+                }
+
+                if (ocorreuErro == false) {
+                    if ($("#TipoOperacao").val() == "A") {
+                        $.ajax({
+                            type: 'POST',
+                            url: '@Url.Content("~/Cadastros/ContratoEmpresa/Save/")',
+                            cache: false,
+                            contentType: 'application/json; charset=utf-8',
+                            data: JSON.stringify({
+                                id: $("#id").val(),
+                                idContrato: $("#ContratoEmpresa_Id").val(),
+                                codigoProduto: $("#CodigoProduto").val(),
+                                inicio: $("#txtInicioFaixa").val(),
+                                termino: $("#txtTerminoFaixa").val(),
+                                valor: $("#txtValorConsulta").val()
+                            }),
+                            success: function (result) {
+                                if (result.Success) {
+                                    toastr['success']('Registro alterado com sucesso');
+                                    CarregarFaixasProduto($("#CodigoProduto").val())
+                                } else {
+                                    toastr['error'](result.ErrorMessage);
+                                }
+                            },
+                            error: function (result) {
+                                toastr['error'](result.ErrorMessage);
+                            }
+                        });
+
+                    } else {
+                        $.ajax({
+                            type: 'POST',
+                            url: '@Url.Content("~/Cadastros/ContratoEmpresa/Save/")',
+                            cache: false,
+                            contentType: 'application/json; charset=utf-8',
+                            data: JSON.stringify({
+                                id: '',
+                                idContrato: $("#ContratoEmpresa_Id").val(),
+                                codigoProduto: $("#CodigoProduto").val(),
+                                inicio: $("#txtInicioFaixa").val(),
+                                termino: $("#txtTerminoFaixa").val(),
+                                valor: $("#txtValorConsulta").val()
+                            }),
+                            success: function (result) {
+                                if (result.Success) {
+                                    toastr['success']('Registro inserido com sucesso');
+                                    CarregarFaixasProduto($("#CodigoProduto").val())
+                                } else {
+                                    toastr['error'](result.ErrorMessage);
+                                }
+                            },
+                            error: function (result) {
+                                toastr['error'](result.ErrorMessage);
+                            }
+                        });
+                    }
+
+                    $.magnificPopup.close();
+
+                }
+            });
+
         });
 
-        function CarregarFaixasProduto(CodigoProduto) {
 
-            var url = '@Url.Content("~/ContratoEmpresa/PrecificacaoProduto")';
-                $.ajax(
-                {
-                    type: 'GET',
-                    url: url,
-                    data: { idContrato: '@(((ContratoEmpresa)Model).Id.ToString())', codigoProduto: CodigoProduto },
-                    success: function (data) {
-                        $('#produtoFaixa').html(data);
-                    }
-                });
-            }
-            function getUrlParameter(name) {
-                name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-                var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-                var results = regex.exec(location.search);
-                return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-            };
+
     </script>
 
 }

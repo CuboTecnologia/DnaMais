@@ -75,6 +75,29 @@ namespace DNAMais.BackOffice.Areas.Cadastros.Controllers
             return View("Cadastro", contratoEmpresa);
         }
 
+        //[AutorizacaoDnaMais]
+        public ActionResult Remove(int id)
+        {
+            facadeContratoEmpresaPrecificacaoProduto.RemoverContratoEmpresaPrecificacao(id);
+
+            if (ModelState.IsValid)
+            {
+                ViewData["Title"] = "DNA+ :: Contratos";
+                ViewData["TituloPagina"] = "Contratos";
+                ViewData["messageSuccess"] = "Contrato removido com sucesso";
+                ViewData["messageReturn"] = "Voltar para lista de Contratos";
+
+                return Json(new { success = true, responseText = string.Empty }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var errorText = Helpers.DnaMaisHelperModelState.GetErrorFriendly(ModelState);
+                return Json(new { success = false, responseText = errorText }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        #region Produtos
+
         public ActionResult Produtos(int id)
         {
             ContratoEmpresa contratoEmpresa = facadeContratoEmpresa.ListarContratoPorId(id);
@@ -96,11 +119,19 @@ namespace DNAMais.BackOffice.Areas.Cadastros.Controllers
             return View("Cadastro", contratoEmpresa);
         }
 
+        #endregion
+
+        #region Precificação
+
         public ActionResult Precificacao(int id)
         {
             ContratoEmpresa contratoEmpresa = facadeContratoEmpresa.ListarContratoPorId(id);
+            ContratoEmpresaPrecificacaoProduto model = new ContratoEmpresaPrecificacaoProduto
+            {
+                ContratoEmpresa = contratoEmpresa
+            };
 
-            return View("Precificacao", contratoEmpresa);
+            return View("Precificacao", model);
         }
 
         [HttpPost]
@@ -154,24 +185,165 @@ namespace DNAMais.BackOffice.Areas.Cadastros.Controllers
             return View("Cadastro", contratoEmpresa);
         }
 
+        public ActionResult PrecificacaoProduto(string idContrato, string codigoProduto)
+        {
+            List<ContratoEmpresaPrecificacaoProduto> faixas = facadeContratoEmpresaPrecificacaoProduto.ListarFaixas(Convert.ToInt32(idContrato), codigoProduto).ToList();
+
+            return PartialView("~/Areas/Cadastros/Views/ContratoEmpresa/PrecificacaoFaixa.cshtml", faixas);
+        }
+
+        //[HttpPost]
+        public ActionResult PrecificacaoCadastro(string idContrato, string codigoProduto)
+        {
+            ContratoEmpresa contratoEmpresa = facadeContratoEmpresa.ListarContratoPorId(Convert.ToInt32(idContrato));
+            Produto produto = facadeProduto.ConsultarProdutoPorId(codigoProduto);
+
+            ContratoEmpresaPrecificacaoProduto model = new ContratoEmpresaPrecificacaoProduto
+            {
+                ContratoEmpresa = contratoEmpresa,
+                CodigoProduto = codigoProduto,
+                Produto = produto
+            };
+
+            return View("PrecificacaoCadastro", model);
+        }
+
+        [HttpPost]
         //[AutorizacaoDnaMais]
-        public ActionResult Remove(int id)
+        public ActionResult CreateFaixaxxx(ContratoEmpresaPrecificacaoProduto contratoEmpresaPrecificacaoProduto)
+        {
+            facadeContratoEmpresaPrecificacaoProduto.SalvarContratoEmpresaPrecificacao(contratoEmpresaPrecificacaoProduto);
+            return View("PrecificacaoCadastro", contratoEmpresaPrecificacaoProduto);
+        }
+
+        [HttpPost]
+        public JsonResult Save(string id, string idContrato, string codigoProduto, string inicio, string termino, string valor)
+        {
+            try
+            {
+                int codigo;
+                double valor_teste;
+                if (codigoProduto.Trim().Length > 0 && int.TryParse(idContrato, out codigo) && int.TryParse(inicio, out codigo) &&
+                    int.TryParse(termino, out codigo) && double.TryParse(valor.Replace(".", "").Replace(",", "."), out valor_teste))
+                {
+                    ContratoEmpresaPrecificacaoProduto preco = new ContratoEmpresaPrecificacaoProduto
+                    {
+                        Id = (int.TryParse(id, out codigo) ? Convert.ToInt32(id) : (int?)null),
+                        IdContratoEmpresa = Convert.ToInt32(idContrato),
+                        CodigoProduto = codigoProduto,
+                        InicioFaixa = Convert.ToInt32(inicio),
+                        TerminoFaixa = Convert.ToInt32(termino),
+                        ValorConsulta = Convert.ToDouble(valor.Replace(".", ""))
+                    };
+
+                    facadeContratoEmpresaPrecificacaoProduto.SalvarContratoEmpresaPrecificacao(preco);
+
+                    if (ModelState.IsValid)
+                    {
+                        return new JsonResult
+                        {
+                            Data = new { ErrorMessage = "", Success = true },
+                            ContentEncoding = System.Text.Encoding.UTF8,
+                            JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                        };
+                    }
+                    else
+                    {
+                        var errorText = Helpers.DnaMaisHelperModelState.GetErrors(ModelState);
+                        return new JsonResult
+                        {
+                            Data = new { ErrorMessage = errorText, Success = false },
+                            ContentEncoding = System.Text.Encoding.UTF8,
+                            JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                        };
+                    }
+                }
+                else
+                {
+                    return new JsonResult
+                    {
+                        Data = new { ErrorMessage = "Dados Invalidos", Success = false },
+                        ContentEncoding = System.Text.Encoding.UTF8,
+                        JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult
+                {
+                    Data = new { ErrorMessage = ex.Message, Success = false },
+                    ContentEncoding = System.Text.Encoding.UTF8,
+                    JsonRequestBehavior = JsonRequestBehavior.DenyGet
+                };
+            }
+
+            return null;
+        }
+
+        public JsonResult Edit(string id)
+        {
+
+            try
+            {
+                int valueTest;
+
+                if (int.TryParse(id, out valueTest))
+                {
+
+                    ContratoEmpresaPrecificacaoProduto preco = facadeContratoEmpresaPrecificacaoProduto.ConsultarPorId(Convert.ToInt32(id));
+
+                    if (preco.Id > 0)
+                    {
+                        return new JsonResult
+                        {
+                            Data = new
+                            {
+                                Success = true,
+                                id = preco.Id,
+                                idContratoEmpresa = preco.ContratoEmpresa.Id,
+                                codigoProduto = preco.CodigoProduto,
+                                nomeProduto = preco.Produto.CategoriaProduto.Nome + " - " + preco.Produto.Nome,
+                                inicio = preco.InicioFaixa,
+                                termino = preco.TerminoFaixa,
+                                valor = preco.ValorConsulta.ToString().Replace(".", ",")
+                            },
+                            ContentEncoding = System.Text.Encoding.UTF8,
+                            JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                        };
+                    }
+                }
+                else
+                {
+                    return new JsonResult
+                    {
+                        Data = new { ErrorMessage = "Ocorreu um erro na consulta", Success = false },
+                        ContentEncoding = System.Text.Encoding.UTF8,
+                        JsonRequestBehavior = JsonRequestBehavior.DenyGet
+                    };
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult
+                {
+                    Data = new { ErrorMessage = ex.Message, Success = false },
+                    ContentEncoding = System.Text.Encoding.UTF8,
+                    JsonRequestBehavior = JsonRequestBehavior.DenyGet
+                };
+            }
+
+
+            return null;
+        }
+
+        public ActionResult RemoveFaixa(short id)
         {
             facadeContratoEmpresaPrecificacaoProduto.RemoverContratoEmpresaPrecificacao(id);
 
-            facadeContratoEmpresaProduto.RemoverContratoEmpresaProduto(id);
-
-            facadeTransacaoConsulta.RemoverConsultaTransacao(id);
-                
-            facadeContratoEmpresa.RemoverContratoEmpresa(id);
-
             if (ModelState.IsValid)
             {
-                ViewData["Title"] = "DNA+ :: Contratos";
-                ViewData["TituloPagina"] = "Contratos";
-                ViewData["messageSuccess"] = "Contrato removido com sucesso";
-                ViewData["messageReturn"] = "Voltar para lista de Contratos";
-
                 return Json(new { success = true, responseText = string.Empty }, JsonRequestBehavior.AllowGet);
             }
             else
@@ -179,14 +351,10 @@ namespace DNAMais.BackOffice.Areas.Cadastros.Controllers
                 var errorText = Helpers.DnaMaisHelperModelState.GetErrorFriendly(ModelState);
                 return Json(new { success = false, responseText = errorText }, JsonRequestBehavior.AllowGet);
             }
+
         }
 
-        public ActionResult PrecificacaoProduto(string idContrato, string codigoProduto)
-        {
-            List<ContratoEmpresaPrecificacaoProduto> faixas = facadeContratoEmpresaPrecificacaoProduto.ListarFaixas(Convert.ToInt32(idContrato), codigoProduto).ToList();
-
-            return PartialView(faixas);
-        }
+        #endregion
 
 
     }

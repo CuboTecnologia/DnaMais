@@ -1,0 +1,69 @@
+﻿@using DNAMais.Domain.Entidades
+@using DNAMais.Framework
+
+@model List<ContratoEmpresaPrecificacaoProduto>
+
+<style>
+    .modal-header-danger {
+        color: #fff;
+        padding: 9px 15px;
+        border-bottom: 1px solid #eee;
+        background-color: #d2322d;
+        -webkit-border-top-left-radius: 5px;
+        -webkit-border-top-right-radius: 5px;
+        -moz-border-radius-topleft: 5px;
+        -moz-border-radius-topright: 5px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-6">
+        <table id="myTable" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
+            <thead>
+                <tr>
+                    <th style="text-align: center; width: 60px;">Ordem</th>
+                    <th style="text-align: center; width: 200px;">Início</th>
+                    <th style="text-align: center; width: 200px;">Término</th>
+                    <th style="text-align: center; width: 200px;">Valor</th>
+                    <th style="text-align: center; width: 80px;">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var cont = 0;
+                }
+                @foreach (var item in Model)
+                {
+                    cont++;
+                    <tr>
+                        <td style="text-align: center;"><span>@cont</span></td>
+                        <td style="text-align: center;"><span>@item.InicioFaixa</span></td>
+                        <td style="text-align: center;"><span>@item.TerminoFaixa</span></td>
+                        <td style="text-align: center;"><span>@item.ValorConsulta</span></td>
+                        <td style="text-align: center; width: 80px;">
+                            <span>
+                                <a class="btn btn-default jsEditar" id="openModalEdit" data-id="@item.Id"><i class="fa fa-pencil" title="editar"></i></a>
+                                <a class="btn btn-default jsExcluir" data-id="@item.Id"><i class="fa fa-remove" title="excluir"></i></a>
+                            </span>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+
+@section scriptsPage {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+        });
+
+
+    </script>
+}

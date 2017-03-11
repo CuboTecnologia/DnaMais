@@ -16,14 +16,17 @@ namespace DNAMais.Domain.Entidades
         [Key]
         [Column("CD_PRODUTO")]
         [StringLength(20)]
+        [Display(Name = "Código")]
         public string Id { get; set; }
 
         [Column("NM_PRODUTO")]
         [StringLength(100)]
+        [Display(Name="Nome")]
         public string Nome { get; set; }
 
         [Required]
         [Column("DS_PRODUTO")]
+        [Display(Name = "Descrição")]
         [StringLength(200)]
         public string Descricao { get; set; }
 

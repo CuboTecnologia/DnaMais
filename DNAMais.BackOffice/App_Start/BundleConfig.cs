@@ -66,6 +66,8 @@ namespace DNAMais.BackOffice.App_Start
                 "~/assets/vendor/jquery-placeholder/jquery-placeholder.js",
                 "~/Scripts/datepicker-pt-BR.js",
                 "~/Scripts/bootbox.js",
+                "~/Scripts/jquery.mask.js",
+                "~/Scripts/jquery.maskMoney.min.js",
                 "~/Scripts/toastr.min.js"));
 
             bundles.Add(new ScriptBundle("~/Scripts/bootstrap").Include(

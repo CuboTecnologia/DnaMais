@@ -1,0 +1,65 @@
+﻿@using DNAMais.Domain.Entidades
+
+@model ContratoEmpresaPrecificacaoProduto
+
+@{
+    Layout = "~/Views/Shared/_Cadastro.cshtml";
+
+    ViewBag.Title = "DNA+ :: Precificação";
+    ViewBag.TituloPagina = "Precificação";
+
+    ViewData["messageSuccess"] = "Contrato de faixa registrado com sucesso";
+    ViewData["messageReturn"] = "Voltar para lista de Faixas de preço";
+
+    bool locked = ViewData["LOCKED"] == null ? false : (bool)ViewData["LOCKED"];
+
+}
+
+@section cadastro
+{
+    @if (Request.HttpMethod == "GET" || !ViewData.ModelState.IsValid)
+    {
+        <div style="width: 100%;">
+
+            @Html.HiddenFor(
+                expression: m => m.Id)
+
+            @Html.HiddenFor(
+                expression: m => m.IdContratoEmpresa)
+
+            @Html.HiddenFor(
+                expression: m => m.CodigoProduto)
+
+            @Html.DnaMaisTextBoxFor(
+                expression: m => m.Produto.Nome,
+                width: 100,
+                disabled: locked)
+
+            @Html.DnaMaisTextBoxNumberFor(
+                expression: m => m.InicioFaixa,
+                width: 50,
+                maxlength: 8,
+                disabled: locked)
+
+            @Html.DnaMaisTextBoxNumberFor(
+                expression: m => m.TerminoFaixa,
+                width: 50,
+                maxlength: 8,
+                disabled: locked)
+
+            @Html.DnaMaisTextBoxValueFor(
+                expression: m => m.ValorConsulta,
+                width: 50,
+                disabled: locked)
+
+            <hr class="separator" />
+        </div>
+    }
+
+}
+
+}
+
+@section validacoes{
+    @Html.Validations((ContratoEmpresaPrecificacaoProduto)Model)
+}

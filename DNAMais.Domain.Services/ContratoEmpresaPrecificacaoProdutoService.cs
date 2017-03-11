@@ -29,7 +29,7 @@ namespace DNAMais.Domain.Services
 
         public List<ContratoEmpresaPrecificacaoProduto> ListarTodos(int idContrato, string codigoProduto)
         {
-            var lista = context.ContratosEmpresasPrecificacoesProdutos.Where(u => u.IdContratoEmpresa == idContrato && u.CodigoProduto == codigoProduto).ToList();
+            var lista = context.ContratosEmpresasPrecificacoesProdutos.Where(u => u.IdContratoEmpresa == idContrato && u.CodigoProduto == codigoProduto).OrderBy(u => u.InicioFaixa).ToList();
 
             return lista;
         }
@@ -44,33 +44,81 @@ namespace DNAMais.Domain.Services
             return repoContratoEmpresaPrecificacaoProduto.FindFirst(c => c.IdContratoEmpresa == id);
         }
 
-        public void SalvarContratoEmpresaPrecificacaoProduto(List<ContratoEmpresaPrecificacaoProduto> precificacoes)
+        public ResultValidation VerificaSobreposicaoFaixas(int? id, int inicio, int? termino)
         {
-            foreach (var item in precificacoes)
+            ResultValidation returnValidation = new ResultValidation();
+
+            if (!returnValidation.Ok) return returnValidation;
+
+            try
             {
-                repoContratoEmpresaPrecificacaoProduto.Update(item);
+                if (id != null)
+                {
+                    var lista = context.ContratosEmpresasPrecificacoesProdutos.Where(u => (u.TerminoFaixa > inicio || u.InicioFaixa < termino) && u.Id != id).ToList();
+
+                    if (lista.Count() > 0)
+                    {
+                        returnValidation.AddMessage("", "Existe sobreposição de faixas, não será possível efetuar a alteração");
+                    }
+                }
+                else
+                {
+                    var lista = context.ContratosEmpresasPrecificacoesProdutos.Where(u => u.TerminoFaixa > inicio && u.InicioFaixa < termino).ToList();
+
+                    if (lista.Count() > 0)
+                    {
+                        returnValidation.AddMessage("", "Existe sobreposição de faixas, não será possível efetuar a inclusão");
+                    }
+                }
+            }
+            catch (Exception err)
+            {
+                returnValidation.AddMessage("", err);
             }
 
-            context.SaveChanges();
+            return returnValidation;
+        }
 
+        public ResultValidation Salvar(ContratoEmpresaPrecificacaoProduto precificacao)
+        {
+            ResultValidation returnValidation = new ResultValidation();
+
+            if (!returnValidation.Ok) return returnValidation;
+
+            returnValidation = this.VerificaSobreposicaoFaixas(precificacao.Id, precificacao.InicioFaixa, precificacao.TerminoFaixa);
+            if (!returnValidation.Ok) return returnValidation;
+
+            try
+            {
+                if (precificacao.Id == null)
+                {
+                    repoContratoEmpresaPrecificacaoProduto.Add(precificacao);
+                }
+                else
+                {
+                    repoContratoEmpresaPrecificacaoProduto.Update(precificacao);
+                }
+
+                context.SaveChanges();
+            }
+            catch (Exception err)
+            {
+                returnValidation.AddMessage("", err);
+            }
+
+            return returnValidation;
         }
 
         public ResultValidation Excluir(int id)
         {
             ResultValidation returnValidation = new ResultValidation();
 
-            List<string> produtos = context.ContratosEmpresasPrecificacoesProdutos.Where(u => u.IdContratoEmpresa == id).Select(u => u.CodigoProduto).Distinct().ToList();
-
             if (!returnValidation.Ok) return returnValidation;
 
             try
             {
-                foreach (var produto in produtos)
-                {
-                    repoContratoEmpresaPrecificacaoProduto.Remove(id, produto);
-
-                    context.SaveChanges();
-                }
+                repoContratoEmpresaPrecificacaoProduto.Remove(id);
+                context.SaveChanges();
             }
             catch (Exception err)
             {

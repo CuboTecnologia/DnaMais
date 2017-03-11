@@ -30,7 +30,8 @@
 
     <!-- Vendor CSS -->
     @Styles.Render("~/css/bootstrap")
-    <link rel="stylesheet" href="~/assets/vendor/font-awesome/css/font-awesome.css" />
+    @*<link rel="stylesheet" href="~/assets/vendor/font-awesome/css/font-awesome.css" />*@
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     @Styles.Render("~/css/magnificpopup")
     @Styles.Render("~/css/datepicker")
 
@@ -335,6 +336,7 @@
     </script>
 
     @RenderSection("scripts", false)
+    @RenderSection("scriptsPage", false)
 
 </body>
 </html>

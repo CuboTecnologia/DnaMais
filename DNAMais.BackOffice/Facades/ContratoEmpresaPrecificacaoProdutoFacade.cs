@@ -27,6 +27,11 @@ namespace DNAMais.BackOffice.Facades
 
         #region Contrato Empresa Precificacao
 
+        public ContratoEmpresaPrecificacaoProduto ConsultarPorId(int id)
+        {
+            return serviceContratoEmpresaPrecificacaoProduto.ConsultarPorId(id);
+        }
+
         public List<ContratoEmpresaPrecificacaoProduto> ListarFaixas(int idContrato, string codigoProduto)
         {
             return serviceContratoEmpresaPrecificacaoProduto.ListarTodos(idContrato, codigoProduto);
@@ -42,9 +47,11 @@ namespace DNAMais.BackOffice.Facades
             return serviceContratoEmpresaPrecificacaoProduto.RetornarPrimeiroContratoPrecificacaoProduto(id);
         }
 
-        public void SalvarContratoEmpresaPrecificacao(List<ContratoEmpresaPrecificacaoProduto> precificacoes)
+        public void SalvarContratoEmpresaPrecificacao(ContratoEmpresaPrecificacaoProduto precificacao)
         {
-            serviceContratoEmpresaPrecificacaoProduto.SalvarContratoEmpresaPrecificacaoProduto(precificacoes);
+            ResultValidation retorno = serviceContratoEmpresaPrecificacaoProduto.Salvar(precificacao);
+
+            PreencherModelState(retorno);
         }
 
         public void RemoverContratoEmpresaPrecificacao(int id)
