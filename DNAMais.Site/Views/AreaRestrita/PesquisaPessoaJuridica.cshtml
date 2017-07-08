@@ -76,14 +76,15 @@
         $('#divLoading').hide();
         $('.jsVoltar').hide();
 
-        $('#btnNovaPesquisa').click(function () {
+        $('#btnNovaPesquisa').click(function (event) {
+            event.preventDefault();
             $('#btnNovaPesquisa').fadeOut(500);
             $('#divListaPesquisaPJ').fadeOut(500);
             $('#divDetalhePesquisaPJ').fadeOut(500);
             $('#divFiltros').fadeIn(500);
         });
 
-        $('.jsVoltar').click(function () {
+        $('.jsVoltar').click(function (event) {
             event.preventDefault();
             $('.jsVoltar').fadeOut(500);
 

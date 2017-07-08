@@ -443,7 +443,7 @@
             $('.modal .modal-body').css('max-height', $(window).height() * 0.7);
         });
 
-        $('.link-pessoa-juridica').on('click', function () {
+        $('.link-pessoa-juridica').on('click', function (event) {
             event.preventDefault();
             var cpf = $(this).attr('data-cnpj');
             $.ajax({

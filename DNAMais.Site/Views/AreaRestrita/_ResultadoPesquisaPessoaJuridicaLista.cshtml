@@ -65,7 +65,7 @@
 <script>
     $(document).ready(function () {
         $('#cnpj').focus();
-        $('.link-pessoa-juridica').on('click', function () {
+        $('.link-pessoa-juridica').on('click', function (event) {
             event.preventDefault();
             $('#hdnOrigemPesquisa').val("lista");
             var cnpj = $(this).attr('data-cnpj');

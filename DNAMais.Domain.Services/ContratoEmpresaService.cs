@@ -106,5 +106,34 @@ namespace DNAMais.Domain.Services
 
             return returnValidation;
         }
+
+        public ContratoEmpresa ConsultarPorProduto(
+            int idClienteEmpresa,
+            string cdProduto)
+        {
+            StringBuilder sql = new StringBuilder();
+
+            sql.Append("SELECT ");
+            sql.Append(" CE.ID_CONTRATO_EMPRESA AS Id, ");
+            sql.Append(" CE.ID_CLIENTE_EMPRESA  AS IdClienteEmpresa, ");
+            sql.Append(" CE.DT_AQUISICAO        AS DataAquisicao, ");
+            sql.Append(" CE.IS_VIGENTE          AS VigenteDescricao, ");
+            sql.Append(" CE.DD_CORTE            AS DiaCorte, ");
+            sql.Append(" CE.DD_FATURAMENTO      AS DiaFaturamento, ");
+            sql.Append(" CE.DT_CADASTRO         AS DataCadastro, ");
+            sql.Append(" CE.ID_USUARIO_CADASTRO AS IdUsuarioCadastro ");
+            sql.Append(" FROM  ");
+            sql.Append("      DNASITE.CONTRATO_EMPRESA CE, ");
+            sql.Append("      DNASITE.CONTRATO_EMPRESA_PRODUTO CEP ");
+            sql.Append(" WHERE ");
+            sql.Append("      CE.ID_CONTRATO_EMPRESA = CEP.ID_CONTRATO_EMPRESA ");
+            sql.Append("      AND CE.ID_CLIENTE_EMPRESA = " + idClienteEmpresa);
+            sql.Append("      AND CEP.CD_PRODUTO = '" + cdProduto + "'");
+
+            ContratoEmpresa contratoEmpresa = context.ContratosEmpresa.SqlQuery(sql.ToString()).FirstOrDefault();
+
+            return contratoEmpresa;
+        }
+
     }
 }

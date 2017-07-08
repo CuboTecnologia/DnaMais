@@ -414,7 +414,7 @@
                     },
                     error: function () {
                         $('#btnSalvarSenha').prop("disabled", false);
-                        toastr['error']("failure");
+                        toastr['error']("Falha - Troca de senha");
                     }
                 });
         }
@@ -451,7 +451,7 @@
                     },
                 error: function () {
                     $('#btnEnviarNovaSenha').prop("disabled", false);
-                    toastr['error']("failure");
+                    toastr['error']("Falha - Gravação da nova senha");
                 }
             });
         }
@@ -562,7 +562,7 @@
                 },
                 error: function () {
                     $('#btnLogin').prop("disabled", false);
-                    toastr['error']("failure");
+                    toastr['error']("Falha - Login");
                 }
             });
         } else {

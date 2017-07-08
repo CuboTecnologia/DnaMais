@@ -10,8 +10,7 @@ using System.Threading.Tasks;
 namespace DNAMais.Domain.Entidades
 {
     [Table("TIPO_CONTATO", Schema = "DNASITE")]
-    [SequenceOracle("SQ_TESTE_CLAUDIO")]
-//    [SequenceOracle("SQ_TIPO_CONTATO")]
+    [SequenceOracle("SQ_TIPO_CONTATO")]
     public class TipoContato
     {
         #region Propriedades Públicas

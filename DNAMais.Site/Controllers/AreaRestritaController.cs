@@ -17,23 +17,17 @@ namespace DNAMais.Site.Controllers
     public class AreaRestritaController : Controller
     {
         AutenticacaoFacade facadeAutenticacao;
-        
+
         PessoaFisicaFacade facadePF;
         PessoaJuridicaFacade facadePJ;
-
-        private readonly int _idClienteEmpresa;
-        private readonly int _idContratoEmpresa;
-        private readonly int _idUsuarioCliente;
+        ContratoEmpresaFacade facadeContratoEmpresa;
 
         public AreaRestritaController()
         {
             facadePF = new PessoaFisicaFacade(ModelState);
             facadePJ = new PessoaJuridicaFacade(ModelState);
-            facadeAutenticacao = new AutenticacaoFacade(ModelState); 
-
-            _idClienteEmpresa = 1;
-            _idContratoEmpresa = 3;
-            _idUsuarioCliente = 21;
+            facadeContratoEmpresa = new ContratoEmpresaFacade(ModelState);
+            facadeAutenticacao = new AutenticacaoFacade(ModelState);
         }
 
         protected override void Dispose(bool disposing)
@@ -61,9 +55,65 @@ namespace DNAMais.Site.Controllers
         {
             var usuarioCliente = CarregaDadosUsuarioCliente();
 
+            #region VerificaContrato consulta PF
+
+            var habilitaConsultaPF = false;
+            ContratoEmpresa contratoEmpresaPF = CarregaDadosContratoEmpresa((int)usuarioCliente.ClienteEmpresa.Id, "CST-WEB-PF");
+
+            if (contratoEmpresaPF != null)
+            {
+                if (contratoEmpresaPF.Id > 0)
+                    habilitaConsultaPF = true;
+            }
+
+            #endregion
+
+            #region VerificaContrato consulta PJ
+
+            var habilitaConsultaPJ = false;
+            ContratoEmpresa contratoEmpresaPJ = CarregaDadosContratoEmpresa((int)usuarioCliente.ClienteEmpresa.Id, "CST-WEB-PF");
+
+            if (contratoEmpresaPJ != null)
+            {
+                if (contratoEmpresaPJ.Id > 0)
+                    habilitaConsultaPJ = true;
+            }
+
+            #endregion
+
+            #region VerificaContrato consulta FTP
+
+            var habilitaConsultaFTP = false;
+            ContratoEmpresa contratoEmpresaFTP = CarregaDadosContratoEmpresa((int)usuarioCliente.ClienteEmpresa.Id, "CST-WEB-FTP");
+
+            if (contratoEmpresaFTP != null)
+            {
+                if (contratoEmpresaFTP.Id > 0)
+                    habilitaConsultaFTP = true;
+            }
+
+            #endregion
+
+            #region VerificaContrato consulta Veiculo
+
+            var habilitaConsultaVeiculo = false;
+            ContratoEmpresa contratoEmpresaVeiculo = CarregaDadosContratoEmpresa((int)usuarioCliente.ClienteEmpresa.Id, "CST-WEB-VEICULO");
+
+            if (contratoEmpresaVeiculo != null)
+            {
+                if (contratoEmpresaVeiculo.Id > 0)
+                    habilitaConsultaVeiculo = true;
+            }
+
+            #endregion
+
             AreaRestritaModel model = new AreaRestritaModel
             {
-                UsuarioCliente = usuarioCliente
+                UsuarioCliente = usuarioCliente,
+                HabilitaConsultaPF = habilitaConsultaPF,
+                HabilitaConsultaPJ = habilitaConsultaPJ,
+                HabilitaConsultaFTP = habilitaConsultaFTP,
+                HabilitaConsultaVeiculo = habilitaConsultaVeiculo
             };
 
             return View(model);
@@ -89,11 +139,18 @@ namespace DNAMais.Site.Controllers
 
         public UsuarioCliente CarregaDadosUsuarioCliente()
         {
-            if (Session["user"] != null)
+            if (Session != null)
             {
-                var usuarioCliente = facadeAutenticacao.ConsultarPorId((int)((UsuarioCliente)Session["user"]).Id);
+                if (Session["user"] != null)
+                {
+                    var usuarioCliente = facadeAutenticacao.ConsultarPorId((int)((UsuarioCliente)Session["user"]).Id);
 
-                return usuarioCliente;
+                    return usuarioCliente;
+                }
+                else
+                {
+                    return new UsuarioCliente();
+                }
             }
             else
             {
@@ -101,8 +158,22 @@ namespace DNAMais.Site.Controllers
             }
         }
 
+        public ContratoEmpresa CarregaDadosContratoEmpresa(int idClienteEmpresa, string cdProduto)
+        {
+            if (idClienteEmpresa > 0 && cdProduto.Trim().Length > 0)
+            {
+                var contratoEmpresa = facadeContratoEmpresa.ConsultarContratoPorProduto(idClienteEmpresa, cdProduto);
+
+                return contratoEmpresa;
+            }
+            else
+            {
+                return new ContratoEmpresa();
+            }
+        }
+
         #region Pessoa Fisica
-        
+
         public ActionResult PesquisaPessoaFisica()
         {
             var usuarioCliente = CarregaDadosUsuarioCliente();
@@ -118,12 +189,30 @@ namespace DNAMais.Site.Controllers
         public ActionResult PesquisarPessoaFisicaPorCPF(string txtCpfPesquisaPorCpf)
         {
             TransacaoConsulta transacao = new TransacaoConsulta();
+            var usuarioCliente = CarregaDadosUsuarioCliente();
+
+            if (usuarioCliente == null)
+            {
+                return PartialView("_ResultadoNaoEncontrado");
+            }
+
+            ContratoEmpresa contratoEmpresa = CarregaDadosContratoEmpresa((int)usuarioCliente.ClienteEmpresa.Id, "CST-WEB-PF");
+
+            if (contratoEmpresa == null)
+            {
+                return PartialView("_ResultadoNaoEncontrado");
+            }
+
+            if (contratoEmpresa == null)
+            {
+                return PartialView("_ResultadoNaoEncontrado");
+            }
 
             InfoPessoaFisica pessoaFisica = facadePF.ConsultarPessoaFisicaPorCPF(
                 txtCpfPesquisaPorCpf,
-                _idClienteEmpresa,
-                _idContratoEmpresa,
-                _idUsuarioCliente,
+                (int)usuarioCliente.ClienteEmpresa.Id,
+                (int)contratoEmpresa.Id,
+                (int)usuarioCliente.Id,
                 out transacao);
 
             if (pessoaFisica != null)
@@ -140,12 +229,25 @@ namespace DNAMais.Site.Controllers
         public ActionResult PesquisarPessoaFisicaPorCPFModal(string txtCpfPesquisaPorCpf)
         {
             TransacaoConsulta transacao = new TransacaoConsulta();
+            var usuarioCliente = CarregaDadosUsuarioCliente();
+
+            if (usuarioCliente == null)
+            {
+                return PartialView("_ResultadoNaoEncontrado");
+            }
+
+            ContratoEmpresa contratoEmpresa = CarregaDadosContratoEmpresa((int)usuarioCliente.ClienteEmpresa.Id, "CST-WEB-PF");
+
+            if (contratoEmpresa == null)
+            {
+                return PartialView("_ResultadoNaoEncontrado");
+            }
 
             InfoPessoaFisica pessoaFisica = facadePF.ConsultarPessoaFisicaPorCPF(
                 txtCpfPesquisaPorCpf,
-                _idClienteEmpresa,
-                _idContratoEmpresa,
-                _idUsuarioCliente,
+                (int)usuarioCliente.ClienteEmpresa.Id,
+                (int)contratoEmpresa.Id,
+                (int)usuarioCliente.Id,
                 out transacao);
 
             if (pessoaFisica != null)
@@ -162,12 +264,25 @@ namespace DNAMais.Site.Controllers
         public ActionResult PesquisarPessoaFisicaPorCEP(string txtCepPesquisaPorEndereco)
         {
             TransacaoConsulta transacao = new TransacaoConsulta();
+            var usuarioCliente = CarregaDadosUsuarioCliente();
+
+            if (usuarioCliente == null)
+            {
+                return PartialView("_ResultadoNaoEncontrado");
+            }
+
+            ContratoEmpresa contratoEmpresa = CarregaDadosContratoEmpresa((int)usuarioCliente.ClienteEmpresa.Id, "CST-WEB-PF");
+
+            if (contratoEmpresa == null)
+            {
+                return PartialView("_ResultadoNaoEncontrado");
+            }
 
             List<InfoPessoaFisica> pessoasFisica = facadePF.ConsultarPessoaFisicaPorCEP(
                 txtCepPesquisaPorEndereco,
-                _idClienteEmpresa,
-                _idContratoEmpresa,
-                _idUsuarioCliente,
+                (int)usuarioCliente.ClienteEmpresa.Id,
+                (int)contratoEmpresa.Id,
+                (int)usuarioCliente.Id,
                 out transacao);
 
             if (pessoasFisica.Count > 0)
@@ -184,13 +299,26 @@ namespace DNAMais.Site.Controllers
         public ActionResult PesquisarPessoaFisicaPorCepNumero(string txtCepPesquisaPorCepNumero, string txtNumeroPesquisaPorCepNumero)
         {
             TransacaoConsulta transacao = new TransacaoConsulta();
+            var usuarioCliente = CarregaDadosUsuarioCliente();
+
+            if (usuarioCliente == null)
+            {
+                return PartialView("_ResultadoNaoEncontrado");
+            }
+
+            ContratoEmpresa contratoEmpresa = CarregaDadosContratoEmpresa((int)usuarioCliente.ClienteEmpresa.Id, "CST-WEB-PF");
+
+            if (contratoEmpresa == null)
+            {
+                return PartialView("_ResultadoNaoEncontrado");
+            }
 
             List<InfoPessoaFisica> pessoasFisica = facadePF.ConsultarPessoaFisicaPorCepNumero(
                 txtCepPesquisaPorCepNumero,
                 txtNumeroPesquisaPorCepNumero,
-                _idClienteEmpresa,
-                _idContratoEmpresa,
-                _idUsuarioCliente,
+                (int)usuarioCliente.ClienteEmpresa.Id,
+                (int)contratoEmpresa.Id,
+                (int)usuarioCliente.Id,
                 out transacao);
 
             if (pessoasFisica.Count > 0)
@@ -213,6 +341,19 @@ namespace DNAMais.Site.Controllers
             string txtComplementoPesquisaPorEndereco)
         {
             TransacaoConsulta transacao = new TransacaoConsulta();
+            var usuarioCliente = CarregaDadosUsuarioCliente();
+
+            if (usuarioCliente == null)
+            {
+                return PartialView("_ResultadoNaoEncontrado");
+            }
+
+            ContratoEmpresa contratoEmpresa = CarregaDadosContratoEmpresa((int)usuarioCliente.ClienteEmpresa.Id, "CST-WEB-PF");
+
+            if (contratoEmpresa == null)
+            {
+                return PartialView("_ResultadoNaoEncontrado");
+            }
 
             List<InfoPessoaFisica> pessoasFisica = facadePF.ConsultarPessoaFisicaPorEndereco(
                 ddlUfPesquisaPorEndereco,
@@ -221,9 +362,9 @@ namespace DNAMais.Site.Controllers
                 txtLogradouroPesquisaPorEndereco,
                 txtNumeroPesquisaPorEndereco,
                 txtComplementoPesquisaPorEndereco,
-                _idClienteEmpresa,
-                _idContratoEmpresa,
-                _idUsuarioCliente,
+                (int)usuarioCliente.ClienteEmpresa.Id,
+                (int)contratoEmpresa.Id,
+                (int)usuarioCliente.Id,
                 out transacao);
 
             if (pessoasFisica.Count > 0)
@@ -240,12 +381,25 @@ namespace DNAMais.Site.Controllers
         public ActionResult PesquisarPessoaFisicaPorNome(string txtNomePesquisaPorNome)
         {
             TransacaoConsulta transacao = new TransacaoConsulta();
+            var usuarioCliente = CarregaDadosUsuarioCliente();
+
+            if (usuarioCliente == null)
+            {
+                return PartialView("_ResultadoNaoEncontrado");
+            }
+
+            ContratoEmpresa contratoEmpresa = CarregaDadosContratoEmpresa((int)usuarioCliente.ClienteEmpresa.Id, "CST-WEB-PF");
+
+            if (contratoEmpresa == null)
+            {
+                return PartialView("_ResultadoNaoEncontrado");
+            }
 
             List<InfoPessoaFisica> pessoasFisica = facadePF.ConsultarPessoaFisicaPorNome(
                 txtNomePesquisaPorNome,
-                _idClienteEmpresa,
-                _idContratoEmpresa,
-                _idUsuarioCliente,
+                (int)usuarioCliente.ClienteEmpresa.Id,
+                (int)contratoEmpresa.Id,
+                (int)usuarioCliente.Id,
                 out transacao);
 
             if (pessoasFisica.Count > 0)
@@ -262,13 +416,26 @@ namespace DNAMais.Site.Controllers
         public ActionResult PesquisarPessoaFisicaPorTelefone(byte? txtDddPesquisaPorTelefone, string txtTelefonePesquisaPorTelefone)
         {
             TransacaoConsulta transacao = new TransacaoConsulta();
+            var usuarioCliente = CarregaDadosUsuarioCliente();
+
+            if (usuarioCliente == null)
+            {
+                return PartialView("_ResultadoNaoEncontrado");
+            }
+
+            ContratoEmpresa contratoEmpresa = CarregaDadosContratoEmpresa((int)usuarioCliente.ClienteEmpresa.Id, "CST-WEB-PF");
+
+            if (contratoEmpresa == null)
+            {
+                return PartialView("_ResultadoNaoEncontrado");
+            }
 
             List<InfoPessoaFisica> pessoasFisica = facadePF.ConsultarPessoaFisicaPorTelefone(
                 txtDddPesquisaPorTelefone,
                 txtTelefonePesquisaPorTelefone,
-                _idClienteEmpresa,
-                _idContratoEmpresa,
-                _idUsuarioCliente,
+                (int)usuarioCliente.ClienteEmpresa.Id,
+                (int)contratoEmpresa.Id,
+                (int)usuarioCliente.Id,
                 out transacao);
 
             if (pessoasFisica.Count > 0)
@@ -285,7 +452,7 @@ namespace DNAMais.Site.Controllers
         #endregion
 
         #region Pessoa Juridica
-        
+
         public ActionResult PesquisaPessoaJuridica()
         {
             var usuarioCliente = CarregaDadosUsuarioCliente();
@@ -301,12 +468,25 @@ namespace DNAMais.Site.Controllers
         public ActionResult PesquisarPessoaJuridicaPorCNPJ(string txtCnpjPesquisaPorCnpj)
         {
             TransacaoConsulta transacao = new TransacaoConsulta();
+            var usuarioCliente = CarregaDadosUsuarioCliente();
+
+            if (usuarioCliente == null)
+            {
+                return PartialView("_ResultadoNaoEncontrado");
+            }
+
+            ContratoEmpresa contratoEmpresa = CarregaDadosContratoEmpresa((int)usuarioCliente.ClienteEmpresa.Id, "CST-WEB-PJ");
+
+            if (contratoEmpresa == null)
+            {
+                return PartialView("_ResultadoNaoEncontrado");
+            }
 
             InfoPessoaJuridica pessoaJuridica = facadePJ.ConsultarPessoaJuridicaPorCNPJ(
                 txtCnpjPesquisaPorCnpj,
-                _idClienteEmpresa,
-                _idContratoEmpresa,
-                _idUsuarioCliente,
+                (int)usuarioCliente.ClienteEmpresa.Id,
+                (int)contratoEmpresa.Id,
+                (int)usuarioCliente.Id,
                 out transacao);
 
             if (pessoaJuridica != null)
@@ -323,12 +503,25 @@ namespace DNAMais.Site.Controllers
         public ActionResult PesquisarPessoaJuridicaPorCNPJModal(string txtCnpjPesquisaPorCnpj)
         {
             TransacaoConsulta transacao = new TransacaoConsulta();
+            var usuarioCliente = CarregaDadosUsuarioCliente();
+
+            if (usuarioCliente == null)
+            {
+                return PartialView("_ResultadoNaoEncontrado");
+            }
+
+            ContratoEmpresa contratoEmpresa = CarregaDadosContratoEmpresa((int)usuarioCliente.ClienteEmpresa.Id, "CST-WEB-PJ");
+
+            if (contratoEmpresa == null)
+            {
+                return PartialView("_ResultadoNaoEncontrado");
+            }
 
             InfoPessoaJuridica pessoaJuridica = facadePJ.ConsultarPessoaJuridicaPorCNPJ(
                 txtCnpjPesquisaPorCnpj,
-                _idClienteEmpresa,
-                _idContratoEmpresa,
-                _idUsuarioCliente,
+                (int)usuarioCliente.ClienteEmpresa.Id,
+                (int)contratoEmpresa.Id,
+                (int)usuarioCliente.Id,
                 out transacao);
 
             if (pessoaJuridica != null)
@@ -345,12 +538,25 @@ namespace DNAMais.Site.Controllers
         public ActionResult PesquisarPessoaJuridicaPorCEP(string txtCepPesquisaPorEndereco)
         {
             TransacaoConsulta transacao = new TransacaoConsulta();
+            var usuarioCliente = CarregaDadosUsuarioCliente();
+
+            if (usuarioCliente == null)
+            {
+                return PartialView("_ResultadoNaoEncontrado");
+            }
+
+            ContratoEmpresa contratoEmpresa = CarregaDadosContratoEmpresa((int)usuarioCliente.ClienteEmpresa.Id, "CST-WEB-PJ");
+
+            if (contratoEmpresa == null)
+            {
+                return PartialView("_ResultadoNaoEncontrado");
+            }
 
             List<InfoPessoaJuridica> pessoasJuridica = facadePJ.ConsultarPessoaJuridicaPorCEP(
                 txtCepPesquisaPorEndereco,
-                _idClienteEmpresa,
-                _idContratoEmpresa,
-                _idUsuarioCliente,
+                (int)usuarioCliente.ClienteEmpresa.Id,
+                (int)contratoEmpresa.Id,
+                (int)usuarioCliente.Id,
                 out transacao);
 
             if (pessoasJuridica.Count > 0)
@@ -373,6 +579,19 @@ namespace DNAMais.Site.Controllers
             string txtComplementoPesquisaPorEndereco)
         {
             TransacaoConsulta transacao = new TransacaoConsulta();
+            var usuarioCliente = CarregaDadosUsuarioCliente();
+
+            if (usuarioCliente == null)
+            {
+                return PartialView("_ResultadoNaoEncontrado");
+            }
+
+            ContratoEmpresa contratoEmpresa = CarregaDadosContratoEmpresa((int)usuarioCliente.ClienteEmpresa.Id, "CST-WEB-PJ");
+
+            if (contratoEmpresa == null)
+            {
+                return PartialView("_ResultadoNaoEncontrado");
+            }
 
             List<InfoPessoaJuridica> pessoasJuridica = facadePJ.ConsultarPessoaJuridicaPorEndereco(
                 ddlUfPesquisaPorEndereco,
@@ -381,9 +600,9 @@ namespace DNAMais.Site.Controllers
                 txtLogradouroPesquisaPorEndereco,
                 txtNumeroPesquisaPorEndereco,
                 txtComplementoPesquisaPorEndereco,
-                _idClienteEmpresa,
-                _idContratoEmpresa,
-                _idUsuarioCliente,
+                (int)usuarioCliente.ClienteEmpresa.Id,
+                (int)contratoEmpresa.Id,
+                (int)usuarioCliente.Id,
                 out transacao);
 
             if (pessoasJuridica.Count > 0)
@@ -400,12 +619,25 @@ namespace DNAMais.Site.Controllers
         public ActionResult PesquisarPessoaJuridicaPorNome(string txtNomePesquisaPorNome)
         {
             TransacaoConsulta transacao = new TransacaoConsulta();
+            var usuarioCliente = CarregaDadosUsuarioCliente();
+
+            if (usuarioCliente == null)
+            {
+                return PartialView("_ResultadoNaoEncontrado");
+            }
+
+            ContratoEmpresa contratoEmpresa = CarregaDadosContratoEmpresa((int)usuarioCliente.ClienteEmpresa.Id, "CST-WEB-PJ");
+
+            if (contratoEmpresa == null)
+            {
+                return PartialView("_ResultadoNaoEncontrado");
+            }
 
             List<InfoPessoaJuridica> pessoasJuridica = facadePJ.ConsultarPessoaJuridicaPorNome(
                 txtNomePesquisaPorNome,
-                _idClienteEmpresa,
-                _idContratoEmpresa,
-                _idUsuarioCliente,
+                (int)usuarioCliente.ClienteEmpresa.Id,
+                (int)contratoEmpresa.Id,
+                (int)usuarioCliente.Id,
                 out transacao);
 
             if (pessoasJuridica.Count > 0)
@@ -424,13 +656,26 @@ namespace DNAMais.Site.Controllers
             string txtTelefonePesquisaPorTelefone)
         {
             TransacaoConsulta transacao = new TransacaoConsulta();
+            var usuarioCliente = CarregaDadosUsuarioCliente();
+
+            if (usuarioCliente == null)
+            {
+                return PartialView("_ResultadoNaoEncontrado");
+            }
+
+            ContratoEmpresa contratoEmpresa = CarregaDadosContratoEmpresa((int)usuarioCliente.ClienteEmpresa.Id, "CST-WEB-PJ");
+
+            if (contratoEmpresa == null)
+            {
+                return PartialView("_ResultadoNaoEncontrado");
+            }
 
             List<InfoPessoaJuridica> pessoasJuridica = facadePJ.ConsultarPessoaJuridicaPorTelefone(
                 txtDddPesquisaPorTelefone,
                 txtTelefonePesquisaPorTelefone,
-                _idClienteEmpresa,
-                _idContratoEmpresa,
-                _idUsuarioCliente,
+                (int)usuarioCliente.ClienteEmpresa.Id,
+                (int)contratoEmpresa.Id,
+                (int)usuarioCliente.Id,
                 out transacao);
 
             if (pessoasJuridica.Count > 0)

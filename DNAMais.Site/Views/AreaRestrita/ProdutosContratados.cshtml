@@ -22,84 +22,70 @@
 
     <div class="featured-boxes">
         <div class="row">
-            <div class="col-md-3 col-sm-6">
-                <div class="featured-box featured-box-secondary featured-box-effect-1">
-                    <div class="box-content">
-                        <a href="@Url.Action("PesquisaPessoaFisica","AreaRestrita")" class="lnk-secondary learn-more">
-                            <i class="icon-featured fa fa-search-plus" style=""></i>
-                            <h4 class="text-uppercase"><strong>Pessoa Física</strong></h4>
-                        </a>
-                        <p style="min-height: 90px;">Disponibilizamos relatórios completos e detalhados sobre o CPF, Endereço, Nome ou Telefone consultado.</p>
-                        <p class="pull-bottom"><a href="@Url.Action("PesquisaPessoaFisica","AreaRestrita")" class="lnk-secondary learn-more"><strong>Clique para exibir as opções</strong></a></p>
+
+            @if (Model.HabilitaConsultaPF)
+            {
+                <div class="col-md-3 col-sm-6">
+                    <div class="featured-box featured-box-secondary featured-box-effect-1">
+                        <div class="box-content">
+                            <a href="@Url.Action("PesquisaPessoaFisica", "AreaRestrita")" class="lnk-secondary learn-more">
+                                <i class="icon-featured fa fa-search-plus" style=""></i>
+                                <h4 class="text-uppercase"><strong>Pessoa Física</strong></h4>
+                            </a>
+                            <p style="min-height: 90px;">Disponibilizamos relatórios completos e detalhados sobre o CPF, Endereço, Nome ou Telefone consultado.</p>
+                            <p class="pull-bottom"><a href="@Url.Action("PesquisaPessoaFisica", "AreaRestrita")" class="lnk-secondary learn-more"><strong>Clique para exibir as opções</strong></a></p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
 
-            <!--
-            <div class="col-md-3 col-sm-6">
-                <div class="featured-box featured-box-secondary featured-box-effect-1">
-                    <div class="box-content">
-                        <i class="icon-featured fa fa-hashtag" style=""></i>
-                        <h4 class="text-uppercase"><strong>Contagem PF</strong></h4>
-                        <p>Disponibilizamos relatórios completos e detalhados sobre o CPF, Endereço, Nome ou Telefone consultado.</p>
-                        <p><a href="@Url.Action("ContagemPessoaFisica","AreaRestrita")" class="lnk-secondary learn-more"><strong>Clique para exibir as opções</strong></a></p>
+            @if (Model.HabilitaConsultaPJ)
+            {
+                <div class="col-md-3 col-sm-6">
+                    <div class="featured-box featured-box-primary featured-box-effect-1">
+                        <div class="box-content">
+                            <a href="@Url.Action("PesquisaPessoaJuridica", "AreaRestrita")" class="lnk-primary learn-more">
+                                <i class="icon-featured fa fa-briefcase"></i>
+                                <h4 class="text-uppercase"><strong>Pessoa Jurídica</strong></h4>
+                            </a>
+                            <p style="min-height: 90px;">Relatórios completos e detalhados sobre o CNPJ, Razão Social ou Telefone consultado.</p>
+                            <p><a href="@Url.Action("PesquisaPessoaJuridica", "AreaRestrita")" class="lnk-primary learn-more"><strong>Clique para exibir as opções</strong></a></p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            -->
+            }
 
-            <div class="col-md-3 col-sm-6">
-                <div class="featured-box featured-box-primary featured-box-effect-1">
-                    <div class="box-content">
-                        <a href="@Url.Action("PesquisaPessoaJuridica","AreaRestrita")" class="lnk-primary learn-more">
-                            <i class="icon-featured fa fa-briefcase"></i>
-                            <h4 class="text-uppercase"><strong>Pessoa Jurídica</strong></h4>
-                        </a>
-                        <p style="min-height: 90px;">Relatórios completos e detalhados sobre o CNPJ, Razão Social ou Telefone consultado.</p>
-                        <p><a href="@Url.Action("PesquisaPessoaJuridica","AreaRestrita")" class="lnk-primary learn-more"><strong>Clique para exibir as opções</strong></a></p>
+@*            @if (Model.HabilitaConsultaFTP)
+            {
+                *@<div class="col-md-3 col-sm-6">
+                    <div class="featured-box featured-box-quaternary featured-box-effect-1">
+                        <div class="box-content">
+                            <a href="@Url.Action("PesquisaFtp", "AreaRestrita")" class="lnk-quaternary learn-more">
+                                <i class="icon-featured fa fa-exchange"></i>
+                                <h4 class="text-uppercase"><strong>FTP</strong></h4>
+                            </a>
+                            <p style="min-height: 90px;">Enriquecimento de dados, adaptáveis às necessidades de sua empresa, com informações oriundas de fontes oficiais.</p>
+                            <p><a href="@Url.Action("PesquisaFtp", "AreaRestrita")" class="lnk-quaternary learn-more"><strong>Clique para exibir as opções</strong></a></p>
+                        </div>
                     </div>
                 </div>
-            </div>
+@*            }*@
 
-            <!--
-            <div class="col-md-3 col-sm-6">
-                <div class="featured-box featured-box-primary featured-box-effect-1">
-                    <div class="box-content">
-                        <i class="icon-featured fa fa-hashtag"></i>
-                        <h4 class="text-uppercase"><strong>Contagem PJ</strong></h4>
-                        <p>Relatórios completos e detalhados sobre o CNPJ, Razão Social ou Telefone consultado.</p>
-                        <p><a href="@Url.Action("ContagemPessoaJuridica","AreaRestrita")" class="lnk-primary learn-more"><strong>Clique para exibir as opções</strong></a></p>
+            @if (Model.HabilitaConsultaVeiculo)
+            {
+                <div class="col-md-3 col-sm-6">
+                    <div class="featured-box featured-box-tertiary featured-box-effect-1">
+                        <div class="box-content">
+                            <a href="#" class="lnk-quaternary learn-more">
+                                <i class="icon-featured fa fa-car"></i>
+                                <h4 class="text-uppercase"><strong>Veículo</strong></h4>
+                            </a>
+                            <p style="min-height: 90px;">Em breve um novo serviço para você! Pesquisas detalhadas sobre veículos de todo território nacional.</p>
+                            <p class="lnk-tertiary learn-more"><strong>Em breve!</strong></p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            -->
-
-            <div class="col-md-3 col-sm-6">
-                <div class="featured-box featured-box-quaternary featured-box-effect-1">
-                    <div class="box-content">
-                        <a href="@Url.Action("PesquisaFtp","AreaRestrita")" class="lnk-quaternary learn-more">
-                            <i class="icon-featured fa fa-exchange"></i>
-                            <h4 class="text-uppercase"><strong>FTP</strong></h4>
-                        </a>
-                        <p style="min-height: 90px;">Enriquecimento de dados, adaptáveis às necessidades de sua empresa, com informações oriundas de fontes oficiais.</p>
-                        <p><a href="@Url.Action("PesquisaFtp","AreaRestrita")" class="lnk-quaternary learn-more"><strong>Clique para exibir as opções</strong></a></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-sm-6">
-                <div class="featured-box featured-box-tertiary featured-box-effect-1">
-                    <div class="box-content">
-                        <a href="#" class="lnk-quaternary learn-more">
-                            <i class="icon-featured fa fa-car"></i>
-                            <h4 class="text-uppercase"><strong>Veículo</strong></h4>
-                        </a>
-                        <p style="min-height: 90px;">Em breve um novo serviço para você! Pesquisas detalhadas sobre veículos de todo território nacional.</p>
-                        <p class="lnk-tertiary learn-more"><strong>Em breve!</strong></p>
-                    </div>
-                </div>
-            </div>
-
+            }
         </div>
     </div>
 </div>

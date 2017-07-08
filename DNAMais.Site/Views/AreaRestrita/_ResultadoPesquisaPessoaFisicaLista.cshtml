@@ -67,7 +67,7 @@
 <script>
     $(document).ready(function () {
         $('#cpf').focus();
-        $('.link-pessoa-fisica').on('click', function () {
+        $('.link-pessoa-fisica').on('click', function (event) {
             event.preventDefault();
             var cpf = $(this).attr('data-cpf');
             $.ajax({

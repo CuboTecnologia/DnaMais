@@ -11,6 +11,7 @@ using System.Reflection;
 using DNAMais.Domain.CustomAttributes;
 using DNAMais.Domain.Entidades;
 using DNAMais.Domain.Entidades.Consultas;
+using System.Data.Entity.Validation;
 
 namespace DNAMais.Infrastructure.Data.Contexts
 {
@@ -89,89 +90,116 @@ namespace DNAMais.Infrastructure.Data.Contexts
 
         public override int SaveChanges()
         {
-            foreach (var changeSet in ChangeTracker.Entries())
+            try
             {
-                var entity = changeSet.Entity;
-
-                var entityType = entity.GetType();
-
-                if (entityType == null)
+                foreach (var changeSet in ChangeTracker.Entries())
                 {
-                    continue;
-                }
+                    #region Codigo
 
-                var entityCustomAttributes = TypeDescriptor.GetAttributes(entityType);
+                    var entity = changeSet.Entity;
 
-                if (entityCustomAttributes == null)
-                {
-                    continue;
-                }
+                    var entityType = entity.GetType();
 
-                if (entityCustomAttributes.Count == 0)
-                {
-                    continue;
-                }
-
-                if (changeSet.State != EntityState.Added)
-                {
-                    continue;
-                }
-
-                foreach (Attribute attribute in entityCustomAttributes)
-                {
-                    if (attribute is SequenceOracle)
+                    if (entityType == null)
                     {
-                        string sequenceName = ((SequenceOracle)attribute).SequenceName;
+                        continue;
+                    }
 
-                        if (!string.IsNullOrWhiteSpace(sequenceName))
+                    var entityCustomAttributes = TypeDescriptor.GetAttributes(entityType);
+
+                    if (entityCustomAttributes == null)
+                    {
+                        continue;
+                    }
+
+                    if (entityCustomAttributes.Count == 0)
+                    {
+                        continue;
+                    }
+
+                    if (changeSet.State != EntityState.Added)
+                    {
+                        continue;
+                    }
+
+                    foreach (Attribute attribute in entityCustomAttributes)
+                    {
+                        if (attribute is SequenceOracle)
                         {
-                            string sequenceValue = GetSequenceValue(sequenceName);
+                            string sequenceName = ((SequenceOracle)attribute).SequenceName;
 
-                            // Obter a instância do Contexto
-                            ObjectContext objectContext = ((IObjectContextAdapter)this).ObjectContext;
-
-                            // Obter a Entrada da Entidade
-                            EntitySetBase entitySet = objectContext
-                                                        .ObjectStateManager
-                                                        .GetObjectStateEntry(entity)
-                                                        .EntitySet;
-
-                            // Obter as Propriedades (Nomes) que compõem o Identificador da Entidade
-                            List<string> propertyKeyNames = entitySet
-                                                                .ElementType
-                                                                .KeyMembers
-                                                                .Select(k => k.Name).ToList();
-
-                            // Para entidades definidas com Sequence, não é possível qualquer possibilidade
-                            // que a entidade tenha 0 (zero) ou +1 (mais de um) identificador
-                            if (propertyKeyNames.Count != 1)
+                            if (!string.IsNullOrWhiteSpace(sequenceName))
                             {
-                                throw new Exception("Mapeamento de chaves incorreto.");
+                                string sequenceValue = GetSequenceValue(sequenceName);
+
+                                // Obter a instância do Contexto
+                                ObjectContext objectContext = ((IObjectContextAdapter)this).ObjectContext;
+
+                                // Obter a Entrada da Entidade
+                                EntitySetBase entitySet = objectContext
+                                                            .ObjectStateManager
+                                                            .GetObjectStateEntry(entity)
+                                                            .EntitySet;
+
+                                // Obter as Propriedades (Nomes) que compõem o Identificador da Entidade
+                                List<string> propertyKeyNames = entitySet
+                                                                    .ElementType
+                                                                    .KeyMembers
+                                                                    .Select(k => k.Name).ToList();
+
+                                // Para entidades definidas com Sequence, não é possível qualquer possibilidade
+                                // que a entidade tenha 0 (zero) ou +1 (mais de um) identificador
+                                if (propertyKeyNames.Count != 1)
+                                {
+                                    throw new Exception("Mapeamento de chaves incorreto.");
+                                }
+
+                                string propertyKeyName = propertyKeyNames[0];
+
+                                // Obter a Propriedade / Identificador da Entidade
+                                PropertyInfo propertyKey = entityType.GetProperty(propertyKeyName);
+
+                                // Obter o Tipo da Propridade / Identificador da Entidade
+                                // Necessário para tornar possível converter o valor obtido da Sequence
+                                // no Tipo correto da Propriedade
+                                Type propertyKeyType = Nullable.GetUnderlyingType(propertyKey.PropertyType) ?? propertyKey.PropertyType;
+
+                                // Assegurar o Tipo correto da Propridade de Identificação
+                                // Conversão do valor da Sequence de string para Tipo correto
+                                object sequenceValueCorrectType = Convert.ChangeType(sequenceValue, propertyKeyType);
+
+                                propertyKey.SetValue(entity, sequenceValueCorrectType);
                             }
 
-                            string propertyKeyName = propertyKeyNames[0];
-
-                            // Obter a Propriedade / Identificador da Entidade
-                            PropertyInfo propertyKey = entityType.GetProperty(propertyKeyName);
-
-                            // Obter o Tipo da Propridade / Identificador da Entidade
-                            // Necessário para tornar possível converter o valor obtido da Sequence
-                            // no Tipo correto da Propriedade
-                            Type propertyKeyType = Nullable.GetUnderlyingType(propertyKey.PropertyType) ?? propertyKey.PropertyType;
-
-                            // Assegurar o Tipo correto da Propridade de Identificação
-                            // Conversão do valor da Sequence de string para Tipo correto
-                            object sequenceValueCorrectType = Convert.ChangeType(sequenceValue, propertyKeyType);
-
-                            propertyKey.SetValue(entity, sequenceValueCorrectType);
+                            break;
                         }
-
-                        break;
                     }
+
+                    #endregion
                 }
+                return base.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                // Retrieve the error messages as a list of strings.
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+
+                // Join the list to a single string.
+                var fullErrorMessage = string.Join("; ", errorMessages);
+
+                // Combine the original exception message with the new one.
+                var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+
+                // Throw a new DbEntityValidationException with the improved exception message.
+                throw new DbEntityValidationException(exceptionMessage, ex.EntityValidationErrors);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
 
-            return base.SaveChanges();
         }
 
         public DbSet<UsuarioBackOffice> BackOfficeUsers { get; set; }
@@ -190,7 +218,7 @@ namespace DNAMais.Infrastructure.Data.Contexts
 
         public DbSet<InfoUf> InfoUfs { get; set; }
         public DbSet<InfoMunicipio> InfoMunicipios { get; set; }
-        
+
         public DbSet<InfoPessoaFisica> PessoasFisicas { get; set; }
         public DbSet<InfoPessoaFisicaEndereco> EnderecosPessoasFisicas { get; set; }
         public DbSet<InfoPessoaFisicaTelefone> TelefonesPessoasFisicas { get; set; }
@@ -209,6 +237,7 @@ namespace DNAMais.Infrastructure.Data.Contexts
         public DbSet<ContratoEmpresaPrecificacaoProduto> ContratosEmpresasPrecificacoesProdutos { get; set; }
         public DbSet<ContratoEmpresaPrecificacaoItemProduto> ContratosEmpresasPrecificacoesItensProduto { get; set; }
         public DbSet<ContratoEmpresaProduto> ContratosEmpresasProdutos { get; set; }
+        public DbSet<ContratoEmpresa> ContratosEmpresa { get; set; }
 
         public DbSet<TransacaoConsulta> TransacoesConsultas { get; set; }
         public DbSet<UsuarioClienteProduto> UsuarioClienteProdutosSelecionados { get; set; }

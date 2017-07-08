@@ -361,7 +361,7 @@
             $('.modal .modal-body').css('max-height', $(window).height() * 0.7);
         });
 
-        $('.link-documento').on('click', function () {
+        $('.link-documento').on('click', function (event) {
             event.preventDefault();
             var documento = $(this).attr('data-documento');
             var tipoPessoa = $(this).attr('data-tipopessoa');

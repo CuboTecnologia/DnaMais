@@ -28,6 +28,11 @@ namespace DNAMais.Framework
         /// <returns></returns>
         private static string Formatar(string valor, string mascara)
         {
+            if (valor == null)
+            {
+                return string.Empty;
+            }
+
             StringBuilder dado = new StringBuilder();
             // remove caracteres nao numericos
             foreach (char c in valor)

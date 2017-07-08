@@ -110,12 +110,14 @@ namespace DNAMais.Domain.Services
                 repoContratoEmpresaProduto.Add(contratoEmpresaProduto);
             }
 
-            contratoEmpresa.ContratosEmpresasPrecificacoesProdutos.Clear();
+            //contratoEmpresa.ContratosEmpresasPrecificacoesProdutos.Clear();
 
-            foreach (var item in precificacoesProduto)
-            {
-                repoContratoEmpresaPrecificacaoProduto.Add(item);
-            }
+            //foreach (var item in precificacoesProduto)
+            //{
+            //    repoContratoEmpresaPrecificacaoProduto.Add(item);
+            //}
+
+
 
             context.SaveChanges();
 

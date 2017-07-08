@@ -137,6 +137,7 @@
     <Compile Include="Controllers\ServicesController.cs" />
     <Compile Include="Facades\AutenticacaoFacade.cs" />
     <Compile Include="Facades\Base\BaseFacade.cs" />
+    <Compile Include="Facades\ContratoEmpresaFacade.cs" />
     <Compile Include="Facades\PessoaJuridicaFacade.cs" />
     <Compile Include="Facades\EnderecoFacade.cs" />
     <Compile Include="Facades\MensagemContatoFacade.cs" />

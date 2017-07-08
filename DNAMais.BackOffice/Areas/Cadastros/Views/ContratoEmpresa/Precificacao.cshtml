@@ -16,7 +16,7 @@
 
     bool locked = ViewData["LOCKED"] == null ? false : (bool)ViewData["LOCKED"];
 
-    List<SelectListItem> produtosContrato = new ContratoEmpresaFacade(null).ListarProdutosContrato().ToList().Select(i => new SelectListItem
+    List<SelectListItem> produtosContrato = new ContratoEmpresaFacade(null).ListarProdutosContrato().Where(u => u.IdContratoEmpresa == Model.ContratoEmpresa.Id).ToList().Select(i => new SelectListItem
     {
         Value = i.CodigoProduto.ToString(),
         Text = i.CodigoProduto + " - " + i.Produto.Nome
@@ -97,7 +97,8 @@
                     </div>
                 </footer>
             </section>
-        </div>
+        </div>
+
         @Html.HiddenFor(x => x.ContratoEmpresa.Id);
         <div class="col-lg-12" style="width: 100%;">
             @Html.DnaMaisDropDownList(
@@ -114,6 +115,9 @@
         <div style="margin-top: 90px;" id="produtoFaixa">
         </div>
 
+        <hr />
+
+        @Html.DnaMaisButton("Index", "btnVoltar", ViewData["messageReturn"].ToString(), "default", "arrow-circle-left")
     }
 
     <script>
@@ -247,7 +251,7 @@
             $("#txtInicioFaixa").mask("######0", { placeholder: " " });
             $("#txtTerminoFaixa").mask("######0", { placeholder: " " });
 
-            $(".jsDecimal").maskMoney({ prefix: '', allowNegative: false, thousands: '.', decimal: ',', affixesStay: false });
+            $(".jsDecimal").maskMoney({ prefix: '', allowNegative: false, thousands: '.', decimal: ',', affixesStay: false, precision: 4 });
             $(".jsDecimal").attr('maxlength', '9');
 
             $("#openModal").attr("disabled", true);

@@ -44,7 +44,7 @@ namespace DNAMais.Domain.Services
             return repoContratoEmpresaPrecificacaoProduto.FindFirst(c => c.IdContratoEmpresa == id);
         }
 
-        public ResultValidation VerificaSobreposicaoFaixas(int? id, int inicio, int? termino)
+        public ResultValidation VerificaSobreposicaoFaixas(int? id, int inicio, int? termino, int? idContrato, string codigoProduto)
         {
             ResultValidation returnValidation = new ResultValidation();
 
@@ -63,7 +63,7 @@ namespace DNAMais.Domain.Services
                 }
                 else
                 {
-                    var lista = context.ContratosEmpresasPrecificacoesProdutos.Where(u => u.TerminoFaixa > inicio && u.InicioFaixa < termino).ToList();
+                    var lista = context.ContratosEmpresasPrecificacoesProdutos.Where(u => (u.TerminoFaixa > inicio) && (u.IdContratoEmpresa == idContrato) && (u.CodigoProduto == codigoProduto)).ToList();
 
                     if (lista.Count() > 0)
                     {
@@ -85,8 +85,26 @@ namespace DNAMais.Domain.Services
 
             if (!returnValidation.Ok) return returnValidation;
 
-            returnValidation = this.VerificaSobreposicaoFaixas(precificacao.Id, precificacao.InicioFaixa, precificacao.TerminoFaixa);
-            if (!returnValidation.Ok) return returnValidation;
+            if (precificacao.InicioFaixa >= precificacao.TerminoFaixa)
+            {
+                returnValidation.AddMessage("", "O valor de ínicio não pode ser igual ou superior ao valor de término da faixa.");
+                return returnValidation;
+            }
+
+            if (precificacao.InicioFaixa <= 0)
+            {
+                returnValidation.AddMessage("", "Informe o valor de ínicio da faixa.");
+                return returnValidation;
+            }
+
+            if (precificacao.TerminoFaixa <= 0)
+            {
+                returnValidation.AddMessage("", "Informe o valor de término da faixa.");
+                return returnValidation;
+            }
+
+            //returnValidation = this.VerificaSobreposicaoFaixas(precificacao.Id, precificacao.InicioFaixa, precificacao.TerminoFaixa, precificacao.IdContratoEmpresa, precificacao.CodigoProduto);
+            //if (!returnValidation.Ok) return returnValidation;
 
             try
             {
